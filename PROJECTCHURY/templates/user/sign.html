@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
-</head>
-<body>
-    회원가입
-</body>
-</html>
+{% extends 'common/base.html' %}
+
+{% block title %}회원가입{% endblock %}
+
+{% block body %}
+<div class="h1 text-primary">회원가입</div>
+
+<form method="post">
+    {% csrf_token %}
+    <table class="table">
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="가입하기" class="btn btn-primary">
+</form>
+{% endblock %}
