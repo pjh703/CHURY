@@ -12,4 +12,11 @@
     <div class="h3 text-info">잘못된 접근입니다. 로그인해주세요</div>
     {% endif %}
 
+    {% for i in response %}
+    <img src="{{ i.cover }}" alt="책 이미지" ><br>
+    제목 : {{ i.title }}<br>
+    작가 : {{ i.author}}<br>
+    <hr>
+    {% endfor %}
+
 {% endblock %}

@@ -1,10 +1,11 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 
 from . import views
-from django.views.generic import TemplateView
 
 
 app_name = 'board'
 urlpatterns = [
+    path('home/', views.home, name='home'),
 
 ]

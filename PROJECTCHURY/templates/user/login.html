@@ -1,16 +1,80 @@
-{% extends 'common/base.html' %}
 
-{% block title %}로그인{% endblock %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>로그인</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'common/bootstrap.min.css' %}">
 
-{% block body %}
-<div class="h1 text-primary">로그인</div>
+        <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js"
+        integrity="sha384-PFHeU/4gvSH8kpvhrigAPfZGBDPs372JceJq3jAXce11bVA6rMvGWzvP4fMQuBGL" crossorigin="anonymous"></script>
+        <script>
+        Kakao.init('5f7420f9cb8e338a3b69a330786fdac2'); // 사용하려는 앱의 JavaScript 키 입력
+        </script>
 
-<form method="post">
-    {% csrf_token %}
-    <table class="table">
-        {{ form.as_table }}
-    </table>
-    <input type="submit" value="로그인" class="btn btn-primary">
-    <a href="/" class="btn btn-primary">뒤로가기</a>
-</form>
-{% endblock %}
+        <script>
+        function loginWithKakao() {
+            Kakao.Auth.authorize({
+            redirectUri: 'http://127.0.0.1:8000/board/home/',
+            });
+        }
+
+        // 아래는 데모를 위한 UI 코드입니다.
+        function displayToken() {
+            var token = getCookie('authorize-access-token');
+
+            if(token) {
+            Kakao.Auth.setAccessToken(token);
+            Kakao.Auth.getStatusInfo()
+                .then(function(res) {
+                if (res.status === 'connected') {
+                    document.getElementById('token-result').innerText
+                    = 'login success, token: ' + Kakao.Auth.getAccessToken();
+                }
+                })
+                .catch(function(err) {
+                Kakao.Auth.setAccessToken(null);
+                });
+            }
+        }
+
+        function getCookie(name) {
+            var parts = document.cookie.split(name + '=');
+            if (parts.length === 2) { return parts[1].split(';')[0]; }
+        }
+        </script>
+
+    </head>
+    <body>
+        {% include 'common/menubar.html' %}
+        
+        <div class="container mt-3 mb-5">
+            {% block body %}
+            <div class="h1 text-primary">로그인</div>
+            
+            <form method="post">
+                {% csrf_token %}
+                <table class="table">
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" value="로그인" class="btn btn-primary">
+                <a href="/" class="btn btn-primary">뒤로가기</a><br>
+                <a id="kakao-login-btn" href="javascript:loginWithKakao()">
+                    <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222"
+                        alt="카카오 로그인 버튼" />
+                    </a>
+                    <p id="token-result"></p>
+            </form>
+            <script>
+                displayToken()
+                getCookie(name)
+            </script>
+            {% endblock %}
+        </div>
+        
+    </body>
+</html>
