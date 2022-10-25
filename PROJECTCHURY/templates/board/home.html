@@ -1,1 +1,17 @@
-new home
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>home</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    {% for i in response %}
+    <img src="{{ i.cover }}" alt="책 이미지" ><br>
+    제목 : {{ i.title }}<br>
+    작가 : {{ i.author}}<br>
+    <hr>
+    {% endfor %}
+</body>
+</html>
