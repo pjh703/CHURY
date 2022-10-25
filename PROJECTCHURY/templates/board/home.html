@@ -1,0 +1,15 @@
+{% extends 'common/base.html' %}
+
+{% block title %}HOME{% endblock %}
+
+{% block body %}
+    
+    <div class="h1">HOME</div>
+
+    {% if user.is_authenticated %}
+    <div class="h3">{{ user.username }}님, 환영합니다.</div>
+    {% else %}
+    <div class="h3 text-info">잘못된 접근입니다. 로그인해주세요</div>
+    {% endif %}
+
+{% endblock %}
