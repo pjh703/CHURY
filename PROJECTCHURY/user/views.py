@@ -20,4 +20,4 @@ class UserCreateView(generic.CreateView):
     form_class = CustomUserCreationForm
     
     template_name = 'user/sign.html'  # GET 요청을 처리할 때 응답할 템플릿 파일
-    success_url = reverse_lazy('user:login')  # POST 요청을 처리할 때 리다이렉트할 URL
+    success_url = reverse_lazy('home')  # POST 요청을 처리할 때 리다이렉트할 URL

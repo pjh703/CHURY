@@ -1,0 +1,19 @@
+<div class="container mt-3">
+
+    <a href="{% url 'home' %}" class="btn btn-outline-primary btn-sm">여기에 로고</a>
+    
+    {% if user.is_authenticated %}
+        {# 로그인한 경우 #}
+        <a href="#" class="btn btn-outline-warning btn-sm">회원정보수정</a>
+        <a href="{% url 'mypage:library' %}" class="btn btn-outline-danger btn-sm">내 추라이</a>
+        <a href="{% url 'user:logout' %}" class="btn btn-outline-secondary btn-sm">로그아웃</a>
+    {% else %}
+        {# 로그인하지 않은 경우 #}
+        <a href="{% url 'user:sign' %}" class="btn btn-outline-success btn-sm">회원가입?</a>
+        <a href="{% url 'user:login' %}" class="btn btn-outline-secondary btn-sm">로그인?</a>
+    {% endif %}
+    
+</div>
+    
+    <hr>
+    
