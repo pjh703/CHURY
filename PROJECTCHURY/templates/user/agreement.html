@@ -1,0 +1,25 @@
+
+{% extends "users/user_base.html" %}
+
+{% load static %}
+
+{% block contents %}
+//
+<form action="" , method="POST">
+    {% csrf_token %}
+    <div>
+        <label">
+            <input type="checkbox" name="agreement1" />
+            <span>이용약관에 동의합니다.</span>
+        </label>
+    </div>
+//
+    <div>
+        <label>
+            <input type="checkbox" name="agreement2" />
+            <span>개인정보 수집 및 이용에 동의합니다.</span>
+         </label>
+    </div>
+</form>
+//
+{% endblock %}
