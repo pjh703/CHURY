@@ -1,8 +1,10 @@
 from django.contrib.auth import models, forms
 from django.urls import reverse_lazy
 from django.views import generic
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
+from django.utils import timezone
+
 
 from . import models
 
@@ -20,4 +22,34 @@ class UserCreateView(generic.CreateView):
     form_class = CustomUserCreationForm
     
     template_name = 'user/sign.html'  # GET 요청을 처리할 때 응답할 템플릿 파일
-    success_url = reverse_lazy('home')  # POST 요청을 처리할 때 리다이렉트할 URL
+    success_url = reverse_lazy('user:chu')  # POST 요청을 처리할 때 리다이렉트할 URL
+
+
+class UserChuView(generic.ListView):
+    template_name = 'user/chu.html'
+    model = models.UserChu
+    paginate_by = 10
+    pasinate_orphans = 5
+
+
+class UserDeleteView(generic.DeleteView):
+    model = models.CustomUser
+    success_url = reverse_lazy('/')
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+
+def useredit(request):
+    if request.method == "POST":
+        form = forms.CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('board:home')
+    else:
+        form = forms.UserChangeForm(instance=request.user)
+    context = {
+        'form' : form,
+    }
+
+    return render(request, 'user/edit.html', context)

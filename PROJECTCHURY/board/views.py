@@ -1,5 +1,13 @@
-from django.shortcuts import render
+from lib2to3.pgen2.token import DOUBLESTAREQUAL
 import requests
+
+from django.shortcuts import render, redirect
+from django.views import generic
+
+from django.shortcuts import get_object_or_404
+
+from .models import BoardDetail
+
 
 # Create your views here.
 
@@ -34,3 +42,9 @@ def home(request):
     }
 
     return render(request, "board/home.html", context)
+
+
+
+def BoardDetailView(request, pk):
+    return render(request, "board/detail.html")
+

@@ -1,5 +1,5 @@
 from dataclasses import fields
-from django.contrib.auth import forms as auth_forms
+from django.contrib.auth import get_user_model, forms as auth_forms
 from django import forms
 
 
@@ -10,3 +10,8 @@ class CustomUserCreationForm(auth_forms.UserCreationForm):
     email = forms.CharField(max_length=100, label='이메일')
     address = forms.CharField(max_length=100, label='주소')
     
+
+class CustomUserChangeForm(auth_forms.UserChangeForm):
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'email')

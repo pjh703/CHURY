@@ -4,3 +4,7 @@ from django.shortcuts import render
 
 def LibraryView(request):
     return render(request, "mypage/library.html")
+
+
+def EnvView(request):
+    return render(request, "mypage/env.html")

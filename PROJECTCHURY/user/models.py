@@ -1,5 +1,7 @@
+from email.policy import default
 from django.contrib.auth import models as auth_models
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class CustomUser(auth_models.User):
@@ -9,3 +11,8 @@ class CustomUser(auth_models.User):
     # User 클래스를 상속받는 클래스를 만들어서 직접 작성
     password2 = models.CharField(max_length=150, verbose_name='비밀번호 확인')  # 비밀번호 확인 필드
     address = models.TextField(verbose_name='주소')  # 주소 필드
+
+
+class UserChu(models.Model):
+    title = models.CharField(max_length=50)
+    date = models.DateTimeField(default=timezone.now)
