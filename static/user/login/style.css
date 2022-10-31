@@ -167,5 +167,115 @@
     letter-spacing: 0.7px;
 }
 
+/* hr */
+.hr-line {
+    margin-top: 50px;
+    color: #636363;
+    font-size: 13px;
+    font-weight: 100;
+}
 
+.hr-line:before {
+    content:" ";
+    display: block;
+    height: 0.5px;
+    width: 165px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    background: #636363;
+}
+.hr-line {
+    position: relative;
+    text-align: center;
+}
+.hr-line:after {
+    content:" ";
+    height: 0.5px;
+    width: 165px;
+    background: #636363;
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
+
+
+
+/* 계정연결 */
+.account-btn {
+  /* height: 250px;
+  padding: 24px; */
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+
+}
+
+/*네이버버튼*/
+.naver-btn {
+  width: 170px;
+  height: 40px; /*버튼크기*/
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background-color: #2DB400;
+  margin-top: 20px;
+  /* margin-bottom: 10px; */
+  margin-right: 10px;
+}
+
+.naver-btn:hover {
+  background-color: #3cca0d;
+}
+
+.naver-btn img {
+  width: 20px;
+  display: flex;
+  position: absolute;
+  left: 15px;
+  bottom: 10px;
+}
+
+.naver-btn h2 {
+    color: rgb(30, 30, 30);
+    letter-spacing: 1px;
+    font-size: 13px;
+    margin-left: 20px;
+}
+
+
+
+/*카카오버튼*/
+.kakao-btn {
+  width: 170px;
+  height: 40px; /*버튼크기*/
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background-color: #f7c600;
+  margin-top: 20px;
+}
+
+.kakao-btn:hover {
+  background-color: #F7E600;
+}
+
+.kakao-btn img {
+  width: 20px;
+  display: flex;
+  position: absolute;
+  left: 15px;
+  bottom: 10px;
+}
+
+.kakao-btn h2 {
+ color: rgb(30, 30, 30);
+ letter-spacing: 1px;
+ font-size: 13px;
+ margin-left: 20px;
+}
 

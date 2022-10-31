@@ -5,7 +5,7 @@ from lib2to3.pgen2.token import DOUBLESTAREQUAL
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 
-from django.views import generic
+from django.views.generic import DetailView
 
 
 

@@ -1,6 +1,6 @@
 {% extends 'common/base.html' %}
 
-{% block content %}
+{% block body %}
 
     <div>
 	    <div style="text-align: center; max-width: 500px; margin: 4rem auto;">
@@ -11,6 +11,8 @@
                 ??????
             </h2>
 	    </div>
-</div>
-
+    </div>
+    {% for i in response %}
+    <td>{{ i.title }}</td>
+    {% endfor %}
 {% endblock %}
