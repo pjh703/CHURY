@@ -1,0 +1,144 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family:'Pretendard-Regular';
+}
+
+section {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('images/signup_bg.jpg');
+    background-size: cover;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.logo {
+    height: 100px; /* 로고 세로 크기(가로는 세로에 맞춰서 자동) */
+}
+
+.logo > img {
+    width: auto; 
+    max-height: 100%; 
+    display: block;
+}
+
+.buttons {
+    width: 350px; /*버튼가로길이*/    
+}
+
+/* .emailbtn {
+    display: block;
+}
+.otherbtn {
+    display: block;
+}
+.loginbtn {
+    display: block;
+} */
+
+/* 여기부터 emailbtn design */
+.emailbtn {
+    background-color: transparent;
+    border: 2px solid #d1d1d1;/*이메일로가입 마우스 대기 전 버튼테두리 색*/
+    border-radius: 30px;
+    color: #3B3B3B; /*이메일로가입 마우스 대기 전 글씨색*/
+    cursor: pointer;
+    letter-spacing: 1px; /* 자간 */
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    margin-top: 15px;
+    height: 60px;
+    text-align: center;
+    width: 350px; /*버튼 가로*/
+  }
+  
+  .emailbtn:disabled {
+    pointer-events: none;
+  }
+  
+  .emailbtn:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    border: 2px solid #1A1A1A;
+  }
+  
+  .emailbtn:active {
+    box-shadow: none;
+    transform: translateY(0);
+  }
+
+
+  /* 여기부터 otherbtn design */
+.otherbtn {
+    background-color: transparent;
+    border: 2px solid #d1d1d1;/*이메일로가입 마우스 대기 전 버튼테두리 색*/
+    border-radius: 30px;
+    color: #3B3B3B; /*이메일로가입 마우스 대기 전 글씨색*/
+    cursor: pointer;
+    letter-spacing: 1px; /* 자간 */
+    font-size: 16px;
+    font-weight: 600;
+    height: 60px;
+    margin: 0;
+    width: 350px; /*버튼 가로*/
+    margin-top: 15px;
+  }
+  
+.otherbtn:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    border: 2px solid #1A1A1A;
+  }
+
+/*hr 관련*/
+.hrdeco {
+  margin-top: 15px;
+  border: 0;
+  height: 2px;
+}
+
+/* 여기부터 loginbtn design */
+.loginbtn {
+    background-color: #ffbf00a3;
+    border: none;
+    border-radius: 30px;
+    color: #3B3B3B; /*글씨색*/
+    cursor: pointer;
+    letter-spacing: 1px; /* 자간 */
+    font-size: 16px;
+    font-weight: 600;
+    height: 60px;
+    margin: 0;
+    width: 350px; /*버튼 가로*/
+    margin-top: 15px;
+  }
+
+.loginbtn:hover {
+    background-color: #ffc000;
+}
+  
+  
+
+
+

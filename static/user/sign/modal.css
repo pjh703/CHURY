@@ -1,0 +1,336 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family:'Pretendard-Regular';
+}
+
+section {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('images/signup_bg.jpg');
+    background-size: cover;
+    padding: 100px 0;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 0 30px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.logo {
+    height: 100px; /* 로고 세로 크기(가로는 세로에 맞춰서 자동) */
+    /* margin-top: 200px; */
+}
+
+.logo > img {
+    width: auto; 
+    max-height: 100%; 
+    margin: auto;
+    display: block;
+}
+
+.buttons {
+    width: 350px; /*버튼가로길이*/
+    
+}
+
+.buttons > .emailbtn {
+    margin: auto;
+    display: block;
+}
+
+.buttons > .otherbtn {
+    margin: auto;
+    display: block;
+}
+
+.buttons > .loginbtn {
+    margin: auto;
+    display: block;
+    margin-top: 20px;
+}
+
+/* 여기부터 emailbtn design */
+.emailbtn {
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #d1d1d1;/*이메일로가입 마우스 대기 전 버튼테두리 색*/
+    border-radius: 30px;
+    box-sizing: border-box;
+    color: #3B3B3B; /*이메일로가입 마우스 대기 전 글씨색*/
+    cursor: pointer;
+    /* display: inline-block; */
+    letter-spacing: 1px; /* 자간 */
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-width: 0;
+    height: 60px;
+    outline: none;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 350px; /*버튼 가로*/
+    will-change: transform; 
+  }
+  
+  .emailbtn:disabled {
+    pointer-events: none;
+  }
+  
+  .emailbtn:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    /* transform: translateY(-2px); */ /*클릭했을때 움직이는거*/
+  }
+  
+  .emailbtn:active {
+    box-shadow: none;
+    transform: translateY(0);
+  }
+
+
+  /* 여기부터 otherbtn design */
+.otherbtn {
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #d1d1d1;/*이메일로가입 마우스 대기 전 버튼테두리 색*/
+    border-radius: 30px;
+    box-sizing: border-box;
+    color: #3B3B3B; /*이메일로가입 마우스 대기 전 글씨색*/
+    cursor: pointer;
+    /* display: inline-block; */
+    letter-spacing: 1px; /* 자간 */
+    font-size: 16px;
+    font-weight: 600;
+    height: 60px;
+    line-height: normal;
+    margin: 0;
+    min-width: 0;
+    outline: none;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 350px; /*버튼 가로*/
+    will-change: transform; 
+  }
+  
+  .otherbtn:disabled {
+    pointer-events: none;
+  }
+  
+  .otherbtn:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    /* transform: translateY(-2px); */ /*클릭했을때 움직이는거*/
+  }
+  
+  .otherbtn:active {
+    box-shadow: none;
+    transform: translateY(0);
+  }
+
+.hrdeco {
+  width: 350px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+
+/* 여기부터 loginbtn design */
+.loginbtn {
+    appearance: none;
+    background-color: #ffbf00a3;
+    border: none;
+    border-radius: 30px;
+    color: #3B3B3B; /*글씨색*/
+    cursor: pointer;
+    /* display: inline-block; */
+    letter-spacing: 1px; /* 자간 */
+    font-size: 16px;
+    font-weight: 600;
+    height: 60px;
+    line-height: normal;
+    margin: 0;
+    min-width: 0;
+    outline: none;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 350px; /*버튼 가로*/
+    will-change: transform; 
+  }
+
+.loginbtn:hover {
+    background-color: #ffc000;
+}
+  
+  .loginbtn:disabled {
+    pointer-events: none;
+  }
+  
+
+/* ======================= */
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.5s;
+  animation-fill-mode: both;
+}
+
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-inner {
+  width: 440px;
+  background-color: rgb(30, 30, 30);
+  border-radius: 12px;
+  animation: showPopup 0.75s;
+  animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.othertxt { 
+  height: auto;
+  position: relative;
+}
+
+.title {
+  font-size: 1.7rem;
+  text-align: center;
+  color: white;
+  font-weight: 600;
+  padding-top: 50px;
+  letter-spacing: 1px;
+}
+
+.description {
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-align: center;
+  color: white;
+
+}
+
+.othertxt img {
+  position: absolute;
+  width: 20px;
+  filter: opacity(0.4) drop-shadow(0 0 0 white);
+  margin: 0;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.account-btn {
+  height: 250px;
+  padding: 24px;
+  box-sizing: border-box;
+  text-align: center;
+  vertical-align: middle;
+
+}
+
+/*네이버버튼*/
+.naver-btn {
+  width: 350px;
+  height: 60px; /*버튼크기*/
+  border-radius: 30px;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background-color: #2DB400;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.naver-btn:hover {
+  background-color: #3cca0d;
+}
+
+.naver-btn img {
+  width: 25px;
+  display: flex;
+  position: absolute;
+  left: 24px;
+  bottom: 16px;
+}
+
+.naver-btn h2 {
+ color: rgb(30, 30, 30);
+ letter-spacing: 1px;
+ font-size: 18px;
+}
+
+
+
+/*카카오버튼*/
+.kakao-btn {
+  width: 350px;
+  height: 60px; /*버튼크기*/
+  border-radius: 30px;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background-color: #f7c600;
+}
+
+.kakao-btn:hover {
+  background-color: #F7E600;
+}
+
+.kakao-btn img {
+  width: 25px;
+  display: flex;
+  position: absolute;
+  left: 24px;
+  bottom: 16px;
+}
+
+.kakao-btn h2 {
+ color: rgb(30, 30, 30);
+ letter-spacing: 1px;
+ font-size: 18px;
+}
+

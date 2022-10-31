@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>CHURY | Join Us</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'user/sign/style.css' %}">
+</head>
+<body>
+    <section id="intro">
+        <div class="container">
+            <a href="{% url 'board:home' %}"><div class="logo">
+                <img src="{% static 'user/sign/images/logo.png' %}" alt="">
+            </div></a>
+
+            <div class="buttons">
+                <a href="{% url 'user:email' %}"><button class="emailbtn" role="button">이메일로 가입</button></a><br>
+                <a href="{% url 'user:modal' %}"><button class="otherbtn" role="button">다른 방법으로 계속하기</button></a>
+
+                <hr class="hrdeco" color="#d1d1d1">
+
+                <a href="{% url 'user:login' %}"><button class="loginbtn" role="button">로그인</button></a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

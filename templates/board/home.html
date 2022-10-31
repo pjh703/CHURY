@@ -1,0 +1,41 @@
+{% extends 'common/base.html' %}
+
+{% block title %}HOME{% endblock %}
+
+{% block body %}
+    
+    <div class="h1">HOME</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#판타지</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for i in response %}
+                <td>
+                    <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지" style="width: 150px; height: 200px;"></a>
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for i in response %}
+                <td>{{ i.title }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for i in response %}
+                <td>{{ i.author}}</td>
+                {% endfor %}
+            </tr>                
+            <tr>
+                {% for i in response %}
+                <td>{{ i.isbn13 }}</td>
+                {% endfor %}
+            </tr>                
+
+        </tbody>
+
+{% endblock %}
