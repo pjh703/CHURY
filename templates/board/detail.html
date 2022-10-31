@@ -1,16 +1,27 @@
 {% extends 'common/base.html' %}
 
-{% block content %}
+{% block body %}
 
     <div>
 	    <div style="text-align: center; max-width: 500px; margin: 4rem auto;">
-	    	<p>
-                {{ i.title }}
-            </p>
 	    	<h2 style="font-family: 'NanumSquareB'">
-                ??????
+                
+                {{ pk }}
+                {{ author }}
+                <hr>
+                {{ isbn13 }}
             </h2>
 	    </div>
-</div>
+    </div>
 
+    <tr>
+        {% for i in response %}
+            
+            {{ i.title }}
+            {{ i.author }}
+            <img src="{{ i.cover }}" alt="책 이미지" style="width: 300px; height: 450px;">
+            <hr>
+        {% endfor %}
+    </tr>
+      
 {% endblock %}

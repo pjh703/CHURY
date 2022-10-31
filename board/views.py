@@ -5,7 +5,7 @@ from lib2to3.pgen2.token import DOUBLESTAREQUAL
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 
-from django.views import generic
+from django.views.generic import DetailView
 
 
 
@@ -46,5 +46,17 @@ def home(request):
 
 
 def BoardDetailView(request, pk):
-    return render(request, "board/detail.html")
+    page = 1
+    list = []
+    Key = 'ttbsaspower81040001'
+    categor = '170370'
+
+    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey={Key}&itemIdType=ISBN&ItemId={pk}&Cover=Big&output=js&Version=20131101&OptResult=ebookList,usedList,reviewList"
+    response = requests.get(apiurl).json()
+    
+    print(response)
+    context = {
+        'response': response['item'],
+    }
+    return render(request, "board/detail.html", context)
 

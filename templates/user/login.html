@@ -1,18 +1,18 @@
+{% load static %}
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset='utf-8'>
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-        <title>로그인</title>
+        <title>CHURT-Login</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         
-        {% load static %}
         <link rel='stylesheet' type='text/css' media='screen' href="{% static 'user/login/style.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     
-        <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js"
+        <!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js"
         integrity="sha384-PFHeU/4gvSH8kpvhrigAPfZGBDPs372JceJq3jAXce11bVA6rMvGWzvP4fMQuBGL" crossorigin="anonymous"></script>
         <script>
         Kakao.init('5f7420f9cb8e338a3b69a330786fdac2'); // 사용하려는 앱의 JavaScript 키 입력
@@ -48,7 +48,7 @@
             var parts = document.cookie.split(name + '=');
             if (parts.length === 2) { return parts[1].split(';')[0]; }
         }
-        </script>
+        </script> -->
 
     </head>
     <body>
@@ -80,18 +80,29 @@
                         <div class="field-group">
                             <button type="submit">로그인</button>
                         </div>
+                   
+                    </form>
     
                         <div class="find">
                             비밀번호를 잊어버리셨나요?
-                        </div>
-                    </form>
+                        </div>`
+
+
+                    <h2 class="hr-line">or</h2>
+
+
+                    <div class="account-btn">
+                        <button class="naver-btn">
+                            <img class="naver-img" src="{% static 'user/login/images/naver.png' %}" alt="">
+                            <h2>네이버 로그인</h2>
+                        </button><br>
+                        <button class="kakao-btn">
+                            <img class="kakao-img" src="{% static 'user/login/images/kakao.png' %}" alt="">
+                            <h2>카카오 로그인</h2>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
-    
-        
     </body>
-
-    <script src="{% static 'common/intro.js' %}">
-    </script>
 </html>
