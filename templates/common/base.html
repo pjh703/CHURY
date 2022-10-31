@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>{% block title %} {% endblock %}</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bs/bootstrap.min.css' %}">
+
+</head>
+<body>
+    {% include 'common/menubar.html' %}
+    
+    <div class="container mt-3 mb-5">
+        
+        {% if user.is_authenticated %}
+    <div class="h3">{{ user.username }}님, 환영합니다.</div>
+        {% else %}
+    <div class="h3 text-info">잘못된 접근입니다. 로그인해주세요</div>
+    
+        <script type="text/javascript">
+            
+                alert("잘못된 접근입니다. 로그인해주세요.");
+            
+        </script>
+        <script type="text/javascript">
+            window.location.replace('/user/login/')
+        </script>
+        {% endif %}
+    
+
+    {% block body %}
+    {% endblock %}
+    </div>
+</body>
+</html>

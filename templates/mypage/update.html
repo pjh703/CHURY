@@ -1,0 +1,16 @@
+{% extends 'common/base.html' %}
+
+
+{% block body %}
+
+<form action="{% url 'mypage:update' user.pk %}" method="post">
+    {% csrf_token %}
+    <table class="table">
+        {{ form.as_table }}
+    </table>
+    <input type="submit" class="btn btn-dark rounded-pill col-6 mt-5">
+</form>
+
+
+{% endblock body %}
+

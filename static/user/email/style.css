@@ -1,0 +1,340 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') /*format('woff')*/;
+    font-style: normal;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard-Regular';
+}
+
+.error-text, 
+.error-icon {
+    display: none;
+}
+
+.field-group.error .error-text,
+.field-group.error .error-icon {
+    display: block;
+}
+
+.field-group.error input {
+    border: 1px solid hsl(0, 100%, 74%);
+    /* border-radius: 5px; */
+}
+
+
+
+.header{
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+.logo{
+    margin-left: 40px;
+}
+
+.login_btn{
+    /*왼쪽에 붙어있게 해주는 아래 두 줄*/
+    display: flex;
+    justify-content: flex-end;
+
+    margin-right: 40px;
+
+    width: 100%;
+}
+
+.btn{
+    height: 30px;
+    background-color: black;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+ }
+
+
+#intro {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(./images/signup_bg.jpg);
+    background-size: cover;
+    padding: 100px 0;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.container h1 {
+    color: black;
+    font-size: 1.7rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.form-container {
+    width: 350px;
+}
+
+.field-group {
+    position: relative;
+}
+
+.field-group input {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.field-group input,
+.field-group button[type = submit] {
+    width: 350px;
+    height: 40px; /*인풋칸 세로길이*/
+    border: 0;
+    border-bottom: 1px solid #636363;
+    padding-left: 20px;
+    outline: none;
+    background: transparent;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.field-group input { /*인풋텍스트크기,두께*/
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.field-group input:focus {
+    border: 1px solid #636363;
+    background: white;
+    /* border-radius: 5px; */
+}
+
+.field-group input::placeholder {
+    color: #636363;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.field-group button[type = submit] {
+    position: relative;
+    cursor: pointer;
+    background-color: #ffbf00a3;
+    border: none;
+    border-radius: 30px;
+    color: #3B3B3B;
+    letter-spacing: 1px;
+    font-size: 16px;
+    font-weight: 600;
+    height: 60px; /*계정생성버튼 세로길이*/
+    margin-top: 15px;
+}
+
+.field-group button[type = submit]:hover {
+    background-color: #ffc000;
+}
+
+.error-icon {
+    /* display: block; */
+    position: absolute;
+    width: auto;
+    height: 20%;
+    top: 15%;
+    right: 10px;
+}
+
+.error-text {
+    /* display: block; */
+    text-align: right;
+    font-size: .8rem;
+    color: hsl(0, 100%, 74%);
+    font-style: italic;
+    position: relative;
+    margin: 0;
+    bottom: 20px;
+}
+
+.checkbox {
+    position: relative;
+    text-align: left;
+    font-size: 12px;
+    padding-left: 15px;
+}
+
+.checkbox input {
+    margin-bottom: 10px;
+}
+
+
+
+
+/*여기부터 checkbox design!!*/
+
+/*1. agree*/
+/*input 은 숨겨주기*/
+input#agree{
+    display:none;
+}
+/*input 바로 다음의 label*/
+input#agree + label{
+    cursor:pointer;
+}
+  
+/*input 바로 다음의 label:before 에 체크하기 전 CSS 설정*/
+input#agree + label:before{
+    content:"";
+    display:inline-block;
+    width:14px;
+    height:14px;
+    line-height:14px;
+    border:1px solid #636363;
+    border-radius: 3px;
+    margin-right: 10px; /*체크박스랑 글씨 사이 간격*/
+    margin-bottom: 10px; /*아래랑 간격*/
+    vertical-align:middle;/*체크 전과 체크 후 높이 차이 때문에 설정*/
+}
+    
+/*checked된 input 바로 다음의 label:before 에 체크 후 CSS 설정*/  
+input#agree:checked + label:before{
+    content:"\f00c";/*폰트어썸 유니코드*/
+    font-family:"Font Awesome 5 free"; /*폰트어썸 아이콘 사용*/
+    font-weight:900;/*폰트어썸 설정*/
+    color:#fff;
+    background-color:#000;
+    border-color:#000;
+    font-size:13px;
+    text-align:center;
+}
+
+/*2. age*/
+/*input 은 숨겨주기*/
+input#age{
+    display:none;
+}
+/*input 바로 다음의 label*/
+input#age + label{
+    cursor:pointer;
+}
+  
+/*input 바로 다음의 label:before 에 체크하기 전 CSS 설정*/
+input#age + label:before{
+    content:"";
+    display:inline-block;
+    width:14px;
+    height:14px;
+    line-height:14px;
+    border:1px solid #636363;
+    border-radius: 3px;
+    margin-right: 10px; /*체크박스랑 글씨 사이 간격*/
+    margin-bottom: 10px; /*아래랑 간격*/
+    vertical-align:middle;/*체크 전과 체크 후 높이 차이 때문에 설정*/
+}
+    
+/*checked된 input 바로 다음의 label:before 에 체크 후 CSS 설정*/  
+input#age:checked + label:before{
+    content:"\f00c";/*폰트어썸 유니코드*/
+    font-family:"Font Awesome 5 free"; /*폰트어썸 아이콘 사용*/
+    font-weight:900;/*폰트어썸 설정*/
+    color:#fff;
+    background-color:#000;
+    border-color:#000;
+    font-size:13px;
+    text-align:center;
+}
+
+/*3. service*/
+/*input 은 숨겨주기*/
+input#service{
+    display:none;
+}
+/*input 바로 다음의 label*/
+input#service + label{
+    cursor:pointer;
+}
+  
+/*input 바로 다음의 label:before 에 체크하기 전 CSS 설정*/
+input#service + label:before{
+    content:"";
+    display:inline-block;
+    width:14px;
+    height:14px;
+    line-height:14px;
+    border:1px solid #636363;
+    border-radius: 3px;
+    margin-right: 10px; /*체크박스랑 글씨 사이 간격*/
+    margin-bottom: 10px; /*아래랑 간격*/
+    vertical-align:middle;/*체크 전과 체크 후 높이 차이 때문에 설정*/
+}
+    
+/*checked된 input 바로 다음의 label:before 에 체크 후 CSS 설정*/  
+input#service:checked + label:before{
+    content:"\f00c";/*폰트어썸 유니코드*/
+    font-family:"Font Awesome 5 free"; /*폰트어썸 아이콘 사용*/
+    font-weight:900;/*폰트어썸 설정*/
+    color:#fff;
+    background-color:#000;
+    border-color:#000;
+    font-size:13px;
+    text-align:center;
+}
+
+/*4. notice*/
+/*input 은 숨겨주기*/
+input#notice{
+    display:none;
+}
+/*input 바로 다음의 label*/
+input#notice + label{
+    cursor:pointer;
+}
+  
+/*input 바로 다음의 label:before 에 체크하기 전 CSS 설정*/
+input#notice + label:before{
+    content:"";
+    display:inline-block;
+    width:14px;
+    height:14px;
+    line-height:14px;
+    border:1px solid #636363;
+    border-radius: 3px;
+    margin-right: 10px; /*체크박스랑 글씨 사이 간격*/
+    margin-bottom: 10px;
+    vertical-align:middle;/*체크 전과 체크 후 높이 차이 때문에 설정*/
+}
+    
+/*checked된 input 바로 다음의 label:before 에 체크 후 CSS 설정*/  
+input#notice:checked + label:before{
+    content:"\f00c";/*폰트어썸 유니코드*/
+    font-family:"Font Awesome 5 free"; /*폰트어썸 아이콘 사용*/
+    font-weight:900;/*폰트어썸 설정*/
+    color:#fff;
+    background-color:#000;
+    border-color:#000;
+    font-size:13px;
+    text-align:center;
+}
+

@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>로그인</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        
+        {% load static %}
+        <link rel='stylesheet' type='text/css' media='screen' href="{% static 'user/login/style.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+        <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js"
+        integrity="sha384-PFHeU/4gvSH8kpvhrigAPfZGBDPs372JceJq3jAXce11bVA6rMvGWzvP4fMQuBGL" crossorigin="anonymous"></script>
+        <script>
+        Kakao.init('5f7420f9cb8e338a3b69a330786fdac2'); // 사용하려는 앱의 JavaScript 키 입력
+        </script>
+
+        <script>
+        function loginWithKakao() {
+            Kakao.Auth.authorize({
+            redirectUri: 'http://127.0.0.1:8000/board/home/',
+            });
+        }
+
+        // 아래는 데모를 위한 UI 코드입니다.
+        function displayToken() {
+            var token = getCookie('authorize-access-token');
+
+            if(token) {
+            Kakao.Auth.setAccessToken(token);
+            Kakao.Auth.getStatusInfo()
+                .then(function(res) {
+                if (res.status === 'connected') {
+                    document.getElementById('token-result').innerText
+                    = 'login success, token: ' + Kakao.Auth.getAccessToken();
+                }
+                })
+                .catch(function(err) {
+                Kakao.Auth.setAccessToken(null);
+                });
+            }
+        }
+
+        function getCookie(name) {
+            var parts = document.cookie.split(name + '=');
+            if (parts.length === 2) { return parts[1].split(';')[0]; }
+        }
+        </script>
+
+    </head>
+    <body>
+        
+        <div class="header" >
+            <div class="logo">
+                <a href="{% url 'board:home' %}"><img src="{% static 'user/login/images/logo.png' %}"></a>
+            </div>
+            <li class="login_btn">
+                <a href="{% url 'user:sign' %}"><button class="btn">회원가입</button></a>
+            </li>
+        </div>
+    
+        <section id="intro">
+            <div class="container">
+                <h1>로그인</h1>
+                <div class="form-container">
+                    <form method="post" action="{% url 'user:login' %}">
+                        {% csrf_token %}
+                        <div class="field-group">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="이메일 (example@gmail.com)"
+                                value="{{ form.username.value|default_if_none:'' }}">
+                        </div>
+                        <div class="field-group">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="비밀번호"
+                                 value="{{ form.password.value|default_if_none:'' }}">
+                        </div>
+    
+                        <div class="field-group">
+                            <button type="submit">로그인</button>
+                        </div>
+    
+                        <div class="find">
+                            비밀번호를 잊어버리셨나요?
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    
+        
+    </body>
+
+    <script src="{% static 'common/intro.js' %}">
+    </script>
+</html>

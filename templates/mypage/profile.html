@@ -1,0 +1,33 @@
+{% extends 'common/base.html' %}
+
+{% block title %}회원정보{% endblock title %}
+
+{% block body %}
+<h2>회원 정보</h2>
+<table class="table">
+    <tr>
+        <th width='20%'>이메일</th>
+        <td>{{user.email}}</td>      
+    </tr>
+    <tr>
+        <th>아이디</th>
+        <td>{{user.username}}</td>      
+    </tr>
+    <tr>
+        <th>이름</th>
+        <td>{{user.last_name}}&nbsp;{{user.first_name}}</td>      
+    </tr>
+
+</table>
+<a href="{% url 'mypage:update' user.pk %}">회원정보수정</a>
+<a href="{% url 'mypage:pwupdate' user.pk %}">비밀번호변경</a>
+
+
+
+<form class="post-form d-inline" action="{% url 'mypage:delete' user.pk %}" method="post">
+    {% csrf_token %}
+    <a href="{% url 'mypage:delete' user.pk %}"><button type="button" class="btn btn-danger">회원 탈퇴</button></a>
+</form>
+
+{% endblock body %}
+

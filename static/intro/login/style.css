@@ -1,0 +1,171 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') /*format('woff')*/;
+    font-style: normal;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard-Regular';
+}
+
+.error-text, 
+.error-icon {
+    display: none;
+}
+
+.field-group.error .error-text,
+.field-group.error .error-icon {
+    display: block;
+}
+
+.field-group.error input {
+    border: 1px solid hsl(0, 100%, 74%);
+    /* border-radius: 5px; */
+}
+
+
+
+.header{
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+.logo{
+    margin-left: 40px;
+}
+
+.login_btn{
+    /*왼쪽에 붙어있게 해주는 아래 두 줄*/
+    display: flex;
+    justify-content: flex-end;
+
+    margin-right: 40px;
+
+    width: 100%;
+}
+
+.btn{
+    height: 30px;
+    background-color: black;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+ }
+
+
+#intro {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(./images/signup_bg.jpg);
+    background-size: cover;
+    padding: 100px 0;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.container h1 {
+    color: black;
+    font-size: 1.7rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    width: 350px;
+}
+
+.field-group {
+    position: relative;
+}
+
+.field-group input {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.field-group input,
+.field-group button[type = submit] {
+    width: 350px;
+    height: 40px; /*인풋칸 세로길이*/
+    border: 0;
+    border-bottom: 1px solid #636363;
+    padding-left: 20px;
+    outline: none;
+    background: transparent;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.field-group input { /*인풋텍스트크기,두께*/
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.field-group input:focus {
+    border: 1px solid #636363;
+    background: white;
+    /* border-radius: 5px; */
+}
+
+.field-group input::placeholder {
+    color: #636363;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.field-group button[type = submit] {
+    padding: 0;
+    position: relative;
+    cursor: pointer;
+    background-color: #ffbf00a3;
+    border: none;
+    border-radius: 30px;
+    color: #3B3B3B;
+    letter-spacing: 1px;
+    font-size: 16px;
+    font-weight: 600;
+    height: 60px; /*계정생성버튼 세로길이*/
+    /* margin-top: 15px; */
+}
+
+.field-group button[type = submit]:hover {
+    background-color: #ffc000;
+}
+
+.find {
+    margin-top: 20px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #636363;
+    letter-spacing: 0.7px;
+}
+
+
+
