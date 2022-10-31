@@ -73,7 +73,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url(./images/signup_bg.jpg);
+    background-image: url(user/login/images/signup_bg.jpg);
     background-size: cover;
     padding: 100px 0;
 }
@@ -185,10 +185,12 @@
     left: 0;
     background: #636363;
 }
+
 .hr-line {
     position: relative;
     text-align: center;
 }
+
 .hr-line:after {
     content:" ";
     height: 0.5px;
@@ -201,7 +203,6 @@
 }
 
 
-
 /* 계정연결 */
 .account-btn {
   /* height: 250px;
@@ -210,18 +211,17 @@
   text-align: center;
   vertical-align: middle;
   display: flex;
-
 }
 
 /*네이버버튼*/
 .naver-btn {
-  width: 170px;
-  height: 40px; /*버튼크기*/
-  border-radius: 5px;
+  width: 170px !important;
+  height: 40px !important; /*버튼크기*/
+  border-radius: 5px !important;
   cursor: pointer;
   position: relative;
   border: none;
-  background-color: #2DB400;
+  background-color: #2DB400 !important;
   margin-top: 20px;
   /* margin-bottom: 10px; */
   margin-right: 10px;

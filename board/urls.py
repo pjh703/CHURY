@@ -8,6 +8,6 @@ app_name = 'board'
 
 urlpatterns = [
     path('home/', views.home, name='home'),
-    path('<int:pk>/', DetailView.as_view(), name="detail"),
+    path('<int:pk>/', views.BoardDetailView, name="detail"),
 
 ]
