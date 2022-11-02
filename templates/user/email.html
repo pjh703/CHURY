@@ -20,32 +20,41 @@
         <div class="container">
             <h1>회원가입</h1>
             <div class="form-container">
+
+
                 <form method="post" action="{% url 'user:email' %}" enctype="multipart/form-data">
                     {% csrf_token %}
-                    
+                   
+
+
                     <div class="field-group">
-                        <input type="text" class="form-control" name="username" id="username" placeholder="이름 (2자 이상)"
+                        <input type="text" class="form-control" name="username" id="username" placeholder="닉네임 (2자 이상)"
                                 value="{{ form.username.value|default_if_none:'' }}">
-                        <img src="../../static/user/email/images/icon-error.svg" class="error-icon" alt="img">
-                        <p class="error-text">이름을 다시 입력해주세요</p>
+                        <img src="{% static 'user/email/images/icon-error.svg' %}" class="error-icon" alt="img">
+                        <div id="error1">{{ form.errors.username }}</div>
                     </div>
                     <div class="field-group">
                         <input type="email" class="form-control" name="email" id="email" placeholder="이메일 (example@gmail.com)"
                                 value="{{ form.email.value|default_if_none:'' }}">
-                        <img src="../../static/user/email/images/icon-error.svg" class="error-icon" alt="img">
-                        <p class="error-text">이메일을 다시 입력해주세요</p>
+                        <img src="{% static 'user/email/images/icon-error.svg' %}" class="error-icon" alt="img">
+                        <div id="error2">{{ form.errors.email }}</div>
                     </div>
                     <div class="field-group">
-                        <input type="password" class="form-control" name="password1" id="password1" placeholder="영문, 숫자, 특문 중 2개 조합 10자 이상"
+                        <input type="password" class="form-control" name="password1" id="password1" placeholder="영문, 숫자, 특문 중 2개 조합 8자 이상"
                                  value="{{ form.password1.value|default_if_none:'' }}">
-                        <img src="../../static/user/email/images/icon-error.svg" class="error-icon" alt="img">
-                        <p class="error-text">비밀번호를 다시 입력해주세요</p>
+                        <img src="{% static 'user/email/images/icon-error.svg' %}" class="error-icon" alt="img">
+                        <div id="error3">{{ form.errors.password1 }}</div>
                     </div>
                     <div class="field-group">
-                        <input type="password" class="form-control" name="password2" id="password2" placeholder="비밀번호 재입력"
+                        <input type="password" class="form-control" name="password2" id="password2" placeholder="비밀번호 재입력" 
                                  value="{{ form.password2.value|default_if_none:'' }}">
-                        <img src="../../static/user/email/images/icon-error.svg" class="error-icon" alt="img">
-                        <p class="error-text">비밀번호를 다시 입력해주세요</p>
+                        <img src="{% static 'user/email/images/icon-error.svg' %}" class="error-icon" alt="img">
+                        <div id="error4">
+                            {% for e in form.errors.password2 %}
+                                {{ e }}<br>
+                            {% endfor %}
+                            {# {{ form.errors.password2 }} #}
+                        </div>
                     </div>
 
                     <div class="checkbox">
@@ -54,7 +63,7 @@
                             <label for='agree'>전체 약관에 동의합니다</label>
                         </div>
                         <div class='age'>
-                            <input id='age' name='age' type='checkbox' value="age">
+                            <input id='age' name='age' type='checkbox' value="age" onclick="is_checked()">
                             <label for='age'>만 14세 이상입니다 (필수)</label>
                         </div>
                         <div class='service'>
@@ -68,7 +77,7 @@
                     </div>
 
                     <div class="field-group">
-                        <button type="submit" value="Save">계정 생성하기</button>
+                        <button id="submit" type="submit" disabled class="submit_toggle">계정 생성하기</button>
                     </div>
                 </form>
             </div>

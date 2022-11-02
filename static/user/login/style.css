@@ -279,3 +279,12 @@
  margin-left: 20px;
 }
 
+#errorid, #errorpw, #erroridpw {
+    margin-left: -200%;
+    text-align: right;
+    position: relative; top: -25px;
+    text-align: right;
+    font-size: .8rem;
+    color: hsl(0, 100%, 74%);
+    font-style: italic;
+}
