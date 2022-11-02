@@ -135,8 +135,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 모델 커스텀
 AUTH_USER_MODEL = 'user.User'
 
-# 이메일 로그인
+# 이메일로 로그인
 AUTHENTICATION_BACKENDS = [
     'user.backends.EmailPhoneUsernameAuthenticationBackend'
 ]
+
+
+# 이메일 보내기
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS =True
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_HOST_USER = ''
+
+EMAIL_HOST_PASSWORD = ''
+
+EMAIL_PORT = 587
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

@@ -6,7 +6,7 @@
 	    <div style="text-align: center; max-width: 500px; margin: 4rem auto;">
 	    	<h2 style="font-family: 'NanumSquareB'">
                 
-                {{ pk }}
+                {{ response.GET.title }}
                 {{ author }}
                 <hr>
                 {{ isbn13 }}
@@ -15,13 +15,34 @@
     </div>
 
     <tr>
+        
         {% for i in response %}
-            
-            {{ i.title }}
-            {{ i.author }}
-            <img src="{{ i.cover }}" alt="책 이미지" style="width: 300px; height: 450px;">
-            <hr>
+        <table>
+            <tr>
+                <td rowspan="10" ><img src="{{ i.cover }}" alt="책 이미지" style="width: 300px; height: 450px;"></td>
+                <td>제목</td>
+                <td>{{ i.title }}</td>
+            </tr>
+            <tr>
+                <td>지은이</td>
+                <td>{{ i.author }}</td>
+            </tr>
+            <tr>
+                <td>지은이</td>
+                <td>{{ i.author }}</td>
+            </tr>
+            <tr>
+                <td>지은이</td>
+                <td>{{ i.author }}</td>
+            </tr>
+            <tr>
+                <td colspan="2"><a href="https://kr1lib.org/ireader/12008598">보기</td>
+            </tr>
+        </table>
         {% endfor %}
+
+        
+            
     </tr>
       
 {% endblock %}
