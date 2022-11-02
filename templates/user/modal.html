@@ -30,24 +30,44 @@
     <!-- modal -->
     <div class="overlay"></div>
 
-    <div class="modal-wrapper">
-        <div class="modal-inner">
-            <div class="othertxt">
-                <div class="title">다른 방법으로 계속하기</div><br>
-                <div class="description">계정을 등록하고 인생책을 만나보세요!</div>
-                <a href="{% url 'user:sign' %}"><img src="{% static 'user/modal/images/close.svg' %}" alt=""></a>
-            </div>
-            <div class="account-btn">
-                <button class="naver-btn">
-                    <img class="naver-img" src="{% static 'user/modal/images/naver.png' %}" alt="">
-                    <h2>네이버로 계속하기</h2>
-                </button><br>
-                <button class="kakao-btn">
-                    <img class="kakao-img" src="{% static 'user/modal/images/kakao.png' %}" alt="">
-                    <h2>카카오톡으로 계속하기</h2>
-                </button>
+    {% load socialaccount %}
+    <div class="modal-container">
+        <div class="modal-wrapper">
+            <div class="modal-inner">
+                <div class="othertxt">
+                    <div class="title">다른 방법으로 계속하기</div><br>
+                    <div class="description">계정을 등록하고 인생책을 만나보세요!</div>
+                    <a href="{% url 'user:sign' %}"><img src="{% static 'user/modal/images/close.svg' %}" alt=""></a>
+                </div>
+                <div class="account-btn">
+                    <a href="{% provider_login_url 'naver' method='oauth2' %}">
+                        <button class="naver-btn">
+                            <img class="naver-img" src="{% static 'user/modal/images/naver.png' %}" alt="">
+                            <h2>네이버로 계속하기</h2>
+                        </button>
+                    </a>
+                    <a href="{% provider_login_url 'kakao' method='oauth2' %}">
+                        <button class="kakao-btn">
+                            <img class="kakao-img" src="{% static 'user/modal/images/kakao.png' %}" alt="">
+                            <h2>카카오톡으로 계속하기</h2>
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        const inner = document.querySelector(".modal-inner")
+        const wrapper = document.querySelector(".modal-wrapper")
+        // inner.addEventListener("click", function (event) {
+        //     alert('!');
+        // })
+        document.querySelector(".modal-wrapper").addEventListener("click", function(e) {
+            if(e.target.querySelector(".modal-wrapper").className != e.currentTarget.querySelector(".modal-inner").className) {
+                alert('!');
+            }
+        })
+        
+    </script>
 </body>
 </html>

@@ -22,7 +22,7 @@
             <div class="form-container">
 
 
-                <form method="post" action="{% url 'user:email' %}" enctype="multipart/form-data">
+                <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                    
 
@@ -30,12 +30,18 @@
                     <div class="field-group">
                         <input type="text" class="form-control" name="username" id="username" placeholder="닉네임 (2자 이상)"
                                 value="{{ form.username.value|default_if_none:'' }}">
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
                         <img src="{% static 'user/email/images/icon-error.svg' %}" class="error-icon" alt="img">
                         <div id="error1">{{ form.errors.username }}</div>
                     </div>
                     <div class="field-group">
                         <input type="email" class="form-control" name="email" id="email" placeholder="이메일 (example@gmail.com)"
                                 value="{{ form.email.value|default_if_none:'' }}">
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
                         <img src="{% static 'user/email/images/icon-error.svg' %}" class="error-icon" alt="img">
                         <div id="error2">{{ form.errors.email }}</div>
                     </div>

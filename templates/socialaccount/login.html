@@ -68,6 +68,18 @@
                             </button>
                         </a>
                     </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" id="auto"></button>
+                      </form>
+                      
+                      <script>
+                        auto.style.display = 'none';
+                        function onLoadEvent() {           // 버튼 자동 클릭 설정
+                          auto.click();
+                        }
+                        window.onload=onLoadEvent
+                      </script>
                 </div>
             </div>
         </section>

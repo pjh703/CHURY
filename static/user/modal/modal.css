@@ -212,8 +212,17 @@ section {
   animation-fill-mode: both;
 }
 
-.modal-wrapper {
+.modal-container{
+  background: rgba(0,0,0,0.5);
   position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.modal-wrapper {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
@@ -221,6 +230,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 3;
 }
 
 .modal-inner {
@@ -229,6 +239,7 @@ section {
   border-radius: 12px;
   animation: showPopup 0.75s;
   animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 5;
 }
 
 .othertxt { 

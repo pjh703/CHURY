@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
+import datetime
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,7 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',  
+    
+    #카카오
+    'allauth.socialaccount.providers.kakao',
+    #네이버
+    'allauth.socialaccount.providers.naver',
 ]
 
 MIDDLEWARE = [
@@ -137,6 +144,17 @@ AUTH_USER_MODEL = 'user.User'
 
 # 이메일 로그인
 AUTHENTICATION_BACKENDS = [
-    'user.backends.EmailPhoneUsernameAuthenticationBackend'
+    'user.backends.EmailPhoneUsernameAuthenticationBackend',
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+SITE_ID = 1
+
+# django-allauth setting
+LOGIN_REDIRECT_URL = 'board:home' # 로그인 후 리디렉션할 페이지
+ACCOUNT_LOGOUT_REDIRECT_URL = "user:login"  # 로그아웃 후 리디렉션 할 페이지
+ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 버튼 클릭 시 자동 로그아웃
