@@ -6,7 +6,9 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>CHURY | Join Us</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'user/sign/style.css' %}">
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'user/modal/modal.css' %}">
+    <link rel="stylesheet" href="{% static 'user/modal/animations.css' %}">
+    
 </head>
 <body>
     <section id="intro">
@@ -16,14 +18,41 @@
             </div></a>
 
             <div class="buttons">
-                <a href="{% url 'user:email' %}"><button class="emailbtn" role="button">이메일로 가입</button></a><br>
-                <a href="{% url 'user:modal' %}"><button class="otherbtn" role="button">다른 방법으로 계속하기</button></a>
+                <a href="{% url 'user:email' %}"><button class="emailbtn" role="button">이메일로 가입</button></a><br><br>
+                <button id="open" class="otherbtn" role="button">다른 방법으로 계속하기</button>
 
-                <hr class="hrdeco" color="#d1d1d1">
+                <hr class="hrdeco" color="#d1d1d1"><br>
 
                 <a href="{% url 'user:login' %}"><button class="loginbtn" role="button">로그인</button></a>
             </div>
         </div>
     </section>
+
+    <div class="overlay"></div>
+    {% load socialaccount %}
+    <div class="modal-inner">
+        <div class="othertxt">
+            <div class="title">다른 방법으로 계속하기</div><br>
+            <div class="description">계정을 등록하고 인생책을 만나보세요!</div>
+            <a id="close"><img src="{% static 'user/modal/images/close.svg' %}" alt=""></a>
+        </div>
+        <div class="account-btn">
+            <a href="{% provider_login_url 'naver' method='oauth2' %}">
+                <button class="naver-btn">
+                    <img class="naver-img" src="{% static 'user/modal/images/naver.png' %}" alt="">
+                    <h2>네이버로 계속하기</h2>
+                </button>
+            </a>
+            <a href="{% provider_login_url 'kakao' method='oauth2' %}">
+                <button class="kakao-btn">
+                    <img class="kakao-img" src="{% static 'user/modal/images/kakao.png' %}" alt="">
+                    <h2>카카오톡으로 계속하기</h2>
+                </button>
+            </a>
+        </div>
+    </div>
+    
+    
 </body>
 </html>
+<script src="{% static 'user/modal/script.js' %}"></script>

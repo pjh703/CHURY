@@ -9,5 +9,5 @@ app_name = 'board'
 urlpatterns = [
     path('home/', views.home, name='home'),
     path('<int:pk>/', views.BoardDetailView, name="detail"),
-
+    path('search/', views.search, name='search'),
 ]

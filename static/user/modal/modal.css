@@ -201,6 +201,7 @@ section {
   
 
 /* ======================= */
+
 .overlay {
   width: 100%;
   height: 100%;
@@ -210,19 +211,20 @@ section {
   background-color: rgba(0, 0, 0, 0.5);
   animation: fadeIn 0.5s;
   animation-fill-mode: both;
+  display: none;
+  z-index: 1;
 }
 
-.modal-container{
-  background: rgba(0,0,0,0.5);
+.overlay.show-modal {
+  display: block;
+}
+
+.modal-inner.show-modal {
+  display: block;
+}
+
+/* .modal-wrapper {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.modal-wrapper {
-  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
@@ -230,16 +232,23 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3;
-}
+  z-index: -1;
+} */
 
 .modal-inner {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+
+  margin-left: -220px;
+  margin-top: -200px;
+  display: none;
   width: 440px;
   background-color: rgb(30, 30, 30);
   border-radius: 12px;
   animation: showPopup 0.75s;
   animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-  z-index: 5;
+  z-index: 2;
 }
 
 .othertxt { 
