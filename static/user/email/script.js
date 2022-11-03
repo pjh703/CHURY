@@ -26,16 +26,6 @@ const inputs = document.querySelectorAll('.form-container form input');
 // }
 
 
-// 전체선택 기능
-function selectAll(selectAll) {
-    const checkboxes
-    =
-document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach((checkbox) => {
-        checkbox.checked = selectAll.checked;
-    })
-}
-
 // 에러 메세지
 if (document.getElementById("error1").innerText) {
     let err = document.getElementById("username");
@@ -69,3 +59,55 @@ function is_checked() {
         submit.parentElement.classList.remove('submit-hover');
     }
 }
+
+
+// 체크박스 관련
+function checkSelectAll()  {
+    const checkboxes = document.querySelectorAll('input[name="option"]');
+    const checked = document.querySelectorAll('input[name="option"]:checked');
+    const selectAll = document.querySelector('input[name="selectall"]');
+
+    if(checkboxes.length === checked.length)  {
+        selectAll.checked = true;
+    } else {
+        selectAll.checked = false;
+    }
+    
+}
+
+function selectAll(selectAll)  {
+    const checkboxes = document.getElementsByName('option');
+
+    checkboxes.forEach((checkbox) => {
+       checkbox.checked = selectAll.checked
+    })
+    const checkbox = document.getElementById('age');
+    const is_checked = checkbox.checked;
+    const emailsubmit = document.getElementById('submit');
+    if (is_checked) {
+        emailsubmit.disabled = false;
+        submit.parentElement.classList.remove('submit_disable');
+        submit.parentElement.classList.add('submit-hover');
+    } else {
+        emailsubmit.disabled = true;
+        submit.parentElement.classList.add('submit_disable');
+        submit.parentElement.classList.remove('submit-hover');
+    }
+}
+
+function is_checked() {
+    const checkbox = document.getElementById('age');
+    const is_checked = checkbox.checked;
+    const emailsubmit = document.getElementById('submit');
+    if (is_checked) {
+        emailsubmit.disabled = false;
+        submit.parentElement.classList.remove('submit_disable');
+        submit.parentElement.classList.add('submit-hover');
+    } else {
+        emailsubmit.disabled = true;
+        submit.parentElement.classList.add('submit_disable');
+        submit.parentElement.classList.remove('submit-hover');
+    }
+}
+
+
