@@ -33,20 +33,13 @@
                         {% csrf_token %}
                         <div class="field-group">
                             <input type="text" class="form-control" name="username" id="username" placeholder="이메일 (example@gmail.com)"
-                            value="{{ form.username.value|default_if_none:'' }}">
-                           <div id="errorid">{{ form.errors.username }}</div>
+                                value="{{ form.username.value|default_if_none:'' }}">
                         </div>
                         <div class="field-group">
                             <input type="password" class="form-control" name="password" id="password" placeholder="비밀번호"
-                            value="{{ form.password.value|default_if_none:'' }}">
-                            <div id="errorpw">{{ form.errors.password }}</div>
+                                 value="{{ form.password.value|default_if_none:'' }}">
                         </div>
-                        {% if form.username.value %}
-                            {% if form.password.value %}
-                            <div id="erroridpw">아이디와 비밀번호가 일치하지 않습니다</div>
-                            {% endif %}
-                        {% endif %}
-                            
+    
                         <div class="field-group">
                             <button type="submit">로그인</button>
                         </div>
@@ -75,6 +68,18 @@
                             </button>
                         </a>
                     </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" id="auto"></button>
+                      </form>
+                      
+                      <script>
+                        auto.style.display = 'none';
+                        function onLoadEvent() {           // 버튼 자동 클릭 설정
+                          auto.click();
+                        }
+                        window.onload=onLoadEvent
+                      </script>
                 </div>
             </div>
         </section>
