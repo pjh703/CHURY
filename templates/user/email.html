@@ -59,20 +59,23 @@
 
                     <div class="checkbox">
                         <div class='agree'>
-                            <input id='agree' name='agree' type='checkbox' value="selectall" onclick="selectAll(this)">
-                            <label for='agree'>전체 약관에 동의합니다</label>
+                            <input id='agree' name='selectall' type='checkbox' value="selectall" onclick="selectAll(this)">
+                            <label for='agree'><b>전체 약관에 동의합니다</b></label>
                         </div>
                         <div class='age'>
-                            <input id='age' name='age' type='checkbox' value="age" onclick="is_checked()">
+                            <input id='age' name='option' type='checkbox' value="age" onclick='checkSelectAll(), is_checked()'>
                             <label for='age'>만 14세 이상입니다 (필수)</label>
                         </div>
                         <div class='service'>
-                            <input id='service' name='service' type='checkbox' value="service">
-                            <label for='service'>추라이 서비스 이용약관에 동의합니다 (선택)</label>
+                            <input id='service' name='option' type='checkbox' value="service" onclick='checkSelectAll()'>
+                            <label for='service'>추라이 서비스 
+                                <a href="{% url 'user:agreement' %}" onClick="window.open(this.href, '', 'width=770%, height=700%'); return false;">
+                                    이용약관</a>에 동의합니다 (선택)
+                            </label>
                         </div>
                         <div class='notice'>
-                            <input id='notice' name='notice' type='checkbox' value="notice">
-                            <label for='notice'>신작 알림 이벤트 정보 수신에 동의합니다 (선택)</label>
+                            <input id='notice' name='option' type='checkbox' value="notice" onclick='checkSelectAll()'>
+                            <label for='notice'>신작 알림 이벤트 정보 수신에 동의합니다 (선택)</label >
                         </div>
                     </div>
 
@@ -84,6 +87,7 @@
         </div>
     </section>
 
+    {{ checked }}
 </body>
 
 <script src="{% static 'user/email/script.js' %}">

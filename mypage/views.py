@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import UpdateView, DeleteView, DetailView
 
 from .forms import UserUpdateForm
+from .models import MYBOOK, MYINFO
 
 from user.models import User
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 # Create your views here.
 
@@ -53,3 +54,16 @@ class PwUpdateView(UpdateView):
     success_url = reverse_lazy('user:login')
     template_name = 'mypage/pwupdate.html'
 
+
+
+# 내 도서관 추가
+def mydic(request):
+
+    if request.method == "POST":
+        post = MYBOOK()
+        post.mydic = request.POST['mydic']
+        email = request.POST['email']
+        post.email = User.objects.get(email=email)        
+        post.save()
+    return redirect(f"/board/{post.mydic}")
+         

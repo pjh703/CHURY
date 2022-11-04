@@ -17,4 +17,6 @@ urlpatterns = [
     path('pwupdate/<int:pk>/', PwUpdateView.as_view(), name='pwupdate'),
     # path('update/<int:pk>/', UserDetailView.as_view(), name='update'),
 
+    # 데이터 처리
+    path('mydic/', views.mydic, name='mydic')
 ]

@@ -15,4 +15,5 @@ urlpatterns = [
     path('email/', UserCreateView.as_view(), name='email'),
     path('sign/', views.SignView, name='sign'),
     path('modal/', views.ModalView, name='modal'),
+    path('agreement/', views.AgreementView, name='agreement'),
 ]

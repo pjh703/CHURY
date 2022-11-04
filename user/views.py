@@ -28,4 +28,5 @@ def SignView(request):
 def ModalView(request):
     return render(request, 'user/modal.html')
 
-
+def AgreementView(request):
+    return render(request, 'user/agreement.html')

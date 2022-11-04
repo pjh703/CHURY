@@ -2,3 +2,4 @@
 
 pip install django-allauth
 
+pip install xlrd

@@ -339,12 +339,13 @@
                                     </dd>
                                 </dl>
                             </div>
-                            <form action="" , method="POST">
+                            <br>
+                            <!-- <form action="" , method="POST">
                                 {% csrf_token %}
                                 <div class="col-12 text-right">
                                     <label style="padding-top: 10px;">
                                         <input type="checkbox" name="agreement1" />
-                                        <span style="font-weight: bold;">이용약관에 동의합니다.</span>
+                                        <span style="font-weight: bold;">이용약관에 동의합니다.</span> -->
                                     </label>
                                     <!-- <strong><input type="checkbox" name="agreement1"> 이용약관에 동의합니다.</strong> -->
                                 </div>
@@ -536,18 +537,18 @@
                                         </dd>
                                     </dl>
                                 </div>
-                                <div class="col-12 text-right">
+                                <!-- <div class="col-12 text-right">
                                     <label style="padding-top: 10px;">
                                         <input type="checkbox" name="agreement2" />
                                         <span style="font-weight: bold;">개인정보 수집 및 이용에 동의합니다.</span>
                                     </label>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="col-12 text-center">
                                 
-                                <button type="submit" name="sign" style="opacity: 90%; font-size: 16px;"
-                                    class="btn btn-red" value="sign">확인</button>
+                                <button type="submit" style="opacity: 90%; font-size: 16px;"
+                                    class="btn btn-red" onclick="self.close()">닫기</button>
                                
                             </div>
                         </form>
