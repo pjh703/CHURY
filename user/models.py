@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 
 # 유저 정보 모델
 class User(AbstractUser):
-    email = models.EmailField(unique=True)  # 유니크 추가로 migrate 필요?
+    email = models.EmailField(unique=True)
     
 
     
