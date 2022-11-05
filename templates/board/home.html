@@ -1,42 +1,292 @@
-{% extends 'common/base.html' %}
+{% load static %}
 
-{% block title %}HOME{% endblock %}
+<!doctype html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>main</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'main/main.css' %}">
+</head>
+<body>
+    <nav id="nav">
+        <div class="left">
+            <div class="logo">
+                <a href="#"><img src="{% static 'main/image/logo.png' %}" alt=""></a>
+            </div>
+            <div class="mobile-menu">메뉴</div>
+            <ul class="menu-list">
+                <li>
+                    <a href="#">국내도서</a>
+                </li>
+                <li>
+                    <a href="#">외국도서</a>
+                </li>
+                <li>
+                    <a href="#">베스트셀러</a>
+                </li>
+                <li>
+                    <a href="#">신작</a>
+                </li>
+                <li>
+                    <a href="#">내가 찜한 콘텐츠</a>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="icon search">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="책제목, 저자, 장르" />
+                </div>
+            </div>
+            <!-- <div class="icon kids">
+                <a href="#">키즈</a>
+            </div>
+            <div class="icon bell">
+                <a href="#"><i class="fa-solid fa-bell"></i></a>
+            </div> -->
 
-{% block body %}
+            <!-- <div class="dropdown"> -->
+            <div class="icon profile">
+                <a href="#">
+                    <div class="avatar-box"></div>
+                    <i class="fa-solid fa-caret-down"></i>
+                    <div class="dropdown-content">
+                        <a href="{% url 'board:search' %}">도서 검색</a>
+                        <a href="#">내 정보</a>
+                        <a href="#">내 책장</a>
+                        <a href="#">개인정보 관리</a>
+                        <a href="#">로그인 및 보안</a>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- <div class="video">
+            <video src="./video/doctor.mp4" autoplay muted loop></video>
+        </div> -->
+
+
+
+        <!-- <div class="description" style="z-index: 97;">
+            <h1>파친코</h1>
+            <h3>오늘의 인기 순위 1등</h3>
+            <p>
+                "역사는 우리를 저버렸지만, 그래도 상관없다"
+                역사에 외면당한 재일조선인 가족의 대서사극
+                전 세계를 감동시킨 이민진 작가의 화제작 파친코 새롭게 출간!
+            </p>
+            <div class="buttons">
+                <button class="play"><i class="fa-solid fa-play"></i><span>바로 보러가기</span></button>
+                <button class="detail"><i class="fa-solid fa-circle-info"></i>상세 정보</button>
+            </div>
+        </div> -->
+        <!-- <div class="age-info">
+            <i class="fa-solid fa-rotate-right"></i>
+            <div class="age">15+</div>
+        </div> -->
+        <div class="wrap" style="z-index: 1;">
+            <div class="slider2" style="height: 620px;">
     
-    <div class="h1">HOME</div>
+                <!-- image slider start -->
+                <div class="slides2">
+                    <!-- radio buttons start -->
+                    <input type="radio" name="radio-btn" id="radio1">
+                    <input type="radio" name="radio-btn" id="radio2">
+                    <input type="radio" name="radio-btn" id="radio3">
+                    <!-- radio buttons end -->
+    
+                    <!-- slide images start -->
+                    <div class="slide2 first">
+                        <img src="{% static 'main/image/slide1.jpg' %}" style="overflow: hidden;" alt="">
+                    </div>
+                    <div class="slide2">
+                        <img src="{% static 'main/image/slide2.jpg' %}" style="overflow: hidden;" alt="">
+                    </div>
+                    <div class="slide2">
+                        <img src="{% static 'main/image/slide3.jpg' %}" style="overflow: hidden;" alt="">
+                    </div>
+    
+                    <!-- slide images end -->
+                    <!-- automatic navigation start -->
+                    <div class="navigation-auto">
+                        <div class="auto-btn1"></div>
+                        <div class="auto-btn2"></div>
+                        <div class="auto-btn3"></div>
+    
+                    </div>
+                    <!-- automatic navigation end -->
+                </div>
+                <!-- manual navigation start -->
+                <div class="navigation-manual">
+                    <label for="radio1" class="manual-btn"></label>
+                    <label for="radio2" class="manual-btn"></label>
+                    <label for="radio3" class="manual-btn"></label>
+    
+                </div>
+                <!-- manual navigation end -->
+                <!-- image slider end -->
+            </div>
+        </div>
+    </main>
+    <section>
+        <div class="content-list">
+            <br><br><br><br><br>
+            <h1>{{ user.username }}님 취향저격 도서</h1>
+            <div class="slider">
+                {% for i in response.item %}
+                <div class="item">
+                    <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지"></a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+            <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+            <br><br>
+        </div>
+        <div class="content-list">
+            <h1>오늘 한국의 TOP 10 도서</h1>
+            <div class="slider">
+                {% for i in response_top10.item %}
+                <div class="item">
+                    <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지"></a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+            <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+            <br><br>
+        </div>
+        <div class="content-list">
+            <h1>상상력을 자극하는 SF 만화</h1>
+            <div class="slider">
+                {% for i in response_sf.item %}
+                <div class="item">
+                    <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지"></a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+            <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+            <br><br>
+        </div>
+        <div class="content-list">
+            <h1>손에 땀을 쥐게하는 공포 소설</h1>
+            <div class="slider">
+                {% for i in response_fear.item %}
+                <div class="item">
+                    <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지"></a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+            <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+            <br><br>
+        </div>
+        <div class="content-list">
+            <h1>이번주 신간 도서</h1>
+            <div class="slider">
+                {% for i in response_new.item %}
+                <div class="item">
+                    <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지"></a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+            <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+            <br><br>
+        </div>
+        <br><br><br><br><br>
+    </section>
+    <!-- <footer>
+        <div class="wrap">
+            <div class="social-icons">
+                <i class="fa-brands fa-facebook-square"></i>
+                <i class="fa-brands fa-instagram"></i>
+                <i class="fa-brands fa-twitter"></i>
+                <i class="fa-brands fa-youtube"></i>
+            </div>
+            <div class="options">
+                <div class="option">자막 및 음성</div>
+                <div class="option">음성 지원</div>
+                <div class="option">고객 센터</div>
+                <div class="option">기프트카드</div>
+                <div class="option">미디어 센터</div>
+                <div class="option">투자 정보(IR)</div>
+                <div class="option">입사 정보</div>
+                <div class="option">이용 약관</div>
+            </div>
+        </div>
+    </footer> -->
+    <script>
+        const next = document.querySelectorAll('.next');
+        const prev = document.querySelectorAll('.prev');
+        const slider = document.querySelectorAll('.slider')
 
-    <a type="button" href="{% url 'board:search' %}">도서 검색</a>
-    <table>
-        <thead>
-            <tr>
-                <th>#판타지</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                {% for i in response %}
-                <td>
-                    <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지" style="width: 150px; height: 200px;"></a>
-                </td>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for i in response %}
-                <td>{{ i.title }}</td>
-                {% endfor %}
-            </tr>
-            <tr>
-                {% for i in response %}
-                <td>{{ i.author}}</td>
-                {% endfor %}
-            </tr>                
-            <tr>
-                {% for i in response %}
-                <td>{{ i.isbn13 }}</td>
-                {% endfor %}
-            </tr>                
+        for(let i =0;i<slider.length;i++){
+            getBooks(slider[i],i+1);
+            makeSlider(slider[i],prev[i],next[i]);
+        }
+        function makeSlider(element,prev,next){
+            next.addEventListener('click',()=>{
+                const offsetX = element.offsetWidth;
+                element.scrollBy(offsetX,0)
+            })
+            prev.addEventListener('click',()=>{
+                const offsetX = element.offsetWidth;
+                element.scrollBy(-offsetX,0)
+            })
+        }
+        function getBooks(element,page){
+            // Key = 'ttbsaspower81040001'
+            // categor = '170370'
+            // fetch(`http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=${Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId=${categor}&output=js&Version=20131101`)
+            //     .then(data=>data.json())
+            //     .then(data=>{
+            //         const books = data.item;
+            //         books.forEach(book=>{
+            //             const div = document.createElement('div');
+            //             div.className='item';
+            //             div.innerHTML = `<img src="" alt="책 이미지" style="width: 150px; height: 200px;">`;
+            //             element.appendChild(div);
+            //         })
+            //     })
+        };
 
-        </tbody>
+        //header 스크롤시 같이 내려가기
+        // let header = document.querySelector(".header");
+        // let headerHeight = header.offsetHeight;
 
-{% endblock %}
+        // window.onscroll = function () {
+        //     let windowTop = window.scrollY;
+        //         // 스크롤 세로값이 헤더높이보다 크거나 같으면 
+        //         // 헤더에 클래스 'drop'을 추가한다
+        //     if (windowTop >= headerHeight) {
+        //         header.classList.add("drop");
+        //     } 
+        //     // 아니면 클래스 'drop'을 제거
+        //     else {
+        //         header.classList.remove("drop");
+        //     }
+        // };
+
+        // main 슬라이드
+        var counter=1;
+        document.getElementById('radio' + counter).checked = true;
+        let interval = setInterval(banner,4500)
+        function banner(n){
+            if (counter == 3) counter = 0
+
+            document.getElementById('radio' + (counter+1)).checked = true;
+            counter++;
+        }
+    </script>
+</body>
+</html>
