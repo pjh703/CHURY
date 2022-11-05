@@ -38,18 +38,21 @@
             </ul>
         </div>
         <div class="right">
-            <div class="icon search">
-                <div class="search-bar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="책제목, 저자, 장르" />
+            <form action="{% url 'board:search' %}" method="get" id="searchForm">
+                <div class="input-group">
+                    <select name="searchType" class="form-select" style="margin-right: 10px; padding: 3px; border: 1px solid black; float:left;">
+                        <option value="title">제목별</option>
+                        <option value="author">저자별</option>
+                        <option value="category">장르별</option>
+                    </select>
+                    <div class="icon search" style="float:left;">
+                        <div class="search-bar">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" name="searchWord" class="form-control" placeholder="검색" onkeypress="if( event.keyCode == 13 ){enterKey();}">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!-- <div class="icon kids">
-                <a href="#">키즈</a>
-            </div>
-            <div class="icon bell">
-                <a href="#"><i class="fa-solid fa-bell"></i></a>
-            </div> -->
+            </form>
 
             <!-- <div class="dropdown"> -->
             <div class="icon profile">
@@ -57,11 +60,11 @@
                     <div class="avatar-box"></div>
                     <i class="fa-solid fa-caret-down"></i>
                     <div class="dropdown-content">
-                        <a href="{% url 'board:search' %}">도서 검색</a>
-                        <a href="#">내 정보</a>
-                        <a href="#">내 책장</a>
-                        <a href="#">개인정보 관리</a>
-                        <a href="#">로그인 및 보안</a>
+                        <a href="{% url 'mypage:profile' %}">내 정보</a>
+                        <a href="../userinfo/book.html">내 책장</a>
+                        <a href="../userinfo/user.html">개인정보 관리</a>
+                        <a href="../userinfo/loglock.html">로그인 및 보안</a>
+                        <a href="{% url 'user:logout' %}">로그아웃</a>
                     </div>
                 </a>
             </div>
@@ -69,29 +72,6 @@
     </nav>
 
     <main>
-        <!-- <div class="video">
-            <video src="./video/doctor.mp4" autoplay muted loop></video>
-        </div> -->
-
-
-
-        <!-- <div class="description" style="z-index: 97;">
-            <h1>파친코</h1>
-            <h3>오늘의 인기 순위 1등</h3>
-            <p>
-                "역사는 우리를 저버렸지만, 그래도 상관없다"
-                역사에 외면당한 재일조선인 가족의 대서사극
-                전 세계를 감동시킨 이민진 작가의 화제작 파친코 새롭게 출간!
-            </p>
-            <div class="buttons">
-                <button class="play"><i class="fa-solid fa-play"></i><span>바로 보러가기</span></button>
-                <button class="detail"><i class="fa-solid fa-circle-info"></i>상세 정보</button>
-            </div>
-        </div> -->
-        <!-- <div class="age-info">
-            <i class="fa-solid fa-rotate-right"></i>
-            <div class="age">15+</div>
-        </div> -->
         <div class="wrap" style="z-index: 1;">
             <div class="slider2" style="height: 620px;">
     
@@ -205,14 +185,8 @@
         </div>
         <br><br><br><br><br>
     </section>
-    <!-- <footer>
+    <footer>
         <div class="wrap">
-            <div class="social-icons">
-                <i class="fa-brands fa-facebook-square"></i>
-                <i class="fa-brands fa-instagram"></i>
-                <i class="fa-brands fa-twitter"></i>
-                <i class="fa-brands fa-youtube"></i>
-            </div>
             <div class="options">
                 <div class="option">자막 및 음성</div>
                 <div class="option">음성 지원</div>
@@ -222,9 +196,13 @@
                 <div class="option">투자 정보(IR)</div>
                 <div class="option">입사 정보</div>
                 <div class="option">이용 약관</div>
+                <div class="option">개인정보</div>
+                <div class="option">문의하기</div>
+                <div class="option">회사 정보</div>
+                <div class="option">쿠키 설정</div>
             </div>
         </div>
-    </footer> -->
+    </footer>
     <script>
         const next = document.querySelectorAll('.next');
         const prev = document.querySelectorAll('.prev');
@@ -286,6 +264,9 @@
 
             document.getElementById('radio' + (counter+1)).checked = true;
             counter++;
+        }
+        function enterKey(){
+            $("#form").submit();
         }
     </script>
 </body>
