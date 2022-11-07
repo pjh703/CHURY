@@ -11,14 +11,19 @@
             <input type="hidden" id="page" name="page" value="1">
             <select name="searchType" class="form-select">
                 {% if searchType == 'title' %}
-                <option value="title" selected="selected">제목</option>
+                <option value="title" selected="selected">제목별</option>
                 {% else %}
-                <option value="title">제목</option>
+                <option value="title">제목별</option>
+                {% endif %}
+                {% if searchType == 'author' %}
+                <option value="author" selected="selected">저자별</option>
+                {% else %}
+                <option value="author">저자별</option>
                 {% endif %}
                 {% if searchType == 'category' %}
-                <option value="category" selected="selected">카테고리</option>
+                <option value="category" selected="selected">장르별</option>
                 {% else %}
-                <option value="category">카테고리</option>
+                <option value="category">장르별</option>
                 {% endif %}
             </select>
             <input type="text" name="searchWord" class="form-control" value="{{ pr_text|default_if_none:'' }}">
@@ -26,6 +31,24 @@
             <div class="col-2"></div>
             <div class="col-3">
                 {% if searchType == 'title' %}
+                <select name="sortType" class="form-select" onchange="this.form.submit()">
+                    {% if sortType == 'PublishTime' %}
+                    <option value="PublishTime" selected="selected">출간일 순</option>
+                    {% else %}
+                    <option value="PublishTime">출간일 순</option>
+                    {% endif %}
+                    {% if sortType == 'SalesPoint' %}
+                    <option value="SalesPoint" selected="selected">판매량 순</option>
+                    {% else %}
+                    <option value="SalesPoint">판매량 순</option>
+                    {% endif %}
+                    {% if sortType == 'CustomerRating' %}
+                    <option value="CustomerRating" selected="selected">고객평점 순</option>
+                    {% else %}
+                    <option value="CustomerRating">고객평점 순</option>
+                    {% endif %}
+                </select>
+                {% elif searchType == 'author' %}
                 <select name="sortType" class="form-select" onchange="this.form.submit()">
                     {% if sortType == 'PublishTime' %}
                     <option value="PublishTime" selected="selected">출간일 순</option>
@@ -71,12 +94,14 @@
         <tr>
             {% if searchType == 'title' %}
             '{{ pr_text }}'에 대한 검색 결과
+            {% elif searchType == 'author' %}
+            '{{ pr_text }}'에 대한 검색 결과
             {% elif searchType == 'category' %}
-            '{{ pr_text }}' 카테고리에 대한 검색 결과
+            '{{ pr_text }}'카테고리에 대한 검색 결과
             {% endif %}
             {% for i in response.item %}
             <td>
-                <img src="{{ i.cover }}" alt="책 이미지" style="width: 150px; height: 200px;"></a>
+                <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지" style="width: 150px; height: 200px;"></a>
             </td>
             {% endfor %}
         </tr>

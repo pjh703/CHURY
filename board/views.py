@@ -63,14 +63,13 @@ def BoardDetailView(request, pk):
     page = 1
     list = []
     Key = 'ttbsaspower81040001'
-    categor = '170370'
 
-    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey={Key}&itemIdType=ISBN&ItemId={pk}&Cover=Big&output=js&Version=20131101&OptResult=ebookList,usedList,reviewList"
+    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey={Key}&itemIdType=ISBN13&ItemId={pk}&Cover=Big&output=js&Version=20131101&OptResult=ebookList,usedList,reviewList"
     response = requests.get(apiurl).json()
     
     # print(response)
     context = {
-        'response': response['item'],
+        'response': response,
     }
     return render(request, "board/detail.html", context)
 
@@ -97,6 +96,29 @@ def search(request, **kwargs):
                         apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start=1&SearchTarget=eBook&Sort=CustomerRating&Cover=Big&output=js&Version=20131101"
                     else:
                         apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start=1&SearchTarget=eBook&Sort=PublishTime&Cover=Big&output=js&Version=20131101"
+                    response = requests.get(apiurl).json()
+
+                    # print(response)
+                    context = {
+                        'response': response,
+                        'searchType': search_type,
+                        'sortType': sort_type,
+                        'pr_text': search_word,
+                    }
+
+                    return render(request, "board/search.html", context)
+
+                case 'author':
+                    page = 1
+                    list = []
+                    Key = 'ttbsaspower81040001'
+                    
+                    if sort_type == 'SalesPoint':
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start=1&SearchTarget=eBook&Sort=SalesPoint&Cover=Big&output=js&Version=20131101"
+                    elif sort_type == 'CustomerRating':
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start=1&SearchTarget=eBook&Sort=CustomerRating&Cover=Big&output=js&Version=20131101"
+                    else:
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start=1&SearchTarget=eBook&Sort=PublishTime&Cover=Big&output=js&Version=20131101"
                     response = requests.get(apiurl).json()
 
                     # print(response)

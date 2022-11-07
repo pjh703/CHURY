@@ -1,8 +1,9 @@
 var counter=1;
-setInterval(function(){
-    document.getElementById('radio' + counter).checked = true;
+document.getElementById('radio' + counter).checked = true;
+let interval = setInterval(banner,4500)
+function banner(n){
+    if (counter == 4) counter = 0
+
+    document.getElementById('radio' + (counter+1)).checked = true;
     counter++;
-    if(counter > 4){
-        counter = 1;
-    }
-}, 4500);
+}
