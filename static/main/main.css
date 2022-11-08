@@ -343,8 +343,12 @@ main .description .buttons .detail:hover {
 
 /* =================================================================== */
 
+.item {
+ position: relative;
+}
+
 .item:hover .imgs{
-  filter: brightness(0.4);
+  filter: brightness(0.5);
 }
 
 .descr{
@@ -355,6 +359,7 @@ main .description .buttons .detail:hover {
   position: absolute;
   color: white;
   opacity: 0;
+  transition: all ease 0.5s;
   z-index: 3;
   width: 200px;
 } 

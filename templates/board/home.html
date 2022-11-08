@@ -122,11 +122,11 @@
             <div class="slider">
                 {% for i in response.item %}
                 <div class="item">
-                    <p class="descr">
-                        {{ i.title }}<br>
-                        {{ i.customerReviewRank }}
-                    </p>
                     <a href="{% url 'board:detail' pk=i.isbn13 %}">
+                    <div class="descr">
+                        {{ i.title }}<br><br>
+                        {{ i.customerReviewRank }}
+                    </div>
                     <img class="imgs" src="{{ i.cover }}" alt="책 이미지"></a>
 
                 </div>
@@ -141,7 +141,12 @@
             <div class="slider">
                 {% for i in response_top10.item %}
                 <div class="item">
-                    <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지"></a>
+                    <a href="{% url 'board:detail' pk=i.isbn13 %}">
+                    <div class="descr">
+                        {{ i.title }}<br><br>
+                        {{ i.customerReviewRank }}
+                    </div>
+                    <img class="imgs" src="{{ i.cover }}" alt="책 이미지"></a>
                 </div>
                 {% endfor %}
             </div>
@@ -154,7 +159,12 @@
             <div class="slider">
                 {% for i in response_sf.item %}
                 <div class="item">
-                    <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지"></a>
+                    <a href="{% url 'board:detail' pk=i.isbn13 %}">
+                    <div class="descr">
+                        {{ i.title }}<br><br>
+                        {{ i.customerReviewRank }}
+                    </div>
+                    <img class="imgs" src="{{ i.cover }}" alt="책 이미지"></a>
                 </div>
                 {% endfor %}
             </div>
@@ -167,7 +177,12 @@
             <div class="slider">
                 {% for i in response_fear.item %}
                 <div class="item">
-                    <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지"></a>
+                    <a href="{% url 'board:detail' pk=i.isbn13 %}">
+                    <div class="descr">
+                        {{ i.title }}<br><br>
+                        {{ i.customerReviewRank }}
+                    </div>
+                    <img class="imgs" src="{{ i.cover }}" alt="책 이미지"></a>
                 </div>
                 {% endfor %}
             </div>
@@ -180,7 +195,12 @@
             <div class="slider">
                 {% for i in response_new.item %}
                 <div class="item">
-                    <a href="{% url 'board:detail' pk=i.isbn13 %}"><img src="{{ i.cover }}" alt="책 이미지"></a>
+                    <a href="{% url 'board:detail' pk=i.isbn13 %}">
+                    <div class="descr">
+                        {{ i.title }}<br><br>
+                        {{ i.customerReviewRank }}
+                    </div>
+                    <img class="imgs" src="{{ i.cover }}" alt="책 이미지"></a>
                 </div>
                 {% endfor %}
             </div>
