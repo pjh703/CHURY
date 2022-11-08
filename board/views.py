@@ -63,14 +63,13 @@ def BoardDetailView(request, pk):
     page = 1
     list = []
     Key = 'ttbsaspower81040001'
-    categor = '170370'
 
-    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey={Key}&itemIdType=ISBN&ItemId={pk}&Cover=Big&output=js&Version=20131101&OptResult=ebookList,usedList,reviewList"
+    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey={Key}&itemIdType=ISBN13&ItemId={pk}&Cover=Big&output=js&Version=20131101&OptResult=ebookList,usedList,reviewList"
     response = requests.get(apiurl).json()
     
     # print(response)
     context = {
-        'response': response['item'],
+        'response': response,
     }
     return render(request, "board/detail.html", context)
 
@@ -109,6 +108,29 @@ def search(request, **kwargs):
 
                     return render(request, "board/search.html", context)
 
+                case 'author':
+                    page = 1
+                    list = []
+                    Key = 'ttbsaspower81040001'
+                    
+                    if sort_type == 'SalesPoint':
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start=1&SearchTarget=eBook&Sort=SalesPoint&Cover=Big&output=js&Version=20131101"
+                    elif sort_type == 'CustomerRating':
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start=1&SearchTarget=eBook&Sort=CustomerRating&Cover=Big&output=js&Version=20131101"
+                    else:
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start=1&SearchTarget=eBook&Sort=PublishTime&Cover=Big&output=js&Version=20131101"
+                    response = requests.get(apiurl).json()
+
+                    # print(response)
+                    context = {
+                        'response': response,
+                        'searchType': search_type,
+                        'sortType': sort_type,
+                        'pr_text': search_word,
+                    }
+
+                    return render(request, "board/search.html", context)
+
                 case 'category':
                     # 카테고리 검색 기능
                     wb = open_workbook('board/aladin_Category.xls')
@@ -118,25 +140,25 @@ def search(request, **kwargs):
                     column = sheet.cell_value(0, column_index)
 
                     page = 1
-                    list = []
+                    response = {}
                     Key = 'ttbsaspower81040001'
                     COUNT = 0
                     for row in range(1, sheet.nrows):
                         if sheet.cell_value(row, column_index) == '전자책':
                             if search_word == '':
                                 response = {'status': 'empty'}
-                            elif search_word in sheet.cell_value(row, column_index + 1):
+                            elif search_word in (str)(sheet.cell_value(row, column_index - 1)):
                                 categor = (int)(sheet.cell_value(row, column_index - 2))
                                 if query_type == 'ItemNewAll':
                                     apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=ItemNewAll&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
                                 else:
                                     apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
                                 # requests를 이용하여 json을 불러옵니다.
-                                response = requests.get(apiurl).json()
-                                break
-                            else:
-                                response = {'status': 'empty'}
-                    
+                                response_url = requests.get(apiurl).json()
+                                response.update(response_url)
+                                # print(response)
+                    print(response)
+
                     context = {
                         'response': response,
                         'searchType': search_type,
