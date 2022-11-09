@@ -1,0 +1,105 @@
+.logoArea{
+    width: 108px;
+    height: 30px;
+    border-radius: 5;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.text{
+    clear: right;
+    width: 100%;
+    margin: auto;
+    position: absolute;
+    left: 200px;
+    top: 170px;
+    overflow: auto;
+    /* margin-right: 50px; */
+    float: left;
+}
+
+.text >h1{
+    color: black;
+    font-size: 60px;
+}
+
+.text > p{
+    color: rgb(119, 117, 117);
+    font-size: 25px;
+}
+
+/* !!!!! tab css !!!!!! */
+.text [class="tab"] {
+    float: right;
+    margin-top: -450px;
+    margin-right: 250px; 
+    margin-bottom: 50px;
+    /* box-shadow: 5px 5px 5px 0px lightgray; */
+    z-index: 1;
+    clear: right;
+    vertical-align : bottom
+}
+
+.text [class="tab-btn"] {
+    /* border: 1px solid aqua; */
+    margin-right: 10px;
+    margin-bottom: 5px;
+    vertical-align : bottom;
+} 
+
+.text [class="tab-btn"] :hover {
+    cursor: pointer;
+    filter: brightness(0.8);
+
+}
+
+.text [class="not-choose-btn"] {
+    position: absolute;
+    position: fixed;
+    left: 1400px;
+    top:850px;
+    font-size: 22px;
+    padding: 12px 60px;
+    text-align: right;
+    font-weight: 600;
+    background-size: 100% auto;
+    color: white;
+    border-radius: 15px;
+    border: 0;
+    outline: 0;
+    background-image: linear-gradient(to right, #ff750f 0%, #ffb105 51%, #ffcc00 100%);
+    /* background-image: linear-gradient(to right, #5e5c5c 0%, #75726b 51%, #e4e2dc 100%); */
+    text-decoration: none;
+    z-index: 2;
+    display: block; width: 230px;
+}
+
+.text [class="choose-btn"] {
+    position: absolute;
+    /* position: fixed; */
+    left: 1400px;
+    top:850px;
+    font-size: 22px;
+    padding: 12px 60px;
+    text-align: center;
+    font-weight: 600;
+    background-size: 100% auto;
+    color: white;
+    border-radius: 15px;
+    border: 0;
+    outline: 0;
+    background-image: linear-gradient(to right, #ff750f 0%, #ffb105 51%, #ffcc00 100%);
+    text-decoration: none;
+    z-index: 2;
+    display: block; width: 230px;
+}
+
+.poster {
+    position: relative;
+}
+.egg {
+    padding-top: 60px;
+    padding-left: 30px;
+    position: absolute;
+    z-index: 4;
+}

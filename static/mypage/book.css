@@ -1,0 +1,362 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family:'Pretendard-Regular';
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: black;
+}
+
+.logo {
+    display: block;
+    width: 150px;
+    height: 40px;
+    background-image: url("../mypage/images/logo.png");
+    background-size: contain;
+    margin-left: 45px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+.sidebar ul a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 18px;
+    color: white;
+    padding-left: 40px;
+    box-sizing: border-box;
+    transition: .4s;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+/* 해당카테고리 bold */
+.sidebar-home {
+    font-weight: 800;
+}
+.sidebar-book {
+    font-weight: 800;
+}
+
+
+.top {
+    margin-bottom: 15px;
+}
+.bottom {
+    border-top: 1px solid rgb(56, 56, 56);
+    padding-top: 15px;
+}
+
+
+ul li:hover a {
+    padding-left: 50px;
+}
+
+.home { 
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(243, 243, 243);
+}
+
+
+/* =========== */
+
+.header{
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: -1;
+}
+
+.logo{
+    margin-left: 40px;
+}
+
+.login_btn{
+    /*왼쪽에 붙어있게 해주는 아래 두 줄*/
+    display: flex;
+    justify-content: flex-end;
+
+    margin-right: 40px;
+
+    width: 100%;
+}
+
+.btn{
+    height: 30px;
+    background-color: black;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+ }
+ 
+
+/* =========== */
+
+/* 내 정보 */
+.home h1 {
+    position: fixed;
+    margin-left: 320px;
+    margin-top: 120px;
+}
+
+/* ================ */
+/* tabs */
+/* 탭 전체 스타일 */
+.tabs {
+    position: fixed;
+    width: 1140px;
+    height: 530px;
+    margin-left: 320px;
+    margin-top: 180px;
+
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+/* 탭 스타일 */
+.tab_item {
+    width: calc(100%/2);
+    height: 50px;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+    line-height: 50px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-align: center;
+    color: black;
+    display: block;
+    float: left;
+    text-align: center;
+    font-weight: 500;
+    cursor: pointer;
+
+  }
+  .tab_item:hover {
+    background-color: rgb(238, 238, 238);
+  }
+  
+  /* 라디오 버튼 UI삭제*/
+  input[name="tab_item"] {
+    display: none;
+  }
+  
+  /* 탭 컨텐츠 스타일 */
+.tab_content {
+    display: none;
+    /* padding: 40px 40px 0; */
+    clear: both;
+    overflow: hidden;
+}
+
+
+/* 선택 된 탭 콘텐츠를 표시 */
+#all:checked ~ #all_content,
+#programming:checked ~ #programming_content,
+#design:checked ~ #design_content {
+    display: block;
+}
+
+/* 선택된 탭 스타일 */
+.tabs input:checked + .tab_item {
+    background-color: black;
+    color: #fff;
+}
+
+
+/* =========================== */
+/* 책정보 content 상단*/
+.up {
+    height: 70px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+.count {
+    margin-left: 20px;
+    letter-spacing: 1px;
+}
+/* buttons 한번에 적용안되서 다 따로 설정함*/
+.recent {
+    padding: 10px;
+    margin-left: 730px;
+    margin-right: 8px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+}
+.recent:hover {
+    background-color: #ffc000;
+}
+.title {
+    padding: 10px;
+    margin-right: 8px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+}
+.title:hover {
+    background-color: #ffc000;
+}
+.author {
+    padding: 10px;
+    margin-right: 8px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+}
+.author:hover {
+    background-color: #ffc000;
+}
+.new {
+    padding: 10px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+}
+.new:hover {
+    background-color: #ffc000;
+}
+
+/* =========================== */
+/* 책정보 content 하단*/
+.down {
+    height: 410px;
+    width: 1140px;
+    /* background-color: palegreen; */
+    overflow-y: scroll;
+}
+    .book-up {
+        display: flex;
+        gap: 75px;
+    }
+    .book1 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+        margin-left: 30px;
+    }
+    .book2 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+    }
+    .book3 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+    }
+    .book4 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+    }
+    .book5 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+    }
+    .book6 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+    }
+.book-down {
+    height: 205px;
+    width: clac(1140-17)px; /*17은 스크롤바 크기*/
+    /* background-color: blueviolet; */
+    margin-top: 45px;
+
+    display: flex;
+    gap: 75px;
+}
+    .book7 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+        margin-left: 30px;
+    }
+    .book8 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+    }
+    .book9 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+    }
+    .book10 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+    }
+    .book11 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+    }
+    .book12 {
+        height: 160px;
+        width: 115px;
+        border-radius: 10px;
+        background-color: #ddd;
+    }
+
+
+/* 스크롤바 내리면 있는 */
+.extra-book {
+    height: 205px;
+    width: clac(1140-17)px; /*17은 스크롤바 크기*/
+    /* background-color: blueviolet; */
+
+    display: flex;
+    /* justify-content: center; */
+    gap: 75px;
+}
+.book13 {
+    height: 160px;
+    width: 115px;
+    border-radius: 10px;
+    background-color: #ddd;
+
+    margin-left: 30px; /*왼쪽 책들만 30씩 더해주면 됨.*/
+}

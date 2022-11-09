@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="{% static 'main/main.css' %}">
 </head>
 <body>
+    {% if user.is_authenticated %}
     <nav id="nav">
         <div class="left">
             <div class="logo">
-                <a href="#"><img src="{% static 'main/image/logo.png' %}" alt=""></a>
+                <a href="{% url 'board:home' %}"><img src="{% static 'main/image/logo.png' %}" alt=""></a>
             </div>
             <div class="mobile-menu">메뉴</div>
             <ul class="menu-list">
@@ -57,10 +58,10 @@
                     <i class="fa-solid fa-caret-down"></i>
                     <div class="dropdown-content">
                         <a href="{% url 'mypage:profile' %}">내 정보</a>
-                        <a href="../userinfo/book.html">내 책장</a>
+                        <a href="{% url 'mypage:library' pk=user.username %}">내 책장</a>
                         <a href="../userinfo/user.html">개인정보 관리</a>
                         <a href="../userinfo/loglock.html">로그인 및 보안</a>
-                        <a href="{% url 'user:logout' %}">로그아웃</a>
+                        <a href="{% url 'user:logout' %}" style="color: rgb(253, 110, 85);">로그아웃</a>
                     </div>
                 </a>
             </div>
@@ -122,13 +123,15 @@
             <div class="slider">
                 {% for i in response.item %}
                 <div class="item">
-                    <a href="{% url 'board:detail' pk=i.isbn13 %}">
-                    <div class="descr">
-                        {{ i.title }}<br><br>
-                        {{ i.customerReviewRank }}
-                    </div>
-                    <img class="imgs" src="{{ i.cover }}" alt="책 이미지"></a>
-
+                    <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                        <div class="descr" style="pointer-events: none;">
+                            {{ i.title }}<br><br>
+                            {{ i.customerReviewRank }}
+                        </div>
+                        <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
+                    </form>
                 </div>
                 {% endfor %}
             </div>
@@ -141,12 +144,15 @@
             <div class="slider">
                 {% for i in response_top10.item %}
                 <div class="item">
-                    <a href="{% url 'board:detail' pk=i.isbn13 %}">
-                    <div class="descr">
-                        {{ i.title }}<br><br>
-                        {{ i.customerReviewRank }}
-                    </div>
-                    <img class="imgs" src="{{ i.cover }}" alt="책 이미지"></a>
+                    <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                        <div class="descr" style="pointer-events: none;">
+                            {{ i.title }}<br><br>
+                            {{ i.customerReviewRank }}
+                        </div>
+                        <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
+                    </form>
                 </div>
                 {% endfor %}
             </div>
@@ -159,12 +165,15 @@
             <div class="slider">
                 {% for i in response_sf.item %}
                 <div class="item">
-                    <a href="{% url 'board:detail' pk=i.isbn13 %}">
-                    <div class="descr">
-                        {{ i.title }}<br><br>
-                        {{ i.customerReviewRank }}
-                    </div>
-                    <img class="imgs" src="{{ i.cover }}" alt="책 이미지"></a>
+                    <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                        <div class="descr" style="pointer-events: none;">
+                            {{ i.title }}<br><br>
+                            {{ i.customerReviewRank }}
+                        </div>
+                        <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
+                    </form>
                 </div>
                 {% endfor %}
             </div>
@@ -177,12 +186,15 @@
             <div class="slider">
                 {% for i in response_fear.item %}
                 <div class="item">
-                    <a href="{% url 'board:detail' pk=i.isbn13 %}">
-                    <div class="descr">
-                        {{ i.title }}<br><br>
-                        {{ i.customerReviewRank }}
-                    </div>
-                    <img class="imgs" src="{{ i.cover }}" alt="책 이미지"></a>
+                    <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                        <div class="descr" style="pointer-events: none;">
+                            {{ i.title }}<br><br>
+                            {{ i.customerReviewRank }}
+                        </div>
+                        <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
+                    </form>
                 </div>
                 {% endfor %}
             </div>
@@ -195,12 +207,15 @@
             <div class="slider">
                 {% for i in response_new.item %}
                 <div class="item">
-                    <a href="{% url 'board:detail' pk=i.isbn13 %}">
-                    <div class="descr">
-                        {{ i.title }}<br><br>
-                        {{ i.customerReviewRank }}
-                    </div>
-                    <img class="imgs" src="{{ i.cover }}" alt="책 이미지"></a>
+                    <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                        <div class="descr" style="pointer-events: none;">
+                            {{ i.title }}<br><br>
+                            {{ i.customerReviewRank }}
+                        </div>
+                        <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
+                    </form>
                 </div>
                 {% endfor %}
             </div>
@@ -294,5 +309,15 @@
             $("#form").submit();
         }
     </script>
+    {% else %}
+    <script type="text/javascript">
+        
+        alert("잘못된 접근입니다. 로그인해주세요.");
+    
+    </script>
+    <script type="text/javascript">
+        window.location.replace('/user/login/')
+    </script>
+    {% endif %}
 </body>
 </html>

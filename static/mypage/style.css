@@ -1,0 +1,133 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family:'Pretendard-Regular';
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: black;
+}
+
+.sidebar img {
+    display: block;
+    margin: 0px auto;
+
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.sidebar ul a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 20px;
+    color: white;
+    padding-left: 35px;
+    box-sizing: border-box;
+    transition: .4s;
+    text-decoration: none;
+}
+
+.top {
+    margin-bottom: 15px;
+}
+.bottom {
+    border-top: 1px solid rgb(56, 56, 56);
+    padding-top: 15px;
+}
+
+ul li:hover a {
+    padding-left: 50px;
+}
+
+.home { 
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(240, 240, 240);
+}
+
+
+/* =========== */
+
+.header{
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: -1;
+}
+
+.login_btn{
+    /*왼쪽에 붙어있게 해주는 아래 두 줄*/
+    display: flex;
+    justify-content: flex-end;
+
+    margin-right: 40px;
+
+    width: 100%;
+}
+
+.btn{
+    height: 30px;
+    background-color: black;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+ }
+
+/* =========== */
+
+/* 내 정보 */
+.home h1 {
+    position: fixed;
+    margin-left: 300px;
+    margin-top: 110px;
+}
+
+/* 박스 */
+.boxes {
+    position: fixed;
+    margin-left: 300px;
+    margin-top: 180px;
+    margin-right: 50px;
+    width: 100%;
+    height: 50px;
+    
+}
+
+
+/* welcome */
+.welcome { 
+    width: 400px;
+    height: 200px;
+    background-color: blue;
+}
+.picture {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+

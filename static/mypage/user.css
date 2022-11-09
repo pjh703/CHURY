@@ -1,0 +1,269 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family:'Pretendard-Regular';
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: black;
+}
+
+.logo {
+    display: block;
+    width: 150px;
+    height: 40px;
+    background-image: url("../mypage/images/logo.png");
+    background-size: contain;
+    margin-left: 40px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+
+.sidebar ul a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 18px;
+    color: white;
+    padding-left: 40px;
+    box-sizing: border-box;
+    transition: .4s;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+/* 해당카테고리 bold */
+.sidebar-use {
+    font-weight: 800;
+}
+
+.top {
+    margin-bottom: 15px;
+}
+.bottom {
+    border-top: 1px solid rgb(56, 56, 56);
+    padding-top: 15px;
+}
+
+
+ul li:hover a {
+    padding-left: 50px;
+}
+
+.home { 
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(243, 243, 243);
+}
+
+
+/* =========== */
+
+.header{
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: -1;
+}
+
+.login_btn{
+    /*왼쪽에 붙어있게 해주는 아래 두 줄*/
+    display: flex;
+    justify-content: flex-end;
+
+    margin-right: 40px;
+
+    width: 100%;
+}
+
+.btn{
+    height: 30px;
+    background-color: black;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+ }
+ 
+
+/* =========== */
+
+/* 개인정보 관리 */
+.home h1 {
+    position: fixed;
+    margin-left: 320px;
+    margin-top: 120px;
+}
+
+.home h3 {
+    position: fixed;
+    margin-left: 320px;
+    margin-top: 180px;
+
+    font-size: medium;
+    font-weight: 500;
+    color: #6e6e6e;
+    letter-spacing: 0.5px;
+}
+
+/* =================================== */
+.box {
+    position: fixed;
+    margin-left: 320px;
+    margin-top: 230px;
+    width: 1140px;
+    height: 480px;
+    gap: 20px;
+    /* background-color: blue; */
+    /* height는 더 늘어나도 됨. 화면 넘어가면 scroll 추가하기 */
+}
+
+/* 닉네임 박스 */
+.nickname{
+    position: absolute;
+    width: 560px;
+    height: 80px;
+    align-items: center;
+    display: flex;
+    font-size: 18px;
+    font-weight: 500;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+
+    text-decoration: none;
+    color: black;
+}
+
+.title {
+    margin-left: 30px;
+    margin-right: auto;
+}
+.right {
+    margin-right: 30px;
+}
+.nickname:hover {
+    background-color: rgb(238, 238, 238);
+}
+
+
+/* 프로필사진 박스 */
+.profile {
+    position: absolute;
+    margin-left: 580px;
+
+    width: 560px;
+    height: 80px;
+    align-items: center;
+    display: flex;
+    font-size: 18px;
+    font-weight: 500;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+
+    text-decoration: none;
+    color: black;
+}
+.title {
+    margin-left: 30px;
+    margin-right: auto;
+}
+.right {
+    margin-right: 30px;
+}
+.profile:hover {
+    background-color: rgb(238, 238, 238);
+}
+
+
+/* 비밀번호 변경 박스 */
+.pw-change {
+    position: absolute;
+    margin-top: 100px;
+
+    width: 560px;
+    height: 80px;
+    align-items: center;
+    display: flex;
+    font-size: 18px;
+    font-weight: 500;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+
+    text-decoration: none;
+    color: black;
+}
+.title {
+    margin-left: 30px;
+    margin-right: auto;
+}
+.right {
+    margin-right: 30px;
+}
+.pw-change:hover {
+    background-color: rgb(238, 238, 238);
+}
+
+/* 회원 탈퇴 박스 */
+.exit {
+    position: absolute;
+    margin-top: 100px;
+    margin-left: 580px;
+
+    width: 560px;
+    height: 80px;
+    align-items: center;
+    display: flex;
+    font-size: 18px;
+    font-weight: 500;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+
+    text-decoration: none;
+    color: black;
+}
+.title {
+    margin-left: 30px;
+    margin-right: auto;
+}
+.right {
+    margin-right: 30px;
+}
+.exit:hover {
+    background-color: rgb(238, 238, 238);
+}

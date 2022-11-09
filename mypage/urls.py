@@ -8,7 +8,7 @@ from .views import UserDeleteView, UserUpdateView, UserDetailView, PwUpdateView
 app_name = 'mypage'
 
 urlpatterns = [
-    path('library/', views.LibraryView, name='library'),
+    path('library/<pk>/', views.LibraryView, name='library'),
     path('env/', views.EnvView, name='env'),
     path('profile/', views.ProfileView , name='profile'),
 
@@ -18,5 +18,7 @@ urlpatterns = [
     # path('update/<int:pk>/', UserDetailView.as_view(), name='update'),
 
     # 데이터 처리
-    path('mydic/', views.mydic, name='mydic')
+    path('mydic/', views.mydic, name='mydic'),
+    path('choose/', views.choose, name='choose'),
+
 ]
