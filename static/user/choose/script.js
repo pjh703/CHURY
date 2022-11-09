@@ -18,9 +18,7 @@ function handleClick(element) {
         posterImg.style = 'filter:brightness(1)';
         // alert(count+"회 클릭하셨습니다.");
         // document.write(count+"회 클릭하셨습니다.");
-        
-        // a = document.getElementById('choose1')
-        // a.disabled = false;
+
         disinput.disabled = true;
         
 
@@ -36,8 +34,6 @@ function handleClick(element) {
         // alert(count+"회 클릭하셨습니다.");
         // document.write(count+"회 클릭하셨습니다.");
 
-        // a = document.getElementById('choose1')
-        // a.disabled = true;
         disinput.disabled = false;
     }
 
@@ -59,14 +55,19 @@ function getCheckedCnt()  {
     var selectedElementsCnt =
             selectedElements.length;
     
-    if (selectedElementsCnt < 3 ) {
-        getElementById('submit').disabled = True;
+    // 출력
+    document.getElementById('result').value
+        = selectedElementsCnt+"개 선택하였습니다.";
+    
+    let three = document.getElementById('result');
+    if (selectedElementsCnt > 2) {
+        three.disabled = false;
+        three.style = 'background-image: linear-gradient(to right, #ff750f 0%, #ffb105 51%, #ffcc00 100%); cursor:pointer';
+
     } else {
-        getElementById('submit').disabled = false;
+        three.disabled = true;
+        three.style = 'background-image: linear-gradient(to right, #717171a2 0%, #717171a2 51%, #717171a2 100%); cursor:default'
     }
 
-
-    // 출력
-    document.getElementById('result').innerText
-        = selectedElementsCnt+"개 선택하였습니다.";
 }
+

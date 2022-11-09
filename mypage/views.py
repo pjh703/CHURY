@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import UpdateView, DeleteView, DetailView
 
 from .forms import UserUpdateForm
-from .models import MYBOOK, MYINFO
+from .models import MYBOOK, MYINFO, MYCHOOSE
 
 from user.models import User
 from django.urls import reverse_lazy, reverse

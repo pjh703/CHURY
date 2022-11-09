@@ -53,14 +53,13 @@
 
 }
 
-.text [class="not-choose-btn"] {
-    position: absolute;
+.not-choose-btn {
     position: fixed;
-    left: 1400px;
-    top:850px;
+    left: 20%;
+    bottom: 25%;
     font-size: 22px;
     padding: 12px 60px;
-    text-align: right;
+    text-align: center;
     font-weight: 600;
     background-size: 100% auto;
     color: white;
@@ -68,17 +67,15 @@
     border: 0;
     outline: 0;
     background-image: linear-gradient(to right, #ff750f 0%, #ffb105 51%, #ffcc00 100%);
-    /* background-image: linear-gradient(to right, #5e5c5c 0%, #75726b 51%, #e4e2dc 100%); */
     text-decoration: none;
     z-index: 2;
-    display: block; width: 230px;
+    display: block; width: 400px;
 }
 
-.text [class="choose-btn"] {
-    position: absolute;
-    /* position: fixed; */
-    left: 1400px;
-    top:850px;
+.choose-btn {
+    position: fixed;
+    left: 20%;
+    bottom: 10%;
     font-size: 22px;
     padding: 12px 60px;
     text-align: center;
