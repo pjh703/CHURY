@@ -59,8 +59,8 @@
                     <div class="dropdown-content">
                         <a href="{% url 'mypage:profile' %}">내 정보</a>
                         <a href="{% url 'mypage:library' pk=user.username %}">내 책장</a>
-                        <a href="../userinfo/user.html">개인정보 관리</a>
-                        <a href="../userinfo/loglock.html">로그인 및 보안</a>
+                        <a href="{% url 'mypage:env' %}">개인정보 관리</a>
+                        <a href="{% url 'mypage:loglock' %}">로그인 및 보안</a>
                         <a href="{% url 'user:logout' %}" style="color: rgb(253, 110, 85);">로그아웃</a>
                     </div>
                 </a>
