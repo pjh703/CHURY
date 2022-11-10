@@ -1,0 +1,509 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: black;
+  user-select: none;
+  font-family:'Pretendard-Regular';
+}
+
+body {
+  background-color: rgb(255, 255, 255);
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  z-index: 98;
+  /* background: linear-gradient(to bottom, rgb(250, 250, 250) 10%, rgba(255, 255, 255, 0.158)); */
+  /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 10%, rgba(0, 0, 0, 0)); */
+  /* background: linear-gradient(white, rgba(255, 255, 255, 0)); */
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+}
+
+/*  */
+nav.drop {
+  position: fixed;
+  animation: dropNav 0.2s;
+  z-index: 99;
+}
+
+@keyframes dropNav {
+  0% {
+    top: -5rem;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+/*  */
+
+nav .left {
+  display: flex;
+  margin-left: 80px;
+}
+nav .left .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  padding: 0.5em;
+  width: 8rem;
+}
+nav .left .logo a {
+  width: 100%;
+}
+nav .left .logo a img {
+  max-width: 100%;
+}
+nav .left .mobile-menu {
+  display: none;
+}
+nav .left .menu-list {
+  display: flex;
+}
+nav .left .menu-list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  padding: 0.2em 1em 0.5em 1em;
+}
+nav .left .menu-list li a {
+  font-size: 1rem;
+}
+nav .right {
+  display: flex;
+  margin-right: 2em;
+}
+nav .right .icon {
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+nav .right .profile {
+  padding: 0;
+}
+nav .right .profile a {
+  display: flex;
+  align-items: center;
+}
+nav .right .profile a .avatar-box {
+  width: 30px;
+  height: 30px;
+  background-color: rgb(245, 216, 90);
+  border-radius: 3px;
+  margin-right: 10px;
+  margin-left : 10px;
+  margin-top: 2px;
+}
+nav .right .profile i {
+  transition: all 300ms;
+  margin-right: 80px;
+}
+nav .right .profile:hover i {
+  transform: rotate(180deg);
+}
+
+/* 드롭다운 */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgb(247, 247, 247);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  /* float: left; */
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {background-color: #ddd;}
+
+.profile:hover .dropdown-content {display: block;}
+
+/* .dropdown:hover .dropbtn {background-color: #fce515;} */
+
+/* 드롭다운 끝 */
+
+nav .right .search {
+  border: 1px solid black;
+  background-color: white;
+}
+nav .right .search .search-bar {
+  display: flex;
+  height: 15px;
+}
+nav .right .search .search-bar input {
+  background-color: transparent;
+  border: none;
+  color: black;
+  outline: none;
+  background-color: white;
+  padding-right: 2px;
+}
+
+.right select {
+  font-size: 15px;
+}
+
+/* =================================================================== */
+
+/* info start */
+
+.main {
+  display: flex;
+  /* background-color: rgb(247, 247, 247); */
+}
+
+.side-left {
+  margin-left: 300px;
+  height: 500px;
+}
+
+.side-right {
+  margin-left: auto;
+  align-items: flex-end;
+  /* background-color: blue; */
+  padding-right: 300px;
+  height: 500px;
+}
+
+.book-info {
+  display: flex;
+}
+
+.book-img {
+  width: 360px;
+  height: 495px;
+  background-color: #ddd;
+  margin-top: 70px;
+  border-radius: 10px;
+}
+
+.text {
+  margin-left: 60px;
+  margin-top: 70px;
+}
+
+.tag1 {
+  height: 35px;
+  width: 110px;
+  background-color: #ffc000;
+  border: none;
+  border-radius: 10px;
+  padding: 0;
+  letter-spacing: 2px;
+  font-size: 15px;
+  color: white;
+}
+.tag1:hover {
+  background-color: #ffbf00a3;
+  border-radius: 10px;
+}
+
+.tag2 {
+  margin-left: 10px;
+  height: 35px;
+  width: 110px;
+  background-color: #ffc000;
+  border: none;
+  border-radius: 10px;
+  padding: 0;
+  letter-spacing: 2px;
+  font-size: 15px;
+  color: white;
+}
+.tag2:hover {
+  background-color: #ffbf00a3;
+  border-radius: 10px;
+}
+
+.title {
+  margin-top: 15px;
+  font-size: 35px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.author {
+  margin-top: 15px;
+  font-size: 20px;
+}
+.publisher {
+  margin-top: 5px;
+  font-size: 20px;
+}
+.date {
+  margin-top: 5px;
+  font-size: 20px;
+}
+.eggs {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+.egg-imgs {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  margin-right: 5px;
+  padding-right: 10px;
+  margin-top: 10px;
+}
+.no-eggs {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.comment {
+  margin-top: 10px;
+  margin-right: -90px;
+  font-size: 21px;
+  color: rgb(61, 61, 61);
+}
+
+.point {
+  margin-left: 43px;
+  font-size: 24px;
+  width: 100px;
+}
+
+.icons {
+  margin-left: 250px;
+}
+
+.icons i {
+  cursor: pointer;
+}
+
+.recommend {
+  margin-top: 15px;
+  font-size: 20px;
+}
+.title2 {
+  font-weight: 600;
+}
+.related-books {
+  display: flex;
+  margin-top: 15px;
+  margin-bottom: 50px;
+}
+
+.related-book {
+  width: 145px;
+  height: 183px;
+  background-color: #ddd;
+  margin-right: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.related-book2 {
+  width: 145px;
+  height: 183px;
+  background-color: #ddd;
+  margin-right: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.related-book3 {
+  width: 145px;
+  height: 183px;
+  background-color: #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* 스크롤 유도 화살표 */
+.arrow-3 {
+  border-top: 80%;
+  position: absolute;
+  top: 89%;
+  right: 50%;
+}
+
+.arrow-down span{
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+  border-bottom: 1px solid rgb(8, 8, 8);
+  border-right: 1px solid rgb(8, 8, 8);
+  transform: rotate(45deg);
+  margin: -10px;
+  animation: animate-arrows 2s infinite;
+  z-index: 99;
+  /* margin-left: 50%; */
+}
+@keyframes animate-arrows{
+  0%{
+    opacity: 0;
+    transform: rotate(45deg) translate(-1.5em, -1.5em);
+  }
+  50%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+    transform: rotate(45deg) translate(1.5em, 1.5em);
+  }
+}
+.arrow-down span:nth-child(1){
+  animation-delay: -0.2s;
+}
+.arrow-down span:nth-child(2){
+  animation-delay: -0.4s;
+}
+.arrow-down span:nth-child(3){
+  animation-delay: -0.6s;
+}
+
+/* section */
+section {
+  position: relative;
+  height: 600px;
+}
+
+.section .introduce{
+  position: absolute;
+  float: left;
+  margin-left: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  /* left: 50px;. */
+  right: 100px;
+  /* margin-bottom: 500px; */
+  letter-spacing: 20px;
+  display: flex;
+}
+
+.introduce [class="title"] {
+  margin-left: 300px;
+  margin-right: 250px;
+  float: left;
+  /* background-color: aqua; */
+  font-size: 23px;
+}
+
+.introduce [class="content"] {
+  float: left;
+  margin-bottom: 50px;
+  /* background-color: crimson; */
+  letter-spacing: 2px;
+  word-spacing: 3px;
+  line-height: 25px;
+  margin-left: 700px;
+  margin-right: 300px;
+  margin-top: -50px;
+  font-size: 18px;
+}
+
+.introduce [class="content2"] {
+  float: left;
+  margin-bottom: 50px;
+  /* background-color: crimson; */
+  letter-spacing: 2px;
+  word-spacing: 3px;
+  line-height: 25px;
+  margin-left: 700px;
+  margin-right: 300px;
+  margin-top: -50px;
+  font-size: 18px;
+  display: flex;
+}
+
+.enroll{
+  position: relative;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(92, 91, 91);
+  left: 480px;
+  z-index: 88;
+  /* margin-right: 10px; */
+  margin-top: 20px;
+  padding: 6px 10px 6px 10px;
+
+}
+
+.enroll>a {
+  color: white;
+  font-size: 15px;
+  letter-spacing: 2px;
+
+}
+
+.enroll:hover {
+  background-color: black;
+}
+
+
+/* .review {
+  margin-top: 50px;
+  padding-left: 300px;
+  padding-right: 300px;
+  display: flex;
+  margin-bottom: 100px;
+} */
+
+/* 별점 0.5 */
+.star {
+  position: absolute;
+  font-size: 2rem;
+  color: #ddd;
+  display: flex;
+  margin-top: 20px;
+
+}
+
+.star input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.star span {
+  width: 0;
+  position: absolute; 
+  left: 0;
+  color: red;
+  overflow: hidden;
+  pointer-events: none;
+  /* margin-right: 800px; */
+}
+
+
+
+/* ================================================================== */
+@media screen and (max-width: 1437px) {
+  main .description {
+    bottom: 10%;
+  }
+}

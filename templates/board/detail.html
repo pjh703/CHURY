@@ -1,50 +1,260 @@
-{% extends 'common/base.html' %}
-
-{% block body %}
-
-    <div>
-	    <div style="text-align: center; max-width: 500px; margin: 4rem auto;">
-	    	<h2 style="font-family: 'NanumSquareB'">
-                <hr>
-            </h2>
-	    </div>
-    </div>
-
-        {% for i in response.item %}
-        <table>
-            <tr>
-                <td rowspan="10" ><img src="{{ i.cover }}" alt="책 이미지" style="width: 300px; height: 450px;"></td>
-                <td>제목</td>
-                <td>{{ i.title }}</td>
-            </tr>
-            <tr>
-                <td>지은이</td>
-                <td>{{ i.author }}</td>
-            </tr>
-            <tr>
-                <td>지은이</td>
-                <td>{{ i.author }}</td>
-            </tr>
-            <tr>
-                <td>지은이</td>
-                <td>{{ i.author }}</td>
-            </tr>
-            <td>
-                <form action="{% url 'mypage:mydic' %}" method="post">
-                    {% csrf_token %}
-                    <input value="{{ i.isbn13 }}" name="mydic" id="mydic">
-                    <input value="{{ user.email }}" name="email" id="email">
+{% load static %}
+<!doctype html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>detail</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'board/detail/detail.css' %}">
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <nav id="nav">
+        <div class="left">
+            <div class="logo">
+                <a href="{% url 'board:home' %}"><img src="{% static 'board/detail/image/logo.png' %}" alt=""></a>
+            </div>
+            <div class="mobile-menu">메뉴</div>
+            <ul class="menu-list">
+                <li>
+                    <!-- <a href="#">일반</a> -->
+                </li>
+                <li>
+                    <!-- <a href="#">로맨스</a> -->
+                </li>
+                <li>
+                    <!-- <a href="#">BL</a> -->
+                </li>
+                <li>
+                    <!-- <a href="#">판타지/무협</a> -->
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <select name="category" style="margin-right: 10px; padding: 3px; border: 1px solid black;">
+                <option value="">상세 검색</option>
+                <option value="제목별">제목별</option>
+                <option value="저자별">저자별</option>
+                <option value="장르별">장르별</option>
+            </select>
+            <div class="icon search">
+                <div class="search-bar">
+                    <input type="text" placeholder="검색" style="font-size: 15px;"/>
+                    <a href="{% url 'board:search' %}"><i class="fa-solid fa-magnifying-glass"></i></a>
                     
-                    <input type="submit" value="내 도서관에 추가">
-                </form>
-            </td>
-            <tr>
-                <td colspan="2"><a href="https://kr1lib.org/ireader/12008598">보기</td>
-            </tr>
-        </table>
-        {{ mydic.temp }}
+                </div>
+            </div>
+            <div class="icon profile">
+                <a href="#">
+                    <div class="avatar-box"></div>
+                    <i class="fa-solid fa-caret-down"></i>
+                    <div class="dropdown-content">
+                        <a href="{% url 'mypage:profile' %}">내 정보</a>
+                        <a href="{% url 'mypage:library' pk=user.username %}">내 책장</a>
+                        <a href="../userinfo/user.html">개인정보 관리</a>
+                        <a href="../userinfo/loglock.html">로그인 및 보안</a>
+                        <a href="{% url 'user:logout' %}" style="color: rgb(253, 110, 85);">로그아웃</a>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+    {% for i in response.item %}
+    <main class="main">
+        <div class="side-left"></div>
+        <div class="book-info">
+            <div class="book-img"><img src="{{ i.cover }}" style="width: 360px;
+                height: 495px; border-radius: 10px;" alt=""></div>
+            {% if i.categoryName %}
+            <div class="text">
+                <div class="text1">
+                    <button id="category_name1" class="tag1">{{ i.categoryName }}</button>
+                    <button id="category_name2" class="tag2">{{ i.categoryName }}</button>
+            {% endif %}
+                    <div class="title">{{ i.title }}</div>
+                    <div class="author">{{ i.author }}</div>
+                    <div class="publisher">{{ i.publisher }}</div>
+                    <div class="date">{{ i.pubDate }}</div>
 
-        {% endfor %}
+                    <div class="eggs">
+                        {% if i.customerReviewRank %}
+                        <div class="egg-imgs">
+                            <img src="{% static 'board/detail/image/1.svg' %}" class="egg1" id="egg1" style="display: none;" alt="">
+                            <img src="{% static 'board/detail/image/2.svg' %}" class="egg2" id="egg2" style="display: none;" alt="">
+                            <img src="{% static 'board/detail/image/3.svg' %}" class="egg3" id="egg3" style="display: none;" alt="">
+                            <img src="{% static 'board/detail/image/4.svg' %}" class="egg4" id="egg4" alt="">
+                        </div>
+                        <div class="point" id="point">{{ i.customerReviewRank }}점/10점</div>
+                        {% else %}
+                        <div class="no-eggs">
+                            <div class="comment">
+                                등록된 리뷰가 없습니다.&ensp;&ensp;&ensp;
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="icons">
+                            <i class="fa-solid fa-circle-play fa-3x" title="바로 보기" style="float:left;"></i>
+                            {% if isbook %}
+                            <form action="{% url 'mypage:mydic' %}" method="post" style="float:left; margin-left: 10px;"> 
+                                {% csrf_token %}
+                                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" style="display: none;">
+                                <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                                <input value="{{ user.username }}" name="username" id="username" style="display: none;">
+                                
+                                <button type="submit" class="fa-solid fa-circle-plus fa-3x" title="내 책장에 담기"></button>
+                            </form>
+                            {% else %}
+                            <form action="{% url 'mypage:mydic_del' %}" method="post" style="float:left; margin-left: 10px;"> 
+                                {% csrf_token %}
+                                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" style="display: none;">
+                                <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                                
+                                <button type="submit" class="fa-solid fa-circle-minus fa-3x" onclick="button1_click();" title="내 책장에서 빼기"></button>
+                                <script>
+                                    function button1_click() {
+                                        alert("내 책장에서 제외되었습니다.");
+                                    }
+                                    </script>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
 
+                    <div class="recommend">
+                        <div class="title2">이 도서를 읽은 독자들이 같이 본 도서</div>
+                        <div class="related-books">
+                            <div class="related-book"></div>
+                            <div class="related-book2"></div>
+                            <div class="related-book3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="side-right" ></div>
+    </main>
+     <!-- <div class="arrow-down">
+        <a href="#about">
+            <div class="arrow-3">
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+        </a>
+    </div> -->
+    <section>
+        {% if i.description %}
+            <div class="introduce">
+                <div class="title">
+                    <h3><br><br>책 소개</h3>
+                </div>
+                <div class="content">
+                    <p><hr><br><br><br>{{ i.description }}<br><br><br><br><hr></p>
+                </div>
+            </div>
+
+        {% endif %}
+        <br><br>
             
-{% endblock %}
+        <div class="introduce">
+            <div class="title">
+                <h3 style="left: 50px;">리뷰 남기기</h3>
+            </div>
+            
+            <form action="{% url 'mypage:mydic2' %}" method="post">
+                {% csrf_token %}
+                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" hidden>
+                <input value="{{ user.email }}" name="email" id="email" hidden>
+                
+                <div class="content2" style="margin-right: 700px;">
+                    <!-- <div><hr style="width: 1054px; margin-left: -50px;"><br><br></div> -->
+                    <span class="star">
+                        ★★★★★
+                        <span>★★★★★</span>
+                        <input type="range" name="myread" id="myread" oninput="drawStar(this)" value="1" step="1" min="0" max="10">
+                        <br>  
+                    </span>
+                    <input type="submit" value="등록" class="enroll"
+                    style="color: white; font-size:15px; letter-spacing: 2px;">
+                </div>
+            </form> 
+        </div>
+        {% endfor %}
+    </section>
+    <script>
+        // 카테고리
+        const a = document.getElementById("category_name1").innerText;
+        const b = document.getElementById("category_name2").innerText;
+        var c = a.split('>').reverse()[1];
+        var d = b.split('>').reverse()[0];
+        document.getElementById("category_name1").innerText = c;
+        document.getElementById("category_name2").innerText = d;
+
+        // 별점 0.5
+        const drawStar = (target) => {
+            document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+        }
+
+        // 계란 이미지 변경
+        var tab = document.querySelectorAll(".egg-imgs");
+        var img11 = document.querySelector("img.egg1");
+        var img22 = document.querySelector("img.egg2");
+        var img33 = document.querySelector("img.egg3");
+        var img44 = document.querySelector("img.egg4");
+        var points = document.getElementById("point").innerText;
+        console.log(parseInt(points.substr(0, 2)))
+
+        if (parseInt(points.substr(0, 2)) >=9){
+            //점수가 9점 이상인 경우
+            img11.style.display = 'none';
+            img22.style.display = 'inline';
+            img33.style.display = 'none';
+            img44.style.display = 'none';
+
+        } else if (parseInt(points.substr(0, 2)) >=5) {
+            // 점수가 5점 이상인 경우
+            img11.style.display = 'inline';
+            img22.style.display = 'none';
+            img33.style.display = 'none';
+            img44.style.display = 'none';
+
+        } else if (parseInt(points.substr(0, 2)) >=2) {
+            // 점수가 2점 이상인 경우
+            img11.style.display = 'none';
+            img22.style.display = 'none';
+            img33.style.display = 'inline';
+            img44.style.display = 'none';
+
+        } else if (parseInt(points.substr(0, 2)) >=0) {
+            // 점수가 0점 이상인 경우
+            img11.style.display = 'none';
+            img22.style.display = 'none';
+            img33.style.display = 'none';
+            img44.style.display = 'inline';
+
+        } else {
+            img11.style.display = 'none';
+            img22.style.display = 'none';
+            img33.style.display = 'none';
+            img44.style.display = 'inline'; 
+        }
+    </script>
+    {% else %}
+    <div class="h3 text-info">잘못된 접근입니다. 로그인해주세요</div>
+    
+    <script type="text/javascript">
+        
+            alert("잘못된 접근입니다. 로그인해주세요.");
+        
+    </script>
+    <script type="text/javascript">
+        window.location.replace('/user/login/')
+    </script>
+    {% endif %}
+</body>
+</html>

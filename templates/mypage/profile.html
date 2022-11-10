@@ -1,33 +1,88 @@
-{% extends 'common/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>CHURY | My Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/info.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="sidebar">
 
-{% block title %}회원정보{% endblock title %}
+        <a href="{% url 'board:home' %}"><div class="logo"></div></a>
 
-{% block body %}
-<h2>회원 정보</h2>
-<table class="table">
-    <tr>
-        <th width='20%'>이메일</th>
-        <td>{{user.email}}</td>      
-    </tr>
-    <tr>
-        <th>아이디</th>
-        <td>{{user.username}}</td>      
-    </tr>
-    <tr>
-        <th>이름</th>
-        <td>{{user.last_name}}&nbsp;{{user.first_name}}</td>      
-    </tr>
+        <ul>
+            <div class="sidebar-home">
+                <li><a href="{% url 'mypage:profile' %}">내정보 홈</a></li>
+            </div>
+            <li><a href="{% url 'mypage:library' pk=user.username %}">내 책장</a></li>
+            <li><a href="{% url 'mypage:env' %}">개인정보 관리</a></li>
+            <li class="top"><a href="{% url 'mypage:loglock' %}">로그인 및 보안</a></li>
+            <li class="bottom"><a href="#">이용권/결제정보</a></li>
+            <li class="top"><a href="#">고객지원센터</a></li>
+            <li class="bottom"><a href="{% url 'user:logout' %}" style="color: #ffc000;">로그아웃</a></li>
+        </ul>
+    </div>
 
-</table>
-<a href="{% url 'mypage:update' user.pk %}">회원정보수정</a>
-<a href="{% url 'mypage:pwupdate' user.pk %}">비밀번호변경</a>
-
-
-
-<form class="post-form d-inline" action="{% url 'mypage:delete' user.pk %}" method="post">
-    {% csrf_token %}
-    <a href="{% url 'mypage:delete' user.pk %}"><button type="button" class="btn btn-danger">회원 탈퇴</button></a>
-</form>
-
-{% endblock body %}
-
+    <div class="home">
+        <h1>내 정보</h1>
+        <div class="boxes">
+            <div class="welcome">
+                <div class="picture"></div>
+                <h1>{{user.username}}님 환영합니다.</h1>
+                <hr>
+                <div class="buy">
+                    <h3>추라이 정기결제 이용권을 구매하시고<br>
+                    다양한 혜택을 받아보세요.</h3>
+                    <button>이용권 구매하기</button>
+                </div>
+            </div>
+            <div class="book">
+                <a href="{% url 'mypage:library' pk=user.username %}">
+                    <h2>내 책장</h2>
+                    <h3>서재에 담은 책과 읽고 있는 책의 목록과<br>
+                        리뷰를 작성하고 관리합니다.</h3>
+                    <h5>바로가기 ></h5>
+                    <div class="book-img">
+                        <i class="fa-solid fa-book-open fa-3x"></i>
+                    </div>
+                </a> 
+            </div>
+            <div class="login">
+                <a href="{% url 'mypage:loglock' %}">
+                    <h2>로그인 및 보안</h2>
+                    <h3>로그인시 비밀번호를 재설정하고<br>
+                        로그인 보안기능을 설정합니다.</h3>
+                    <h5>바로가기 ></h5>
+                    <div class="login-img">
+                        <i class="fa-solid fa-lock fa-3x"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="use">
+                <a href="{% url 'mypage:env' %}">
+                    <h2>개인정보 관리</h2>
+                    <h3>추라이 닉네임, 프로필사진 등<br>
+                        개인정보를 확인하고 관리합니다.</h3>
+                    <h5>바로가기 ></h5>
+                    <div class="use-img">
+                        <i class="fa-solid fa-gear fa-3x"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="money">
+                <h2>이용권 / 결제정보</h2>
+                <h3>추라이에 보유한 이용권/쿠폰<br>
+                    내역을 확인할 수 있습니다.</h3>
+                <h5>바로가기 ></h5>
+                <div class="use-img">
+                    <i class="fa-solid fa-gift fa-3x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

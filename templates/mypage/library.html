@@ -1,4 +1,70 @@
-{% extends 'common/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>CHURY | My Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/book.css' %}">
+    <script src="{% static 'mypage/book.js' %}"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="{% url 'board:home' %}"><div class="logo"></div></a>
+        <ul>
+            <li><a href="{% url 'mypage:profile' %}">내정보 홈</a></li>
+            <div class="sidebar-book">
+                <li><a href="#">내 책장</a></li>
+            </div>
+            <li><a href="{% url 'mypage:env' %}">개인정보 관리</a></li>
+            <li class="top"><a href="{% url 'mypage:loglock' %}">로그인 및 보안</a></li>
+            <li class="bottom"><a href="#">이용권/결제정보</a></li>
+            <li class="top"><a href="#">고객지원센터</a></li>
+            <li class="bottom"><a href="{% url 'user:logout' %}" style="color: #ffc000;">로그아웃</a></li>
+        </ul>
+    </div>
 
+    <div class="home">
+        <div class="header">
+            <li class="login_btn">
+                <a href="{% url 'user:logout' %}"><button class="btn">로그아웃</button></a>
+            </li>    
+        </div>
+        <h1>내 책장</h1>
+        <div class="tabs">
+            <input id="all" type="radio" name="tab_item" checked>
+            <label class="tab_item" for="all">책정보</label>
+            <input id="programming" type="radio" name="tab_item">
+            <label class="tab_item" for="programming">통계</label>
+            <div class="tab_content" id="all_content">
+                <div class="up">
+                    <div class="count">{{ response.item|length }}권의 책</div>
+                    <div class="buttons">
+                        <button class="recent">최근에 추가한 순</button>
+                        <button class="title">제목순</button>
+                        <button class="author">저자순</button>
+                        <button class="new">발행순</button>
+                    </div>
+                </div>
+                <div class="down">
+                    <div class="book-up">
+                        {% for i in response.item %}
+                        <span class="item">
+                            <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                                {% csrf_token %}
+                                <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                                <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
+                            </form>
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="tab_content" id="programming_content">
+                완독% / 독서시간 등 그래프
+            </div>
+        </div>
 
-내 도서관
+</body>
+</html>

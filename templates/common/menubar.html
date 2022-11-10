@@ -8,13 +8,13 @@
        
         {% if user.is_authenticated %}
             {# 로그인한 경우 #}
-            <!-- <a href="{% url 'mypage:library' %}" class="btn btn-outline-danger btn-sm">내 추라이</a>
+            <!-- <a href="{% url 'mypage:library' pk=user.username %}" class="btn btn-outline-danger btn-sm">내 추라이</a>
             <a href="{% url 'mypage:env' %}" class="btn btn-outline-danger btn-sm">설정</a>
             <a href="{% url 'mypage:profile' %}" class="btn btn-outline-danger btn-sm">회원정보수정</a>
             <a href="{% url 'user:logout' %}" class="btn btn-outline-secondary btn-sm">로그아웃</a> -->
             
         <li class="login_btn">
-            <a href="{% url 'mypage:profile' %}"><button class="btn">내 정보</button></a>
+            <a href="{% url 'mypage:profile' %}"><button class="btn" style="margin-right: 10px;">내 정보</button></a>
             <a href="{% url 'user:logout' %}"><button class="btn">로그아웃</button></a>
         </li>
 

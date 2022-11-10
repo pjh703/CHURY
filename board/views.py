@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 
 from django.views.generic import DetailView
+from user.models import User
+from mypage.models import MYBOOK, MYCHOOSE
 from xlrd import open_workbook
 
 
@@ -13,50 +15,104 @@ from xlrd import open_workbook
 # Create your views here.
 
 def home(request):
+    a = User.objects.filter(username = request.user).values('id')
+    e_id = a.values('id')[0]['id']
+    choo1 = MYCHOOSE.objects.filter(email_id = e_id).values('Action')
+    choo2 = MYCHOOSE.objects.filter(email_id = e_id).values('Adventure')
+    choo3 = MYCHOOSE.objects.filter(email_id = e_id).values('Animation')
+    choo4 = MYCHOOSE.objects.filter(email_id = e_id).values('Comedy')
+    choo5 = MYCHOOSE.objects.filter(email_id = e_id).values('Crime')
+    choo6 = MYCHOOSE.objects.filter(email_id = e_id).values('Documentary')
+    choo7 = MYCHOOSE.objects.filter(email_id = e_id).values('Drama')
+    choo8 = MYCHOOSE.objects.filter(email_id = e_id).values('Family')
+    choo9 = MYCHOOSE.objects.filter(email_id = e_id).values('Fantasy')
+    choo10 = MYCHOOSE.objects.filter(email_id = e_id).values('History')
+    choo11 = MYCHOOSE.objects.filter(email_id = e_id).values('Horror')
+    choo12 = MYCHOOSE.objects.filter(email_id = e_id).values('Music')
+    choo13 = MYCHOOSE.objects.filter(email_id = e_id).values('Mystery')
+    choo14 = MYCHOOSE.objects.filter(email_id = e_id).values('Romance')
+    choo15 = MYCHOOSE.objects.filter(email_id = e_id).values('ScienceFiction')
+    choo16 = MYCHOOSE.objects.filter(email_id = e_id).values('TVMovie')
+    choo17 = MYCHOOSE.objects.filter(email_id = e_id).values('Thriller')
+    choo18 = MYCHOOSE.objects.filter(email_id = e_id).values('War')
+    choo19 = MYCHOOSE.objects.filter(email_id = e_id).values('Western')
+    choo = choo1.exists()+choo2.exists()+choo3.exists()+choo4.exists()+choo5.exists()+choo6.exists()+choo7.exists()+choo8.exists()+choo9.exists()+choo10.exists()+choo11.exists()+choo12.exists()+choo13.exists()+choo14.exists()+choo15.exists()+choo16.exists()+choo17.exists()+choo18.exists()+choo19.exists()     
+   
 
-    page = 1
-    list = []
-    Key = 'ttbsaspower81040001'
+    # MYCHOO DATA가 있으면 home, 없으면 choose
+    if choo:
+        
+        page = 1
+        list = []
+        Key = 'ttbsaspower81040001'
 
-    categor = '170370'
-    # open API 주소를 이용합니다. json으로 받아옵니다.
-    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=20&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
-        # requests를 이용하여 json을 불러옵니다.
-    response = requests.get(apiurl).json()
-    # print(response)
+        categor = '170370'
+        # open API 주소를 이용합니다. json으로 받아옵니다.
+        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=20&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
+            # requests를 이용하여 json을 불러옵니다.
+        response = requests.get(apiurl).json()
+        # print(response)
 
-    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&output=js&Version=20131101"
-    response_top10 = requests.get(apiurl).json()
+        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&output=js&Version=20131101"
+        response_top10 = requests.get(apiurl).json()
 
 
-    wb = open_workbook('board/aladin_Category.xls')
-    sheet = wb.sheet_by_index(0)
-    sheet.cell_value(0, 0)
-    column_index = 2
-    column = sheet.cell_value(0, column_index)
+        wb = open_workbook('board/aladin_Category.xls')
+        sheet = wb.sheet_by_index(0)
+        sheet.cell_value(0, 0)
+        column_index = 2
+        column = sheet.cell_value(0, column_index)
 
-    categor_sf = '40112'
-    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=20&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor_sf}&output=js&Version=20131101"
-    response_sf = requests.get(apiurl).json()
+        categor_sf = '40112'
+        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=20&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor_sf}&output=js&Version=20131101"
+        response_sf = requests.get(apiurl).json()
+                
+        categor_fear = '56552'
+        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor_fear}&output=js&Version=20131101"
+        response_fear = requests.get(apiurl).json()
+        
+        
+        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=ItemNewSpecial&MaxResults=20&start=1&SearchTarget=eBook&Cover=Big&output=js&Version=20131101"
+        response_new = requests.get(apiurl).json()
+        
+        context = {
+            'response': response,
+            'response_top10': response_top10,
+            'response_sf': response_sf,
+            'response_fear': response_fear,
+            'response_new': response_new,
+        }
+
+        return render(request, "board/home.html", context)
+    
+
+    # 장르 데이터베이스 없을 시 choose로
+    else:
+
+        apikey = '6b75188cf5cbc494ffe18d4d302e3aaa'
+        
+        url = f'https://api.themoviedb.org/3/movie/popular?api_key={apikey}&language=ko-KR&page=1&region=KR'
+        genre_url = f'https://api.themoviedb.org/3/genre/movie/list?api_key={apikey}&language=ko-KR'
+        respon = requests.get(url).json()['results']
+        res_gen = requests.get(genre_url).json()['genres']
+        
+        for item in respon :
+            gen_list = []
+            for i in range(len(res_gen)):
+                gen_list += res_gen[i].values()
             
-    categor_fear = '56552'
-    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor_fear}&output=js&Version=20131101"
-    response_fear = requests.get(apiurl).json()
-    
-     
-    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=ItemNewSpecial&MaxResults=20&start=1&SearchTarget=eBook&Cover=Big&output=js&Version=20131101"
-    response_new = requests.get(apiurl).json()
-    
-    context = {
-        'response': response,
-        'response_top10': response_top10,
-        'response_sf': response_sf,
-        'response_fear': response_fear,
-        'response_new': response_new,
-    }
+            gen_ko = []
+            for j in range(len(item['genre_ids'])):
+                a = gen_list[gen_list.index(item['genre_ids'][j])-1]
+                gen_ko.append(a)
+           
+            item['gen_ko'] = gen_ko
+            
+        context = {
+            'respon': respon,
+        }
 
-    return render(request, "board/home.html", context)
-
+        return render(request, 'user/choose.html', context)
 
 
 def BoardDetailView(request, pk):
@@ -66,12 +122,35 @@ def BoardDetailView(request, pk):
 
     apiurl =f"http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey={Key}&itemIdType=ISBN13&ItemId={pk}&Cover=Big&output=js&Version=20131101&OptResult=ebookList,usedList,reviewList"
     response = requests.get(apiurl).json()
-    
-    # print(response)
-    context = {
-        'response': response,
-    }
-    return render(request, "board/detail.html", context)
+
+    isbook = True
+    if request.method == "POST":
+        email = request.POST['email']
+        email_id = User.objects.get(email = email).id
+        mydic = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk)
+        mydic1 = MYBOOK.objects.filter(email_id = email_id).filter(mydic = pk)
+        # print(mydic1)
+        # print("post")
+
+        if len(mydic) > 0:
+            isbook = False # 책이 저장되어 있는 경우
+
+        # print(response)
+        context = {
+            'response': response,
+            'isbook': isbook,
+        }
+        return render(request, "board/detail.html", context)
+
+    else:
+        # print("get")
+        # print(response)
+
+        context = {
+            'response': response,
+            'isbook': isbook,
+        }
+        return render(request, "board/detail.html", context)
 
 
 
@@ -141,13 +220,14 @@ def search(request, **kwargs):
 
                     page = 1
                     response = {}
+                    response_list = []
                     Key = 'ttbsaspower81040001'
                     COUNT = 0
                     for row in range(1, sheet.nrows):
                         if sheet.cell_value(row, column_index) == '전자책':
                             if search_word == '':
                                 response = {'status': 'empty'}
-                            elif search_word in (str)(sheet.cell_value(row, column_index - 1)):
+                            elif (search_word in (str)(sheet.cell_value(row, column_index - 1)))|(search_word in (str)(sheet.cell_value(row, column_index + 1))):
                                 categor = (int)(sheet.cell_value(row, column_index - 2))
                                 if query_type == 'ItemNewAll':
                                     apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=ItemNewAll&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
@@ -155,9 +235,9 @@ def search(request, **kwargs):
                                     apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
                                 # requests를 이용하여 json을 불러옵니다.
                                 response_url = requests.get(apiurl).json()
-                                response.update(response_url)
-                                # print(response)
-                    print(response)
+                                response_list.append(response_url['item'])
+                                response['item'] = sum(response_list, [])
+
 
                     context = {
                         'response': response,

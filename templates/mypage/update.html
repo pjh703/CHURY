@@ -1,16 +1,97 @@
-{% extends 'common/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>CHURY | My Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='{% static 'mypage/user-modal/namemodal.css' %}'>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <a href="{% url 'board:home' %}"><img src="{% static 'mypage/logo.png' %}"></a>
+        </div>
+
+        <ul>
+            <div class="sidebar-home">
+                <li><a href="info.html">내정보 홈</a></li>
+            </div>
+            <div class="sidebar-book">
+                <li><a href="book.html">내 책장</a></li>
+            </div>
+            <div class="sidebar-use">
+                <li><a href="#">개인정보 관리</a></li>
+            </div>
+            <li class="top"><a href="loglock.html">로그인 및 보안</a></li>
+            <li class="bottom"><a href="#">이용권/결제정보</a></li>
+            <li><a href="#">고객지원센터</a></li>
+        </ul>
+    </div>
+
+    <div class="home">
+        <div class="header">
+            <li class="login_btn">
+                <a href="../intro.html"><button class="btn">로그아웃</button></a>
+            </li>    
+        </div>
+        <h1>개인정보 관리</h1>
+        <h3>추라이에 등록된 개인정보 정보를 확인할 수 있습니다. 최신 정보로 관리해주세요.</h4>
+        <div class="box">
+            <div class="nickname">
+                <div class="title">닉네임</div>
+                <div class="right">></div>
+            </div>
+            <div class="profile">
+                <div class="title">프로필사진</div>
+                <div class="right">></div>
+            </div>
+            <div class="pw-change">
+                <div class="title">비밀번호 변경</div>
+                <div class="right">></div>
+            </div>
+
+            <div class="exit">
+                <div class="title">회원 탈퇴</div>
+                <div class="right">></div>
+            </div>
+        </div>
+    </div>
 
 
-{% block body %}
+    <!-- modal -->
+    <div class="overlay"></div>
 
-<form action="{% url 'mypage:update' user.pk %}" method="post">
-    {% csrf_token %}
-    <table class="table">
-        {{ form.as_table }}
-    </table>
-    <input type="submit" class="btn btn-dark rounded-pill col-6 mt-5">
-</form>
+    <div class="modal-wrapper">
+        <div class="modal-inner">
+            <div class="othertxt">
+                <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage\images\close.svg' %}" alt=""></a>
+                <div class="warning">추라이 서비스 이용 시<br>노출되는<br>닉네임입니다.</div>
+                <div class="input-btn">
+                <form action="{% url 'mypage:update' user.pk %}" method="post">
+                {% csrf_token %}
+                <input type="username" class="form-control" id="username" name="username" placeholder="nickname" value="{{ form.username.value|default_if_none:'' }}">
+                <input hidden type="email" class="form-control" id="email" name="email" placeholder="이메일 (example@gmail.com)" value="{{ form.email.value|default_if_none:'' }}">
+                      
+                    <div id="error" style="position: relative; left: 70px; color: red;">
+                        {{ form.errors.username }}
+                    </div>
+                    <!-- <input type="text" id="name" name="name" placeholder="닉네임 (2자 이상)"> -->
+                    <!-- <button>중복확인</button> -->
 
+                </div>
+                <div class="description">한글 및 영문, 숫자, @/./+/-/_만 등록 가능합니다.</div>
+                <li>닉네임을 변경하면 이전 작성한 글의 닉네임도 같이 변경 됩니다.</li>
+            </div>
+            <div class="modal-buttons">
+                <!-- <a href="{% url 'mypage:env' %}">
+                    <button class="cancel-btn">취소</button></a> -->
+                <button type="submit" class="change-btn">변경</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
-{% endblock body %}
-
+</body>
+</html>

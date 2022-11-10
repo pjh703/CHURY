@@ -412,10 +412,10 @@ section .content-list .slider .item {
   z-index: 1;
   opacity: .99;
 }
-section .content-list .slider .item img {
+section .content-list .slider .item .imgs {
   /* 포스터 사이즈만 바뀜. 틀은 안바뀜 */
-  width: 100%;
-  height: 100%;
+  width: 200px;
+  height: 280px;
   object-fit: cover;
   border-radius: 15px;
   z-index: 2;

@@ -1,0 +1,419 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family:'Pretendard-Regular';
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: black;
+}
+
+.logo {
+    display: block;
+    margin: 0px auto;
+
+    width: 150px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+
+    z-index: 10;
+    cursor: pointer;
+}
+
+
+.sidebar ul a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 18px;
+    color: white;
+    padding-left: 40px;
+    box-sizing: border-box;
+    transition: .4s;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+/* 해당카테고리 bold */
+.sidebar-use {
+    font-weight: 800;
+}
+
+.top {
+    margin-bottom: 15px;
+}
+.bottom {
+    border-top: 1px solid rgb(56, 56, 56);
+    padding-top: 15px;
+}
+
+
+ul li:hover a {
+    padding-left: 50px;
+}
+
+.home { 
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(243, 243, 243);
+}
+
+
+/* =========== */
+
+.header{
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+.login_btn{
+    /*왼쪽에 붙어있게 해주는 아래 두 줄*/
+    display: flex;
+    justify-content: flex-end;
+
+    margin-right: 40px;
+
+    width: 100%;
+}
+
+.btn{
+    height: 30px;
+    background-color: black;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+ }
+ 
+
+/* =========== */
+
+/* 개인정보 관리 */
+.home h1 {
+    position: fixed;
+    margin-left: 320px;
+    margin-top: 120px;
+}
+
+.home h3 {
+    position: fixed;
+    margin-left: 320px;
+    margin-top: 180px;
+
+    font-size: medium;
+    font-weight: 500;
+    color: #6e6e6e;
+    letter-spacing: 0.5px;
+}
+
+/* =================================== */
+.box {
+    position: fixed;
+    margin-left: 320px;
+    margin-top: 230px;
+    width: 1140px;
+    height: 480px;
+    display: flex;
+    gap: 20px;
+    /* background-color: blue; */
+    /* height는 더 늘어나도 됨. 화면 넘어가면 scroll 추가하기 */
+}
+
+/* 닉네임 박스 */
+.nickname{
+  position: absolute;
+  width: 560px;
+  height: 80px;
+  align-items: center;
+  display: flex;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+
+  text-decoration: none;
+  color: black;
+}
+
+.title {
+  margin-left: 30px;
+  margin-right: auto;
+}
+.right {
+  margin-right: 30px;
+}
+.nickname:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+
+/* 프로필사진 박스 */
+.profile {
+  position: absolute;
+  margin-left: 580px;
+
+  width: 560px;
+  height: 80px;
+  align-items: center;
+  display: flex;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+
+  text-decoration: none;
+  color: black;
+}
+.title {
+  margin-left: 30px;
+  margin-right: auto;
+}
+.right {
+  margin-right: 30px;
+}
+.profile:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+
+/* 비밀번호 변경 박스 */
+.pw-change {
+  position: absolute;
+  margin-top: 100px;
+
+  width: 560px;
+  height: 80px;
+  align-items: center;
+  display: flex;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+.title {
+  margin-left: 30px;
+  margin-right: auto;
+}
+.right {
+  margin-right: 30px;
+}
+.pw-change:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+/* 회원 탈퇴 박스 */
+.exit {
+  position: absolute;
+  margin-top: 100px;
+  margin-left: 580px;
+
+  width: 560px;
+  height: 80px;
+  align-items: center;
+  display: flex;
+  font-size: 18px;
+  font-weight: 500;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+.title {
+  margin-left: 30px;
+  margin-right: auto;
+}
+.right {
+  margin-right: 30px;
+}
+.exit:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+
+/* ======================= */
+/* 닉네임 modal */
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.5s;
+    animation-fill-mode: both;
+  }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+  
+  .modal-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-inner {
+    width: 500px;
+    background-color: rgb(30, 30, 30);
+    border-radius: 12px;
+    animation: showPopup 0.75s;
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+@keyframes showPopup {
+  from {
+      opacity: 0;
+      transform: scale(0.8);
+  }
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+.othertxt { 
+  height: auto;
+  position: relative;
+}
+
+.warning {
+  font-size: 1.6rem;
+  text-align: left;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 40px;
+  margin-left: 60px;
+  margin-top: 60px;
+}
+
+
+.othertxt img {
+  position: absolute;
+  width: 20px;
+  filter: opacity(0.4) drop-shadow(0 0 0 white);
+  margin: 0;
+  right: 60px;
+  cursor: pointer;
+}
+
+.middle {
+    display: flex;
+    align-items: center;
+    margin-left: 60px;
+}
+
+.upload {
+    display: flex;
+    align-items: center;
+    color: #ffc000;
+    font-size: 15px;
+    padding-bottom: 20px;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+.upload i {
+    padding-right: 20px;
+}
+
+.delete {
+    display: flex;
+    align-items: center;   
+    color: #ffc000;
+    font-size: 15px;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+.delete i {
+    padding-right: 20px;
+    padding-left: 2px;
+}
+
+.picture {
+    width: 200px;
+    height: 200px;
+    background-color: #ddd;
+    margin-left: 80px;
+    border-radius: 50%;
+}
+
+/* ======================================= */
+/* 취소, 변경 버튼 */
+.modal-buttons {
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 65px;
+}
+
+.cancel-btn {
+  width: 190px;
+  height: 45px;
+  margin-right: 10px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #636363;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+.cancel-btn:hover {
+  background-color: rgb(172, 172, 172);
+}
+
+.change-btn {
+  width: 190px;
+  height: 45px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #636363;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+.change-btn:hover {
+  background-color: rgb(172, 172, 172);
+}
