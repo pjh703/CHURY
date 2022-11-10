@@ -17,22 +17,6 @@
   
   /* ========================== */
   
-  body {
-    background-color: rgb(255, 255, 255);
-    overflow-x: hidden;
-  }
-  
-  a {
-    text-decoration: none;
-  }
-  
-  button {
-    border: none;
-    padding: 0.9em 2em;
-    border-radius: 5px;
-    font-weight: 600;
-    cursor: pointer;
-  }
   
   nav {
     display: flex;
@@ -40,9 +24,6 @@
     align-items: center;
     height: 80px;
     z-index: 98;
-    /* background: linear-gradient(to bottom, rgb(250, 250, 250) 10%, rgba(255, 255, 255, 0.158)); */
-    /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 10%, rgba(0, 0, 0, 0)); */
-    /* background: linear-gradient(white, rgba(255, 255, 255, 0)); */
     background-color: white;
     border-bottom: 1px solid #ddd;
   }
@@ -88,7 +69,6 @@
   }
   nav .left .menu-list {
     display: flex;
-    margin-top: 17px;
   }
   nav .left .menu-list li {
     display: flex;
@@ -100,6 +80,52 @@
   nav .left .menu-list li a {
     font-size: 1rem;
   }
+/* ---------form------------- */
+
+/* 3개 항목 가운데정렬 */
+.input-group {
+  align-items: center;
+  outline: none;
+}
+
+/* 왼쪽 제목,저자,장르별 */
+.form-select2 {
+  height: 35px;
+  width: 100px;
+  text-align: center;
+  border: 1px solid black;
+  border-right: none;
+}
+
+/* 가운데 search bar */
+.search-bar {
+  height: 35px;
+  display: flex;
+  border: 1px solid black;
+}
+.search-bar input {
+  width: 400px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: none;
+}
+.search-bar button {
+  height: 33px;
+  width: 60px;
+  border: none;
+  border-left: 1px solid black;
+}
+
+/* 오른쪽 최신,인기,평점순 */
+.form-select3 {
+  height: 35px;
+  width: 100px;
+  margin-left: 15px;
+  text-align: center;
+}
+
+/* ======================================================= */
+
   nav .right {
     display: flex;
     margin-right: 2em;
@@ -131,6 +157,8 @@
   nav .right .profile:hover i {
     transform: rotate(180deg);
   }
+
+  /* ============================================= */
   
   /* 드롭다운 */
   .dropdown-content {
@@ -157,29 +185,19 @@
   
   /* 드롭다운 끝 */
   
-  nav .right .search {
-    border: 1px solid black;
-    background-color: white;
-  }
-  nav .right .search .search-bar {
-    display: flex;
-    height: 15px;
-  }
-  nav .right .search .search-bar input {
-    background-color: transparent;
-    border: none;
-    color: black;
-    outline: none;
-    background-color: white;
-    padding-right: 2px;
-  }
-  
-  .right select {
-    font-size: 15px;
-  }
-  
   /* ===================================================== */
-  
+
+.search-result  {
+  text-align: center;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  background-color: rgb(247, 247, 247);
+  border-bottom: 1px solid #ddd
+}
+
+  /* ===================================================== */
+
+
   /* 왼쪽 간격 */
   .middle {
     display: flex;
@@ -187,9 +205,9 @@
   }
   
   .side-left {
-    margin-left: 300px;
+    margin-left: 200px;
     height: 500px;
-    background-color: green;
+    /* background-color: green; */
   }
   
   
@@ -203,139 +221,341 @@
   }
 
 /* ================================================== */
-/* 책 */
+/* 사이드바 */
 
-.search-result {
-  letter-spacing: 0.5px;
-  font-size: 18px;
-  text-align: center;
-  margin-top: 50px;
-  padding-bottom: 50px;
-  /* border-bottom: 1px solid #ddd; */
-}
+.sidebar {
+    /* position: fixed; */
+    width: 200px;
+    z-index: 996;
+    transition: all 0.3s;
+    padding: 20px;
+    /* background-color: red; */
+  
+    margin-top: 70px;
+    /* border-right: 1px solid #ddd; */
+  }
+  
+  .sidebar-nav {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .sidebar-nav li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    margin-bottom: 5px;
+  }
+  
+  .sidebar-nav .nav-item {
+    margin-bottom: 5px; /*칸마다 위아래 간격*/
+  }
+  
+.nav-link {   /* 선택하면 노란색 */
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: black;
+    transition: 0.3;
+    background: #ffc000;
+    padding: 10px 15px;
+    border-radius: 4px;
+  }
 
-.search-result button {
-  margin-top: 20px;
-  height: 50px;
-  width: 220px;
-  font-weight: 600;
-  font-size: 15px;
-  background-color: black;
+  .sidebar-nav .nav-link.collapsed {
+    color: white;
+    background: black;
+  }
+
+.sidebar-nav .nav-link2.collapsed {
   color: white;
-  border: none;
-  border-radius: 10px;
-  letter-spacing: 2px;
+  background: rgb(165, 165, 165);
+  border-radius: 4px;
 }
+.nav-link2 {
+  color: white;
+  background: rgb(165, 165, 165);
+  border-radius: 4px;
+}
+.nav-link2:hover {
+  color: white;
+  background: rgb(165, 165, 165);
+  border-radius: 4px;
+}
+  
+  .sidebar-nav .nav-link .bi-chevron-down {
+    margin-right: 0;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .sidebar-nav .nav-link:not(.collapsed) .bi-chevron-down {
+    transform: rotate(180deg);
+  }
+
+  .sidebar-nav .nav-link2 .bi-chevron-down {
+    margin-right: 0;
+    transition: transform 0.2s ease-in-out;
+  }
+  .sidebar-nav .nav-link2:not(.collapsed) .bi-chevron-down {
+    transform: rotate(180deg);
+  }
+  
+  .sidebar-nav .nav-content {
+    padding: 5px 0 0 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .sidebar-nav .nav-content a {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 500;
+    transition: 0.3;
+    padding: 10px 20px 10px 20px;
+    transition: 0.3s;
+  }
+
+  .sidebar-nav .nav-content a i {
+    font-size: 6px;
+    margin-right: 8px;
+    line-height: 0;
+    border-radius: 50%;
+  }
+
+
+
+#components-nav2 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav2 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav3 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav3 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav4 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav4 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav5 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav5 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav6 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav6 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav7 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav7 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav8 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav8 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav9 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav9 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav10 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav10 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav11 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav11 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav12 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav12 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav13 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav13 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav14 li {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav14 li:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav15 a {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+#components-nav15 a:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav17 a {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+#components-nav17 a:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav18 a {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+#components-nav18 a:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+#components-nav19 a {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+#components-nav19 a:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+
+#components-nav19 .nav-link2 {
+  color: white;
+  background: rgb(165, 165, 165);
+  border-radius: 4px;
+  margin-bottom: 0;
+}
+#components-nav19 .nav-link2:hover {
+  color: white;
+  background: rgb(165, 165, 165);
+  border-radius: 4px;
+  margin-bottom: 0;
+}
+#components-nav20 a {
+  color: black;
+  background: #ddd;
+  border-radius: 4px;
+}
+#components-nav20 a:hover {
+  color: black;
+  background: rgb(234, 234, 234);
+  border-radius: 4px;
+}
+
+
+
+
+
+
+/* ================================================== */
+/* 책 */
 
 a {
   text-decoration: none;
   color: black;
 }
 
-.about-book {
-    display: flex;
-    background-color: red;
-}
-
-.buttons {
-    display: flex;
-    text-align: center;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin-top: 25px;
-    /* margin-left: 90px; */
-}
-
-.basic {
-  width: 150px;
-  height: 50px;
-  border: none;
-  background-color: black;
-  /* background-color: rgb(247, 247, 247); */
-  color: white;
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  border-right: 1px solid rgb(208, 208, 208);
-}
-/* .basic:hover {
-  background-color: #ddd;
-} */
-
-.romance {
-  width: 150px;
-  height: 50px;
-  border: none;
-  background-color: rgb(247, 247, 247);
-  border-right: 1px solid rgb(208, 208, 208);
-  font-size: 17px;
-  letter-spacing: 2px;
-}
-.romance:hover {
-  background-color: #ddd;
-}
-
-.bl {
-  width: 150px;
-  height: 50px;
-  border: none;
-  background-color: rgb(247, 247, 247);
-  border-right: 1px solid rgb(208, 208, 208);
-  font-size: 17px;
-  letter-spacing: 2px;
-}
-.bl:hover {
-  background-color: #ddd;
-}
-
-.fantasy {
-  width: 150px;
-  height: 50px;
-  border: none;
-  background-color: rgb(247, 247, 247);
-  font-size: 17px;
-  letter-spacing: 2px;
-}
-.fantasy:hover {
-  background-color: #ddd;
-}
-
 .book-info {
-  width: 100%;
-}
-
-.sort {
-  height: 30px;
-  width: 150px;
   margin-top: 30px;
-  margin-left: 750px;
-  color: black;
-  font-size: 15px;
 }
 
 .books {
   display: flex;
   padding-bottom: 30px;
   border-bottom: 1px solid #ddd;
+  align-items: center;
 }
 
 .book-number {
   margin-top: 30px;
-  margin-left: 50px;
-}
-
-.book-thumbnail {
-  width: 220px;
-  height: 280px;
-  margin-top: 30px;
-  margin-left: 50px;
-  background-color: #ddd;
-  border-radius: 10px;
+  margin-left: 30px;
 }
 
 .book-titles {
-  margin-top: 50px;
+  margin-top: 30px;
   margin-left: 50px;
 }
 
@@ -348,17 +568,54 @@ a {
 
 .book-author {
   height: 35px;
-  width: 200px;
   font-size: 16px;
 }
 
 .book-other {
   height: 35px;
-  width: 200px;
+  width: 300px;
   font-size: 16px;
 }
 
+/* 계란 start */
+.eggs {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+.eggs.egg-imgs img {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  margin-right: 5px;
+  padding-right: 10px;
+  margin-top: 10px;
+}
+.no-eggs {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.comment {
+  margin-top: 10px;
+  margin-right: -90px;
+  color: rgb(61, 61, 61);
+}
+
+.point {
+  /* margin-left: 43px; */
+  font-size: 24px;
+  width: 200px;
+}
+/* 계란 end */
+
 .grade {
+  display: flex;
+  align-items: center;
+}
+
+.egg {
   width: 50px;
   height: 50px;
   margin-top: 30px;
@@ -393,48 +650,96 @@ a {
 }
 
 .book-buttons {
+  margin-left: auto;
+  margin-right: 30px;
   margin-top: 210px;
-  margin-left: 190px;
 }
 
 /* =================================================== */
 /* pagination */
 
-.page_wrap {
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
   margin-top: 50px;
-  padding-bottom: 100px;
-
-	text-align:center;
-	font-size:0;
- }
-.page_nation {
-	display:inline-block;
-}
-.page_nation .none {
-	display:none;
-}
-.page_nation a {
-	display:block;
-	margin:0 3px;
-	float:left;
-	border:1px solid #ddd;
-	width:28px;
-	height:28px;
-	line-height:28px;
-	text-align:center;
-	background-color:white;
-	font-size:13px;
-	color:#999999;
-	text-decoration:none;
-}
-.page_nation .arrow {
-	border:1px solid #ddd;
-  background-color: rgb(247, 247, 247);
-  color: #999999;
+  margin-bottom: 100px;
 }
 
-.page_nation a.active {
-	background-color:black;
-	color:#fff;
-	border:1px solid black;
+.pagination ul {
+  display: flex;
+  background-color: white;
+  padding-left: 0;
 }
+
+.pagination ul li {
+  height: 30px;
+  list-style: none;
+  line-height: 30px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination ul li.numb {
+  height: 30px;
+  width: 45px;
+  margin-left: 5px;
+}
+
+.pagination ul li.btn {
+  background: #ddd;
+  padding: 0 10px;
+}
+
+.pagination ul li.prev2 {
+  margin-right: 5px;
+}
+.pagination ul li.next {
+  margin-left: 5px;
+}
+.pagination ul li.next2 {
+  margin-left: 5px;
+}
+
+.pagination ul li.active,
+.pagination ul li.numb:hover {
+  background: rgb(202, 202, 202);
+  border-radius: 5px;
+}
+
+/* .point .eggimg1 {
+  display: block;
+  width: 50px;
+  height: 50px;
+  background-image: url("./images/1.svg");
+  background-size: contain;
+  background-color: black;
+}
+.point .eggimg2 {
+  display: block;
+  width: 50px;
+  height: 50px;
+  background-image: url("./images/2.svg");
+  background-size: contain;
+  background-color: black;
+}
+.point .eggimg3 {
+  display: block;
+  width: 50px;
+  height: 50px;
+  background-image: url("./images/3.svg");
+  background-size: contain;
+  background-color: black;
+}
+.point .eggimg4 {
+  display: block;
+  width: 50px;
+  height: 50px;
+  background-image: url("./images/4.svg");
+  background-size: contain;
+  background-color: black;
+} */

@@ -165,16 +165,16 @@ def search(request, **kwargs):
     if search_type and search_type: # 검색기준 및 검색어를 전달받은 경우
             match search_type:
                 case 'title':
-                    page = 1
+                    page = request.GET.get('page', 1)
                     list = []
                     Key = 'ttbsaspower81040001'
                     
                     if sort_type == 'SalesPoint':
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start=1&SearchTarget=eBook&Sort=SalesPoint&Cover=Big&output=js&Version=20131101"
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start={page}&SearchTarget=eBook&Sort=SalesPoint&Cover=Big&output=js&Version=20131101"
                     elif sort_type == 'CustomerRating':
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start=1&SearchTarget=eBook&Sort=CustomerRating&Cover=Big&output=js&Version=20131101"
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start={page}&SearchTarget=eBook&Sort=CustomerRating&Cover=Big&output=js&Version=20131101"
                     else:
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start=1&SearchTarget=eBook&Sort=PublishTime&Cover=Big&output=js&Version=20131101"
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start={page}&SearchTarget=eBook&Sort=PublishTime&Cover=Big&output=js&Version=20131101"
                     response = requests.get(apiurl).json()
 
                     # print(response)
@@ -188,16 +188,16 @@ def search(request, **kwargs):
                     return render(request, "board/search.html", context)
 
                 case 'author':
-                    page = 1
+                    page = request.GET.get('page', 1)
                     list = []
                     Key = 'ttbsaspower81040001'
                     
                     if sort_type == 'SalesPoint':
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start=1&SearchTarget=eBook&Sort=SalesPoint&Cover=Big&output=js&Version=20131101"
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start={page}&SearchTarget=eBook&Sort=SalesPoint&Cover=Big&output=js&Version=20131101"
                     elif sort_type == 'CustomerRating':
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start=1&SearchTarget=eBook&Sort=CustomerRating&Cover=Big&output=js&Version=20131101"
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start={page}&SearchTarget=eBook&Sort=CustomerRating&Cover=Big&output=js&Version=20131101"
                     else:
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start=1&SearchTarget=eBook&Sort=PublishTime&Cover=Big&output=js&Version=20131101"
+                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start={page}&SearchTarget=eBook&Sort=PublishTime&Cover=Big&output=js&Version=20131101"
                     response = requests.get(apiurl).json()
 
                     # print(response)
@@ -218,7 +218,7 @@ def search(request, **kwargs):
                     column_index = 2
                     column = sheet.cell_value(0, column_index)
 
-                    page = 1
+                    page = request.GET.get('page', 1)
                     response = {}
                     response_list = []
                     Key = 'ttbsaspower81040001'
@@ -230,9 +230,9 @@ def search(request, **kwargs):
                             elif (search_word in (str)(sheet.cell_value(row, column_index - 1)))|(search_word in (str)(sheet.cell_value(row, column_index + 1))):
                                 categor = (int)(sheet.cell_value(row, column_index - 2))
                                 if query_type == 'ItemNewAll':
-                                    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=ItemNewAll&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
+                                    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=ItemNewAll&MaxResults=10&start={page}&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
                                 else:
-                                    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
+                                    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start={page}&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
                                 # requests를 이용하여 json을 불러옵니다.
                                 response_url = requests.get(apiurl).json()
                                 response_list.append(response_url['item'])
