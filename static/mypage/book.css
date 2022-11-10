@@ -249,50 +249,51 @@ ul li:hover a {
 /* 책정보 content 하단*/
 .down {
     height: 410px;
-    width: 1140px;
+    width: 1200px;
     /* background-color: palegreen; */
+    overflow-x: hidden;
     overflow-y: scroll;
+    margin-bottom: 100px;
 }
     .book-up {
-        display: flex;
-        gap: 75px;
+        /* width: 1140; */
+        display: block;
+        gap: 50px;
+        margin-left: 90px;
+        margin-right: 55px;
+        margin-top: 40px;
     }
-    .book1 {
-        height: 160px;
-        width: 115px;
-        border-radius: 10px;
-        background-color: #ddd;
-        margin-left: 30px;
+
+    .item:hover .imgs{
+        filter: brightness(0.5);
     }
-    .book2 {
-        height: 160px;
-        width: 115px;
-        border-radius: 10px;
-        background-color: #ddd;
-    }
-    .book3 {
-        height: 160px;
-        width: 115px;
-        border-radius: 10px;
-        background-color: #ddd;
-    }
-    .book4 {
-        height: 160px;
-        width: 115px;
-        border-radius: 10px;
-        background-color: #ddd;
-    }
-    .book5 {
-        height: 160px;
-        width: 115px;
-        border-radius: 10px;
-        background-color: #ddd;
-    }
-    .book6 {
-        height: 160px;
-        width: 115px;
-        border-radius: 10px;
-        background-color: #ddd;
+
+    .descr{
+        font-size: large;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 50px;
+        position: absolute;
+        color: white;
+        opacity: 0;
+        transition: all ease 0.5s;
+        z-index: 3;
+        width: 200px;
+      } 
+        
+      .item:hover .descr{ 
+        opacity: 1;
+      }
+
+    .imgs {
+        width: 200px;
+        height: 280px;
+        margin-right: 55px;
+        margin-bottom: 50px;
+        object-fit: cover;
+        border-radius: 15px;
+        z-index: 2;
+        float: left;
     }
 .book-down {
     height: 205px;
@@ -360,3 +361,5 @@ ul li:hover a {
 
     margin-left: 30px; /*왼쪽 책들만 30씩 더해주면 됨.*/
 }
+
+

@@ -12,7 +12,9 @@
 </head>
 <body>  
     {% if user.is_authenticated %}
-    <div class="h3">잘못된 접근입니다.</div>
+    {% block body %}
+        
+    {% endblock body %}
     {% else %}
     <script type="text/javascript">
         

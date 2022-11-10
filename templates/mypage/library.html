@@ -17,8 +17,8 @@
             <div class="sidebar-book">
                 <li><a href="#">내 책장</a></li>
             </div>
-            <li><a href="user.html">개인정보 관리</a></li>
-            <li class="top"><a href="loglock.html">로그인 및 보안</a></li>
+            <li><a href="{% url 'mypage:env' %}">개인정보 관리</a></li>
+            <li class="top"><a href="{% url 'mypage:loglock' %}">로그인 및 보안</a></li>
             <li class="bottom"><a href="#">이용권/결제정보</a></li>
             <li class="top"><a href="#">고객지원센터</a></li>
             <li class="bottom"><a href="{% url 'user:logout' %}" style="color: #ffc000;">로그아웃</a></li>
@@ -28,7 +28,7 @@
     <div class="home">
         <div class="header">
             <li class="login_btn">
-                <a href="../intro.html"><button class="btn">로그아웃</button></a>
+                <a href="{% url 'user:logout' %}"><button class="btn">로그아웃</button></a>
             </li>    
         </div>
         <h1>내 책장</h1>
@@ -39,7 +39,7 @@
             <label class="tab_item" for="programming">통계</label>
             <div class="tab_content" id="all_content">
                 <div class="up">
-                    <div class="count">7권의 책</div>
+                    <div class="count">{{ response.item|length }}권의 책</div>
                     <div class="buttons">
                         <button class="recent">최근에 추가한 순</button>
                         <button class="title">제목순</button>
@@ -49,20 +49,15 @@
                 </div>
                 <div class="down">
                     <div class="book-up">
-                        {% for i in mydic %}
-                        {{ i.mydic }}
+                        {% for i in response.item %}
+                        <span class="item">
+                            <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                                {% csrf_token %}
+                                <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                                <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
+                            </form>
+                        </span>
                         {% endfor %}
-                    </div>
-                    <div class="book-down">
-                        <div class="book7"></div>
-                        <div class="book8"></div>
-                        <div class="book9"></div>
-                        <div class="book10"></div>
-                        <div class="book11"></div>
-                        <div class="book12"></div>
-                    </div>
-                    <div class="extra-book">
-                        <div class="book13"></div>
                     </div>
                 </div>
             </div>

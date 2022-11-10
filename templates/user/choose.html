@@ -10,6 +10,7 @@
     
 
 </head>
+
 <body>
     <div class="header" style="position: absolute;">
         <div class="logoArea" style="position: absolute; left: 8%;">
@@ -25,10 +26,10 @@
         콘텐츠를 3개 이상 <br>
         선택해 주세요. <br><br>
         </h1>
-    <p>
-        취향에 딱 맞는 도서를 찾아드리는 데 도움이 됩니다. <br>
-        마음에 드는 콘텐츠를 선택하세요.
-    </p>
+        <h3>
+            취향에 딱 맞는 도서를 찾아드리는 데 도움이 됩니다. <br>
+            마음에 드는 콘텐츠를 선택하세요.
+        </h3>
    
     <form action="{% url 'mypage:choose' %}" method="post">
     {% csrf_token %}
@@ -53,7 +54,7 @@
                 <input type="checkbox" id="ch{{forloop.counter}}" name="contents" onclick='getCheckedCnt()' style="display:none;">
                 <label for="ch{{forloop.counter}}">
                     <div class="tab-btn">
-                        <img src="{% static 'user/choose/image/egg.png' %}" width="150px" height="auto" id="egg{{forloop.counter}}" class="egg" style="display:none;">
+                        <img src="{% static 'user/choose/image/egg.png' %}" width="100px" height="auto" id="egg{{forloop.counter}}" class="egg" style="display:none; margin-left: 23px; margin-top: 15px;">
                         <img src="https://image.tmdb.org/t/p/original/{{ i.poster_path }}" alt="포스터" width="200" height="250" class="poster">
                         <input value="{{ i.gen_ko }}" id="choose" name="choose" class="choose" hidden disabled>
                     </div>

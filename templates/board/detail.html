@@ -21,16 +21,16 @@
             <div class="mobile-menu">메뉴</div>
             <ul class="menu-list">
                 <li>
-                    <a href="#">일반</a>
+                    <!-- <a href="#">일반</a> -->
                 </li>
                 <li>
-                    <a href="#">로맨스</a>
+                    <!-- <a href="#">로맨스</a> -->
                 </li>
                 <li>
-                    <a href="#">BL</a>
+                    <!-- <a href="#">BL</a> -->
                 </li>
                 <li>
-                    <a href="#">판타지/무협</a>
+                    <!-- <a href="#">판타지/무협</a> -->
                 </li>
             </ul>
         </div>
@@ -103,11 +103,23 @@
                                 {% csrf_token %}
                                 <input value="{{ i.isbn13 }}" name="mydic" id="mydic" style="display: none;">
                                 <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                                <input value="{{ user.username }}" name="username" id="username" style="display: none;">
                                 
                                 <button type="submit" class="fa-solid fa-circle-plus fa-3x" title="내 책장에 담기"></button>
                             </form>
                             {% else %}
-                            <button type="submit" class="fa-solid fa-circle-minus fa-3x" style="float:left; margin-left: 10px;" title="내 책장에서 빼기"></button>
+                            <form action="{% url 'mypage:mydic_del' %}" method="post" style="float:left; margin-left: 10px;"> 
+                                {% csrf_token %}
+                                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" style="display: none;">
+                                <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                                
+                                <button type="submit" class="fa-solid fa-circle-minus fa-3x" onclick="button1_click();" title="내 책장에서 빼기"></button>
+                                <script>
+                                    function button1_click() {
+                                        alert("내 책장에서 제외되었습니다.");
+                                    }
+                                    </script>
+                            </form>
                             {% endif %}
                         </div>
                     </div>
@@ -149,30 +161,37 @@
         {% endif %}
         <br><br>
             
-    {% endfor %}
         <div class="introduce">
             <div class="title">
                 <h3 style="left: 50px;">리뷰 남기기</h3>
             </div>
-            <div class="content2" style="margin-right: 700px;">
-                <!-- <div><hr style="width: 1054px; margin-left: -50px;"><br><br></div> -->
-                <span class="star">
-                    ★★★★★
-                    <span>★★★★★</span>
-                    <input type="range" oninput="drawStar(this)" value="1" step="1" min="0" max="10">
-                    <br>  
-                </span>
-                <div class="enroll"><a href="#">등록</a></div>
-            </div>
             
+            <form action="{% url 'mypage:mydic2' %}" method="post">
+                {% csrf_token %}
+                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" hidden>
+                <input value="{{ user.email }}" name="email" id="email" hidden>
+                
+                <div class="content2" style="margin-right: 700px;">
+                    <!-- <div><hr style="width: 1054px; margin-left: -50px;"><br><br></div> -->
+                    <span class="star">
+                        ★★★★★
+                        <span>★★★★★</span>
+                        <input type="range" name="myread" id="myread" oninput="drawStar(this)" value="1" step="1" min="0" max="10">
+                        <br>  
+                    </span>
+                    <input type="submit" value="등록" class="enroll"
+                    style="color: white; font-size:15px; letter-spacing: 2px;">
+                </div>
+            </form> 
         </div>
+        {% endfor %}
     </section>
     <script>
         // 카테고리
         const a = document.getElementById("category_name1").innerText;
         const b = document.getElementById("category_name2").innerText;
-        var c = a.split('>')[2];
-        var d = b.split('>')[3];
+        var c = a.split('>').reverse()[1];
+        var d = b.split('>').reverse()[0];
         document.getElementById("category_name1").innerText = c;
         document.getElementById("category_name2").innerText = d;
 

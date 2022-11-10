@@ -1,10 +1,19 @@
-.logoArea{
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+}
+
+* {
+    font-family:'Pretendard-Regular';
+}
+
+/* .logoArea{
     width: 108px;
     height: 30px;
     border-radius: 5;
     margin-top: 10px;
     margin-left: 10px;
-}
+} */
 
 .text{
     clear: right;
@@ -12,7 +21,7 @@
     margin: auto;
     position: absolute;
     left: 200px;
-    top: 170px;
+    /* top: 170px; */
     overflow: auto;
     /* margin-right: 50px; */
     float: left;
@@ -21,11 +30,18 @@
 .text >h1{
     color: black;
     font-size: 60px;
+    margin-bottom: 0;
+    line-height: 80px;
+    letter-spacing: 0.5px;
 }
 
-.text > p{
+.text > h3{
     color: rgb(119, 117, 117);
     font-size: 25px;
+    font-weight: 500;
+    margin-top: -40px;
+    letter-spacing: 0.5px;
+    line-height: 40px;
 }
 
 /* !!!!! tab css !!!!!! */
@@ -55,21 +71,22 @@
 
 .not-choose-btn {
     position: fixed;
-    left: 20%;
-    bottom: 25%;
+    left: 13%;
+    bottom: 8%;
     font-size: 22px;
-    padding: 12px 60px;
+    padding: 20px 60px;
     text-align: center;
     font-weight: 600;
     background-size: 100% auto;
     color: white;
-    border-radius: 15px;
+    border-radius: 40px;
     border: 0;
     outline: 0;
     background-image: linear-gradient(to right, #ff750f 0%, #ffb105 51%, #ffcc00 100%);
     text-decoration: none;
     z-index: 2;
     display: block; width: 400px;
+    letter-spacing: 0.5px;
 }
 
 .choose-btn {
@@ -93,10 +110,18 @@
 
 .poster {
     position: relative;
+    line-height: 150px;
+
 }
 .egg {
     padding-top: 60px;
     padding-left: 30px;
     position: absolute;
     z-index: 4;
+    line-height: 150px;
+}
+
+.tap-btn img .poster {
+    margin-top: 50px;
+
 }

@@ -6,18 +6,33 @@ from .models import MYBOOK, MYINFO, MYCHOOSE
 
 from user.models import User
 from django.urls import reverse_lazy, reverse
-
+import requests
 # Create your views here.
 
 
+
 def LibraryView(request, pk):
+    response = {}
+    response_list = []
+    Key = 'ttbsaspower81040001'
     email_id = User.objects.get(username = pk).id
     mydic = MYBOOK.objects.filter(email_id = email_id).values('mydic')
-    print(mydic)
+    for i in range(0,len(mydic)):
+        mydic_num = mydic[i]['mydic']
+        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey={Key}&itemIdType=ISBN13&ItemId={mydic_num}&Cover=Big&output=js&Version=20131101&OptResult=ebookList,usedList,reviewList"
+        response_url = requests.get(apiurl).json()
+        response_list.append(response_url['item'])
+        response['item'] = sum(response_list, [])
+
     context = {
-        'mydic': mydic,
+        'response': response,
     }
     return render(request, "mypage/library.html", context)
+    # return render(request, "mypage/library.html")
+
+
+def LogLock(request):
+    return render(request, "mypage/loglock.html")
 
 
 def EnvView(request):
@@ -69,11 +84,35 @@ def mydic(request):
         post = MYBOOK()
         post.mydic = request.POST['mydic']
         email = request.POST['email']
+        username = request.POST['username']
+        post.email = User.objects.get(email=email)      
+        post.save()
+    return redirect(f"/mypage/library/{username}")
+       
+# 삭제
+def mydic_del(request):
+
+    if request.method == "POST":
+        post = MYBOOK()
+        post.mydic = request.POST['mydic']
+        email = request.POST['email']
+        email_id = User.objects.get(email = email).id
+        mydic = MYBOOK.objects.filter(email_id = email_id).filter(mydic = post.mydic)
+        mydic.delete()
+    return redirect(f"/board/detail/{post.mydic}")
+
+# 평점
+def mydic2(request):
+    if request.method == "POST":
+        post = MYBOOK()
+        post.mydic = request.POST['mydic']
+        post.myread = request.POST['myread']
+        email = request.POST['email']
         post.email = User.objects.get(email=email)      
         post.save()
     return redirect(f"/board/detail/{post.mydic}")
          
-
+         
 # 선호 장르 선택
 def choose(request):
 

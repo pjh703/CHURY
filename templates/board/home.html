@@ -21,16 +21,16 @@
             <div class="mobile-menu">메뉴</div>
             <ul class="menu-list">
                 <li>
-                    <a href="#">일반</a>
+                    <!-- <a href="#">일반</a> -->
                 </li>
                 <li>
-                    <a href="#">로맨스</a>
+                    <!-- <a href="#">로맨스</a> -->
                 </li>
                 <li>
-                    <a href="#">BL</a>
+                    <!-- <a href="#">BL</a> -->
                 </li>
                 <li>
-                    <a href="#">판타지/무협</a>
+                    <!-- <a href="#">판타지/무협</a> -->
                 </li>
             </ul>
         </div>
@@ -82,15 +82,15 @@
     
                     <!-- slide images start -->
                     <div class="slide2 first">
-                        <a href="{% url 'board:detail' pk=9791168340596 %}">
+                        <a href="/board/search/?searchType=title&searchWord=파친코">
                         <img src="{% static 'main/image/banner1.jpg' %}" alt=""></a>
                     </div>
                     <div class="slide2">
-                        <a href="{% url 'board:detail' pk=9788937497124 %}">
+                        <a href="/board/search/?searchType=title&searchWord=검은책">
                         <img src="{% static 'main/image/banner2.jpg' %}" alt=""></a>
                     </div>
                     <div class="slide2">
-                        <a href="{% url 'board:detail' pk=9791165341053 %}">
+                        <a href="/board/search/?searchType=title&searchWord=달러구트 꿈 백화점">
                         <img src="{% static 'main/image/banner3.jpg' %}" alt=""></a>
                     </div>
     
@@ -128,7 +128,7 @@
                         <input value="{{ user.email }}" name="email" id="email" style="display: none;">
                         <div class="descr" style="pointer-events: none;">
                             {{ i.title }}<br><br>
-                            {{ i.customerReviewRank }}
+                            {{ i.customerReviewRank }}점
                         </div>
                         <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
                     </form>
@@ -149,7 +149,7 @@
                         <input value="{{ user.email }}" name="email" id="email" style="display: none;">
                         <div class="descr" style="pointer-events: none;">
                             {{ i.title }}<br><br>
-                            {{ i.customerReviewRank }}
+                            {{ i.customerReviewRank }}점
                         </div>
                         <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
                     </form>
@@ -170,7 +170,7 @@
                         <input value="{{ user.email }}" name="email" id="email" style="display: none;">
                         <div class="descr" style="pointer-events: none;">
                             {{ i.title }}<br><br>
-                            {{ i.customerReviewRank }}
+                            {{ i.customerReviewRank }}점
                         </div>
                         <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
                     </form>
@@ -191,7 +191,7 @@
                         <input value="{{ user.email }}" name="email" id="email" style="display: none;">
                         <div class="descr" style="pointer-events: none;">
                             {{ i.title }}<br><br>
-                            {{ i.customerReviewRank }}
+                            {{ i.customerReviewRank }}점
                         </div>
                         <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
                     </form>
@@ -212,7 +212,7 @@
                         <input value="{{ user.email }}" name="email" id="email" style="display: none;">
                         <div class="descr" style="pointer-events: none;">
                             {{ i.title }}<br><br>
-                            {{ i.customerReviewRank }}
+                            {{ i.customerReviewRank }}점
                         </div>
                         <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
                     </form>

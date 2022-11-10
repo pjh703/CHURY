@@ -236,3 +236,344 @@ ul li:hover a {
 .record:hover {
     background-color: rgb(238, 238, 238);
 }
+
+/* 모달 */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* 로그인계정 관리 modal */
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.5s;
+    animation-fill-mode: both;
+  }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+  
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  
+.modal-inner {
+  width: 500px;
+  background-color: rgb(30, 30, 30);
+  border-radius: 12px;
+  animation: showPopup 0.75s;
+  animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+@keyframes showPopup {
+  from {
+      opacity: 0;
+      transform: scale(0.8);
+  }
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+.othertxt { 
+  height: auto;
+  position: relative;
+}
+
+.warning {
+    font-size: 1.6rem;
+    text-align: left;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 40px;
+    margin: 40px;
+    margin-left: 60px;
+    margin-top: 60px;
+}
+  
+.account-box {
+    width: 380px;
+    height: 45px;
+    background-color: white;
+    margin-left: 60px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #636363;
+    letter-spacing: 2px;
+}
+
+.account-info {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.description {
+    margin-top: 40px;
+    text-align: left;
+    margin-left: 60px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: #ddd;
+    font-weight: 500;
+    line-height: 25px;
+}
+
+
+.othertxt img {
+  position: absolute;
+  width: 20px;
+  filter: opacity(0.4) drop-shadow(0 0 0 white);
+  margin: 0;
+  right: 60px;
+  cursor: pointer;
+}
+
+
+.modal-buttons {
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 65px;
+}
+
+.cancel-btn {
+  width: 190px;
+  height: 45px;
+  margin-right: 10px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #636363;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+.cancel-btn:hover {
+  background-color: rgb(172, 172, 172);
+}
+
+.change-btn {
+  width: 190px;
+  height: 45px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #636363;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+.change-btn:hover {
+  background-color: rgb(172, 172, 172);
+}
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+    
+  .modal-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+    
+  .modal-inner {
+    width: 500px;
+    background-color: rgb(30, 30, 30);
+    border-radius: 12px;
+    animation: showPopup 0.75s;
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  @keyframes showPopup {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+  }
+  
+  .othertxt { 
+    height: auto;
+    position: relative;
+  }
+  
+  .warning {
+      font-size: 1.6rem;
+      text-align: left;
+      color: white;
+      font-weight: 600;
+      letter-spacing: 1px;
+      line-height: 40px;
+      margin: 40px;
+      margin-left: 60px;
+      margin-top: 60px;
+  }
+  
+  .descriptions {
+      display: flex;
+      align-items: center;
+  }
+  
+  .description {
+      text-align: left;
+      margin-left: 60px;
+      font-size: 15px;
+      letter-spacing: 1px;
+      color: #ddd;
+      font-weight: 500;
+      line-height: 25px;
+  }
+  
+  .go-step2 {
+      width: 45px;
+      height: 45px;
+      margin-left: 45px;
+      background-color: white;
+      border-radius: 50%;
+      color: rgb(30, 30, 30);
+      text-align: center;
+      padding-top: 12px;
+  }
+  
+  .othertxt hr {
+      border: 0;
+      height: 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      margin-left: 55px;
+      margin-top: 35px;
+      margin-bottom: 40px;
+      width: 390px;
+  }
+    
+  
+  
+  .othertxt img {
+    position: absolute;
+    width: 20px;
+    filter: opacity(0.4) drop-shadow(0 0 0 white);
+    margin: 0;
+    right: 60px;
+    cursor: pointer;
+  }
+  
+  /* ============================================ */
+  /* datepicker */
+  .calendar {
+      display: flex;
+      justify-content: center;
+      height: 30px;
+      gap: 10px;
+      margin-bottom: 40px;
+  }
+  
+  .calendar h4 {
+      color: white;
+      margin-top: 5px;
+  }
+  
+  .calendar input {
+      width: 145px;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      outline: none;
+      letter-spacing: 2px;
+      text-align: center;
+      color: black;
+      background-color: white;
+  }
+  
+  .calendar button {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-align: center;
+      width: 60px;
+      border: none;
+      cursor: pointer;
+      border-radius: 30px;
+      background-color: #ffc000;
+  }
+  
+  /* .calendar input::placeholder {
+      color: #636363;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 2px;
+  } */
+  
+  /* ============================================== */
+  
+  .recording{
+      color: white;
+      width: 380px;
+      height: 150px;
+      overflow-y: scroll;
+      background-color: rgb(30, 30, 30);
+      justify-content: center;
+      margin-left: 60px;
+      margin-bottom: 75px;
+      font-size: 15px;
+      line-height: 25px;
+      letter-spacing: 1px;
+      padding-left: 10px;
+      padding-top: 10px;
+  }
+  
+  .date {
+      font-weight: 600;
+  }
+  .web {
+      color: #ddd;
+  }
+  .location {
+      color: #ddd;
+  }
+  
+  .recording2 {
+      margin-top: 20px;
+  }
+  
+  

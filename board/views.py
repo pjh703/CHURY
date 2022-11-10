@@ -85,6 +85,8 @@ def home(request):
 
         return render(request, "board/home.html", context)
     
+
+    # 장르 데이터베이스 없을 시 choose로
     else:
 
         apikey = '6b75188cf5cbc494ffe18d4d302e3aaa'
@@ -113,7 +115,6 @@ def home(request):
         return render(request, 'user/choose.html', context)
 
 
-
 def BoardDetailView(request, pk):
     page = 1
     list = []
@@ -122,15 +123,17 @@ def BoardDetailView(request, pk):
     apiurl =f"http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey={Key}&itemIdType=ISBN13&ItemId={pk}&Cover=Big&output=js&Version=20131101&OptResult=ebookList,usedList,reviewList"
     response = requests.get(apiurl).json()
 
+    isbook = True
     if request.method == "POST":
         email = request.POST['email']
         email_id = User.objects.get(email = email).id
         mydic = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk)
-        print(len(mydic))
+        mydic1 = MYBOOK.objects.filter(email_id = email_id).filter(mydic = pk)
+        # print(mydic1)
+        # print("post")
 
-        isbook = True
         if len(mydic) > 0:
-            isbook = False
+            isbook = False # 책이 저장되어 있는 경우
 
         # print(response)
         context = {
@@ -139,11 +142,15 @@ def BoardDetailView(request, pk):
         }
         return render(request, "board/detail.html", context)
 
-    # print(response)
-    context = {
-        'response': response,
-    }
-    return render(request, "board/detail.html", context)
+    else:
+        # print("get")
+        # print(response)
+
+        context = {
+            'response': response,
+            'isbook': isbook,
+        }
+        return render(request, "board/detail.html", context)
 
 
 
