@@ -145,12 +145,15 @@
                 {{ response.totalResults }}건이 검색되었습니다.
                 {% elif searchType == 'category' %}
                 '{{ pr_text }}' 카테고리에 대한 검색 결과<br>
+                {{ total_result }}건이 검색되었습니다.
                 {% endif %}
                 {% for i in response.item %}
                 {% endfor %}
                 {% elif response.status == 'empty' %}
                 '{{ pr_text }}' 카테고리에 대한 검색결과가 없습니다.
                 {% elif response.totalResults == 0 %}
+                '{{ pr_text }}' 에 대한 검색결과가 없습니다.
+                {% elif total_result == 0 %}
                 '{{ pr_text }}' 에 대한 검색결과가 없습니다.
                 {% else %}
                 검색어를 입력해주세요.
@@ -179,43 +182,33 @@
                                 </a>
                                 <ul id="components-nav2" class="nav-content collapse " data-bs-parent="#components-nav2">
                                     <li>
-                                        <a href="#">
-                                            <span>경제학/경제일반</span>
+                                        <a href="/board/search/?page=1&searchType=category&searchWord=경제학">
+                                            <span>경제학</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="/board/search/?page=1&searchType=category&searchWord=기업 경영">
                                             <span>기업 경영</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
-                                            <span>기업/경영자 스토리</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
+                                        <a href="/board/search/?page=1&searchType=category&searchWord=마케팅/세일즈">
                                             <span>마케팅/세일즈</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
-                                            <span>제태크/투자</span>
+                                        <a href="/board/search/?page=1&searchType=category&searchWord=재테크/투자">
+                                            <span>재테크/투자</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="/board/search/?page=1&searchType=category&searchWord=창업/취업/은퇴">
                                             <span>창업/취업/은퇴</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
-                                            <span>CEO/비지니스맨을 위한 능력계발</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>트렌드/미래전망</span>
+                                        <a href="/board/search/?page=1&searchType=category&searchWord=트렌드/미래예측">
+                                            <span>트렌드/미래예측</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -725,7 +718,7 @@
                                 </a>
                                 <ul id="components-nav9" class="nav-content collapse " data-bs-parent="#components-nav2">
                                     <li>
-                                        <a href="#">
+                                        <a href="/board/search/?page=1&searchType=category&searchWord=고고학">
                                             <span>고고학</span>
                                         </a>
                                     </li>

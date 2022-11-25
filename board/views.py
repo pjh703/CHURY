@@ -221,6 +221,7 @@ def search(request, **kwargs):
                     page = request.GET.get('page', 1)
                     response = {}
                     response_list = []
+                    total_result = 0
                     Key = 'ttbsaspower81040001'
                     COUNT = 0
                     for row in range(1, sheet.nrows):
@@ -236,14 +237,15 @@ def search(request, **kwargs):
                                 # requests를 이용하여 json을 불러옵니다.
                                 response_url = requests.get(apiurl).json()
                                 response_list.append(response_url['item'])
+                                total_result += response_url['totalResults']
                                 response['item'] = sum(response_list, [])
-
 
                     context = {
                         'response': response,
                         'searchType': search_type,
                         'queryType': query_type,
                         'pr_text': search_word,
+                        'total_result' : total_result,
                     }
 
                     return render(request, "board/search.html", context)
