@@ -7,6 +7,7 @@
     <title>CHURY | My Page</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/loglock.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div class="sidebar">
@@ -139,8 +140,9 @@
                             </div>
                             <div class="modal-buttons">
                                 <a href="{% url 'mypage:loglock' %}">
-                                    <button class="cancel-btn">이 기능은 개발중입니다</button></a>
-                                <!-- <button class="change-btn">설정</button> -->
+                                    <button class="cancel-btn">취소</button></a>
+                                <a href="{% url 'mypage:loglock' %}">
+                                    <button class="change-btn">설정</button></a>
                             </div>
                         </div>
                     </div>

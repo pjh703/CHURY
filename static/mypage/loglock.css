@@ -251,6 +251,170 @@ ul li:hover a {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+
+/* ********************************************************* */
+
+.othertxt { 
+    height: auto;
+    position: relative;
+  }
+  
+  .warning {
+      font-size: 1.6rem;
+      text-align: left;
+      color: white;
+      font-weight: 600;
+      letter-spacing: 1px;
+      line-height: 40px;
+      margin: 40px;
+      margin-left: 60px;
+      margin-top: 60px;
+  }
+    
+  
+  .description {
+      margin-top: 40px;
+      text-align: left;
+      margin-left: 60px;
+      font-size: 15px;
+      letter-spacing: 1px;
+      color: #ddd;
+      font-weight: 500;
+      line-height: 25px;
+  }
+  
+  .explain {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: 60px;
+      padding-right: 60px;
+      gap: 10px;
+  }
+
+/* 계정/이메일 로그인 */
+.login-first i {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    color: rgb(30, 30, 30);
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 28px;
+}
+.login-first {
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    line-height: 20px;
+
+}
+.login-text {
+    margin-top: 10px;
+}
+
+/* 비밀번호 6자리 입력 */
+.number i {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    color: rgb(30, 30, 30);
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 30px;
+}
+.number {
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    line-height: 20px;
+
+}
+.number-text {
+    margin-top: 10px;
+}
+
+
+/* 2단계인증 입력 */
+.done i {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    color: rgb(30, 30, 30);
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 28px;
+}
+.done {
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    line-height: 20px;
+}
+.done-text {
+    margin-top: 10px;
+}
+
+/* 오른쪽 화살표 */
+.next-step {
+    color: #ddd;
+    padding-left: 5px;
+    padding-right: 5px;
+    
+}
+
+.othertxt img {
+    position: absolute;
+    width: 20px;
+    filter: opacity(0.4) drop-shadow(0 0 0 white);
+    margin: 0;
+    right: 60px;
+    cursor: pointer;
+  }
+  
+  
+  .modal-buttons {
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 65px;
+  }
+  
+  .cancel-btn {
+    width: 190px;
+    height: 45px;
+    margin-right: 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #636363;
+    cursor: pointer;
+    letter-spacing: 2px;
+  }
+  .cancel-btn:hover {
+    background-color: rgb(172, 172, 172);
+  }
+
+  .change-btn {
+    width: 190px;
+    height: 45px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #636363;
+    cursor: pointer;
+    letter-spacing: 2px;
+  }
+  .change-btn:hover {
+    background-color: rgb(172, 172, 172);
+  }
+  
+/* *********************************************************** */
+
+
 /* 로그인계정 관리 modal */
 
 .overlay {
@@ -576,4 +740,7 @@ ul li:hover a {
       margin-top: 20px;
   }
   
+
+
+
   
