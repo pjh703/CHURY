@@ -123,6 +123,7 @@ def choose(request):
         counter = {}
         a = request.POST.getlist('choose')
 
+        # 불러온 값이 리스트처럼 생긴 str값이라 다시 리스트로
         for i in range(0,len(a)):
             a_array = a[i].replace(' ', '')
             b_array = a_array.replace('"', '')
@@ -130,7 +131,8 @@ def choose(request):
             d_array = c_array.replace(']', '')
             e_array = d_array.replace("'", '')
             array += e_array.split(',')
-                
+        
+        # counter dict에 {장르 : 갯수} 추가
         for value in array:
             try: counter[value] += 1
             except: counter[value] = 1

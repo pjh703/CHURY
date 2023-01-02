@@ -25,8 +25,8 @@ class UserCreateView(CreateView):
 def SignView(request):
     return render(request, 'user/sign.html')
 
-def ModalView(request):
-    return render(request, 'user/modal.html')
+# def ModalView(request):
+#     return render(request, 'user/modal.html')
 
 def AgreementView(request):
     return render(request, 'user/agreement.html')
