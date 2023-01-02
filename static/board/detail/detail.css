@@ -214,15 +214,15 @@ nav .right .search .search-bar input {
 
 .tag1 {
   height: 35px;
-  width: 110px;
   background-color: #ffc000;
   border: none;
   border-radius: 10px;
-  padding: 0;
   letter-spacing: 2px;
   font-size: 15px;
   color: white;
+  padding: 10px;
 }
+
 .tag1:hover {
   background-color: #ffbf00a3;
   border-radius: 10px;
@@ -231,14 +231,13 @@ nav .right .search .search-bar input {
 .tag2 {
   margin-left: 10px;
   height: 35px;
-  width: 110px;
   background-color: #ffc000;
-  border: none;
+  /* border: none; */
   border-radius: 10px;
-  padding: 0;
   letter-spacing: 2px;
   font-size: 15px;
   color: white;
+  padding: 10px;
 }
 .tag2:hover {
   background-color: #ffbf00a3;
