@@ -7,6 +7,13 @@
     <title>CHURY | My Page</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/loglock.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- datepicker -->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
 </head>
 <body>
     <div class="sidebar">
@@ -139,8 +146,9 @@
                             </div>
                             <div class="modal-buttons">
                                 <a href="{% url 'mypage:loglock' %}">
-                                    <button class="cancel-btn">이 기능은 개발중입니다</button></a>
-                                <!-- <button class="change-btn">설정</button> -->
+                                    <button class="cancel-btn">취소</button></a>
+                                <a href="{% url 'mypage:loglock' %}">
+                                    <button class="change-btn">설정</button></a>
                             </div>
                         </div>
                     </div>
@@ -165,7 +173,7 @@
                                 <div class="warning">로그인 기록은<br>최근 3개월까지 조회가능합니다.</div>
                                 
                                 <div class="descriptions">
-                                    <div class="description">
+                                    <div class="description2">
                                         회원님이 모르는 로그인 기록이 확인되었나요?<br>
                                         보안 설정으로 내 계정을 보호해주세요.
                                     </div>
@@ -270,7 +278,9 @@ $.datepicker.setDefaults({
     dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
     dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
     showMonthAfterYear: true,
-    yearSuffix: '년'
+    yearSuffix: '년',
+    minDate: "-3M",
+    maxDate: "0M"
 });
 
 $(function() {
@@ -278,6 +288,8 @@ $(function() {
         dateFormat: 'yy.mm.dd'
     });
 });
+
+
    
 </script>
 </html>
