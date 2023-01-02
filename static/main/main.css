@@ -370,7 +370,7 @@ main .description .buttons .detail:hover {
 
 .contents {
   background-color: rgb(257, 257, 257);
-  margin-top: 93px;
+  /* margin-top: 93px; */
   padding-top: 60px;
 }
 
@@ -395,6 +395,7 @@ section .content-list .slider {
   /* 콘텐츠 슬라이드 여백*/
   margin-left: 60px;
   margin-right: 60px;
+  padding: 10px;
 }
 section .content-list .slider::-webkit-scrollbar {
   display: none;

@@ -15,6 +15,7 @@ from xlrd import open_workbook
 # Create your views here.
 
 def home(request):
+    
     a = User.objects.filter(username = request.user).values('id')
     e_id = a.values('id')[0]['id']
     choo1 = MYCHOOSE.objects.filter(email_id = e_id).values('Action')
