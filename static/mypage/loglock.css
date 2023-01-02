@@ -512,6 +512,15 @@ ul li:hover a {
     line-height: 25px;
 }
 
+.description2 {
+    text-align: left;
+    margin-left: 60px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: #ddd;
+    font-weight: 500;
+    line-height: 25px;
+}
 
 .othertxt img {
   position: absolute;
@@ -627,6 +636,7 @@ ul li:hover a {
       color: #ddd;
       font-weight: 500;
       line-height: 25px;
+      margin: none;
   }
   
   .go-step2 {
