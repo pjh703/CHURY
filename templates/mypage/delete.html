@@ -7,14 +7,12 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>CHURY | My Page</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='{% static 'mypage/user-modal/exitmodal.css' %}'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/user-modal/exitmodal.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ont-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div class="sidebar">
-        <div class="logo">
-            <a href="main/main.html"><img src="{% static 'mypage/images/logo.svg' %}"></a>
-        </div>
+        <a href="{% url 'board:home' %}"><div class="logo"></div></a>
 
         <ul>
             <div class="sidebar-home">
@@ -29,6 +27,7 @@
             <li class="top"><a href="loglock.html">로그인 및 보안</a></li>
             <li class="bottom"><a href="#">이용권/결제정보</a></li>
             <li><a href="#">고객지원센터</a></li>
+            <li class="bottom"><a href="{% url 'user:logout' %}" style="color: #ffc000;">로그아웃</a></li>
         </ul>
     </div>
 
@@ -45,8 +44,8 @@
                 <div class="title">닉네임</div>
                 <div class="right">></div>
             </div>
-            <div class="profile">
-                <div class="title">프로필사진</div>
+            <div class="pc-change">
+                <div class="title">프로필사진 변경</div>
                 <div class="right">></div>
             </div>
             <div class="pw-change">

@@ -6,7 +6,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>CHURY | My Page</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/user-modal/changemodal.css' %}">
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/user-modal/picture.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
@@ -15,7 +15,7 @@
 <div class="sidebar">
     <a href="{% url 'board:home' %}"><div class="logo"></div></a>
 
-    <ul>
+    <ul> 
         <div class="sidebar-home">
             <li><a href="info.html">내정보 홈</a></li>
         </div>
@@ -35,6 +35,7 @@
 
 <div class="home">
     <div class="header">
+          
     </div>
     <h1>개인정보 관리</h1>
     <h3>추라이에 등록된 개인정보 정보를 확인할 수 있습니다. 최신 정보로 관리해주세요.</h4>
@@ -66,19 +67,22 @@
 <div class="modal-wrapper">
     <div class="modal-inner">
         <div class="othertxt">
-            <form action="{% url 'mypage:pwupdate' user.pk %}" method="post">
-            {% csrf_token %}
-            <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage\images\close.svg' %}" alt=""></a>
-            <div class="warning">비밀번호 변경</div>
-            <div class="input-btn">
-                
-                <input type="password1" class="form-control" id="password1" name="password1" placeholder="새 비밀번호" value="{{ form.password1.value|default_if_none:'' }}">
-                <input type="password2" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인" value="{{ form.password2.value|default_if_none:'' }}">
-                 
-                
-                <div style="position: relative; left: 70px; color: red;">
-                    {{ form.errors.password2 }}
+            <form action="{% url 'mypage:picture' user.pk %}" method="post">
+                {% csrf_token %}
+                <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage\images\close.svg' %}" alt=""></a>
+                <div class="warning">추라이 서비스 이용 시<br>노출되는<br>프로필사진입니다.</div>
+            <div class="middle">
+                <div class="left">
+                    <div class="upload">
+                        <i class="fa-solid fa-file-import"></i>
+                        사진 업로드
+                    </div>
+                    <div class="delete">
+                        <i class="fa-solid fa-trash"></i>
+                        사진 삭제
+                    </div>
                 </div>
+                <div class="picture"></div>    
             </div>
         </div>
         <div class="modal-buttons">

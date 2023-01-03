@@ -42,6 +42,9 @@ def EnvView(request):
 def ProfileView(request):
     return render(request, "mypage/profile.html")
 
+def PictureView(request, pk):
+    return render(request, "mypage/picture.html")
+
 
 # 회원탈퇴
 class UserDeleteView(DeleteView):

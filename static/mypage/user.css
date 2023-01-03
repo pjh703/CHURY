@@ -174,7 +174,7 @@ ul li:hover a {
 
 
 /* 프로필사진 박스 */
-.profile {
+.pc-change {
     position: absolute;
     margin-left: 580px;
 
@@ -200,7 +200,7 @@ ul li:hover a {
 .right {
     margin-right: 30px;
 }
-.profile:hover {
+.pc-change:hover {
     background-color: rgb(238, 238, 238);
 }
 
@@ -208,7 +208,7 @@ ul li:hover a {
 /* 비밀번호 변경 박스 */
 .pw-change {
     position: absolute;
-    margin-top: 80px;
+    margin-top: 100px;
 
     width: 560px;
     height: 80px;
@@ -239,7 +239,7 @@ ul li:hover a {
 /* 회원 탈퇴 박스 */
 .exit {
     position: absolute;
-    margin-top: 80px; 
+    margin-top: 100px; 
     margin-left: 580px; 
 
     width: 560px;

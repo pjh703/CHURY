@@ -21,16 +21,16 @@
 }
 
 .logo {
-  display: block;
-  width: 150px;
-  height: 40px;
-  background-image: url("../../mypage/images/logo.png");
-  background-size: contain;
-  margin-left: 40px;
-  margin-top: 40px;
-  margin-bottom: 30px;
-  cursor: pointer;
-}
+    display: block;
+    width: 150px;
+    height: 40px;
+    background-image: url("../../mypage/images/logo.png");
+    background-size: contain;
+    margin-left: 40px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    cursor: pointer;
+  }
 
 
 .sidebar ul a {
@@ -46,6 +46,7 @@
     text-decoration: none;
     letter-spacing: 1px;
 }
+
 
 /* 해당카테고리 bold */
 .sidebar-use {
@@ -174,7 +175,7 @@ ul li:hover a {
 
 
 /* 프로필사진 박스 */
-.pc-change {
+.profile {
   position: absolute;
   margin-left: 580px;
 
@@ -200,7 +201,7 @@ ul li:hover a {
 .right {
   margin-right: 30px;
 }
-.pc-change:hover {
+.profile:hover {
   background-color: rgb(238, 238, 238);
 }
 
@@ -262,8 +263,9 @@ ul li:hover a {
   background-color: rgb(238, 238, 238);
 }
 
+
 /* ======================= */
-/* 비밀번호 변경 modal */
+/* 닉네임 modal */
 
 .overlay {
     width: 100%;
@@ -285,24 +287,24 @@ ul li:hover a {
 }
 
   
-.modal-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .modal-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
-.modal-inner {
-  width: 500px;
-  background-color: rgb(30, 30, 30);
-  border-radius: 12px;
-  animation: showPopup 0.75s;
-  animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-}
+  .modal-inner {
+    width: 500px;
+    background-color: rgb(30, 30, 30);
+    border-radius: 12px;
+    animation: showPopup 0.75s;
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
 @keyframes showPopup {
   from {
       opacity: 0;
@@ -320,61 +322,16 @@ ul li:hover a {
 }
 
 .warning {
-    font-size: 1.6rem;
-    text-align: left;
-    color: white;
-    font-weight: 600;
-    letter-spacing: 1px;
-    line-height: 40px;
-    margin: 40px;
-    margin-left: 60px;
-    margin-top: 60px;
-}
-  
-  
-.othertxt li {
-    letter-spacing: 1px;
-    text-align: left;
-    color: rgb(164, 164, 164);
-    font-size: 12px;
-    font-weight: 400;
-    margin-left: 60px;
-    line-height: 20px;
-}
-  
-.description {
-    margin-top: 20px;
-    text-align: right;
-    font-size: 15px;
-    letter-spacing: 1px;
-    color: #ddd;
-    font-weight: 500;
-    margin-right: 60px;
-}
-
-
-.input-btn input {
-  height: 45px;
-  width: 380px;
+  font-size: 1.6rem;
+  text-align: left;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 40px;
   margin-left: 60px;
-  margin-bottom: 20px;
-  margin-top: 30px;
-
-  font-size: 16px;
-  font-weight: 600;
-  border: none;
-  outline: none;
-  letter-spacing: 2px;
-  padding-left: 20px;
-  padding-right: 20px;
+  margin-top: 60px;
 }
 
-.input-btn input::placeholder {
-  color: #636363;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 2px;
-}
 
 .othertxt img {
   position: absolute;
@@ -385,10 +342,51 @@ ul li:hover a {
   cursor: pointer;
 }
 
+.middle {
+    display: flex;
+    align-items: center;
+    margin-left: 60px;
+}
 
+.upload {
+    display: flex;
+    align-items: center;
+    color: #ffc000;
+    font-size: 15px;
+    padding-bottom: 20px;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+.upload i {
+    padding-right: 20px;
+}
+
+.delete {
+    display: flex;
+    align-items: center;   
+    color: #ffc000;
+    font-size: 15px;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+.delete i {
+    padding-right: 20px;
+    padding-left: 2px;
+}
+
+.picture {
+    width: 200px;
+    height: 200px;
+    background-color: #ddd;
+    margin-left: 80px;
+    border-radius: 50%;
+}
+
+/* ======================================= */
+/* 취소, 변경 버튼 */
 .modal-buttons {
   text-align: center;
-  padding-top: 20px;
+  padding-top: 40px;
   padding-bottom: 65px;
 }
 
