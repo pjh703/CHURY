@@ -60,19 +60,17 @@
     <!-- modal -->
     <div class="overlay"></div>
 
-    <div class="overlay"></div>
-
     <div class="modal-wrapper">
         <div class="modal-inner">
             <div class="othertxt">
-                <a href="/mypage/env/"><img src="{% static 'mypage\images\close.svg' %}" alt=""></a>
+                <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage\images\close.svg' %}" alt=""></a>
                 <div class="warning">추라이 서비스 이용 시<br>노출되는<br>닉네임입니다.</div>
                 <div class="input-btn">
-                    <form action="{% url 'mypage:update' user.pk %}" method="post">
-                        {% csrf_token %}
-                    <input type="text" id="name" name="name" placeholder="변경할 닉네임을 입력하세요." value="{{ form.username.value|default_if_none:'' }}">
-                    <button>중복확인</button>
-                    <input hidden type="email" class="form-control" id="email" name="email" placeholder="이메일 (example@gmail.com)" value="{{ form.email.value|default_if_none:'' }}">
+                <form action="{% url 'mypage:update' user.pk %}" method="post">
+                {% csrf_token %}
+                <input type="username" class="form-control" id="username" name="username" placeholder="변경할 닉네임을 입력하세요." value="{{ form.username.value|default_if_none:'' }}">
+                <input hidden type="email" class="form-control" id="email" name="email" placeholder="이메일 (example@gmail.com)" value="{{ form.email.value|default_if_none:'' }}">
+                      
                     <div id="error" style="position: relative; left: 70px; color: red;">
                         {{ form.errors.username }}
                     </div>
@@ -81,12 +79,12 @@
                 <li>닉네임을 변경하면 이전 작성한 글의 닉네임도 같이 변경 됩니다.</li>
             </div>
             <div class="modal-buttons">
-                <a href="/mypage/env/">
-                    <button class="cancel-btn">취소</button>
-                    <button class="change-btn">변경</button>
-                </a>
+                <a href="{% url 'mypage:env' %}">
+                    <button class="cancel-btn">취소</button></a>
+                <button type="submit" class="change-btn">변경</button>
+                </form>
             </div>
-        </div> 
+        </div>
     </div>
 
 </body>

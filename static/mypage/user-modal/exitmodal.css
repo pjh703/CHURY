@@ -172,7 +172,7 @@ ul li:hover a {
   background-color: rgb(238, 238, 238);
 }
 
-
+ 
 /* 프로필사진 박스 */
 .pc-change {
   position: absolute;
@@ -377,7 +377,7 @@ ul li:hover a {
 }
 
 .othertxt img {
-  position: absolute;
+  position: absolute; 
   width: 20px;
   filter: opacity(0.4) drop-shadow(0 0 0 white);
   margin: 0;
@@ -390,6 +390,8 @@ ul li:hover a {
   text-align: center;
   padding-top: 20px;
   padding-bottom: 65px;
+  display: flex;
+  margin-left: 56px;
 }
 
 .cancel-btn {
