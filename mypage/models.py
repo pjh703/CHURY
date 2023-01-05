@@ -1,37 +1,32 @@
 from django.db import models
 # Create your models here.
 
-class MYINFO(models.Model):
-    email = models.ForeignKey("user.User", on_delete=models.CASCADE)
-    profile_image = models.ImageField
-    hp = models.IntegerField(null=True, unique=True)
-    hp_confirm = models.BooleanField(default=False)
-    email_confirm = models.BooleanField(default=False)
-    adult_confirm = models.BooleanField(default=False)
-    grade = models.IntegerField(default=0)
-
-    class META:
-        pass
-
 
 class MYBOOK(models.Model):
-    email = models.ForeignKey("user.User", on_delete=models.CASCADE)
-    mylike = models.CharField(null=True, max_length=15)
-    mydic = models.BigIntegerField(null=True)
-    myread = models.CharField(null=True, max_length=15)
+    user_id = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    book_id = models.CharField(null=True, max_length=15)
+
     
-    # def __str__(self):
-    #     return self.email
-    # def __str__(self):
-    #     return self.mylike
-    # def __str__(self):
-    #     return self.mydic
-    # def __str__(self):
-    #     return self.myread
+class MYSTAR(models.Model):
+    user_id = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    book_id = models.CharField(null=True, max_length=15)
+    b_like = models.BooleanField(default=False)
+    star = models.IntegerField(null=True, default=0)
+    
+    
+class COMMENT(models.Model):
+    user_id = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    reply = models.CharField(null=True, max_length=100)
+    c_date = models.DateTimeField(auto_now_add=True)
+    u_date = models.DateTimeField(auto_now=True)
+
+
+# class MYVIEW(models.Model):
+#     user_id = models.ForeignKey("user.User", on_delete=models.CASCADE)
 
 
 class MYCHOOSE(models.Model):
-    email = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    user_id = models.ForeignKey("user.User", on_delete=models.CASCADE)
     Action = models.IntegerField(null=True, default=0)
     Adventure = models.IntegerField(null=True, default=0)
     Animation = models.IntegerField(null=True, default=0)
