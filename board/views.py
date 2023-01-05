@@ -10,8 +10,11 @@ from user.models import User
 from mypage.models import MYBOOK, MYCHOOSE
 from xlrd import open_workbook
 
+import numpy as np
+import pandas as pd
 
 
+data = pd.read_excel('book_data.xlsx')
 # Create your views here.
 
 def home(request):
@@ -46,12 +49,7 @@ def home(request):
         list = []
         Key = 'ttbsaspower81040001'
 
-        categor = '170370'
-        # open API 주소를 이용합니다. json으로 받아옵니다.
-        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=20&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
-            # requests를 이용하여 json을 불러옵니다.
-        response = requests.get(apiurl).json()
-        # print(response)
+        response_data = data.head(10).to_dict('records')
 
         apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&output=js&Version=20131101"
         response_top10 = requests.get(apiurl).json()
@@ -76,11 +74,11 @@ def home(request):
         response_new = requests.get(apiurl).json()
         
         context = {
-            'response': response,
+            'response_data': response_data,
             'response_top10': response_top10,
             'response_sf': response_sf,
             'response_fear': response_fear,
-            'response_new': response_new,
+            'response_new': response_new
         }
 
         return render(request, "board/home.html", context)
@@ -123,40 +121,46 @@ def BoardDetailView(request, pk):
     apiurl =f"http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey={Key}&itemIdType=ISBN13&ItemId={pk}&Cover=Big&output=js&Version=20131101&OptResult=ebookList,usedList,reviewList"
     response = requests.get(apiurl).json()
 
+    detail_data = data[data['id'] == int(pk)].to_dict('records')
+    if len(eval(data[data['id'] == 506445]['keyword'].iloc[0])) > 0:
+        keyword = eval(data[data['id'] == int(pk)]['keyword'].iloc[0])
+        print(keyword)
     isbook = True
     # 책이 있나없나 검사
-    if request.method == "POST":
-        email = request.POST['email']
-        email_id = User.objects.get(email = email).id
-        mydic = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk)
-        mydic1 = MYBOOK.objects.filter(email_id = email_id).filter(mydic = pk)
-        myread = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk).values('myread')[0].get('myread')
+    # if request.method == "POST":
+    #     email = request.POST['email']
+    #     email_id = User.objects.get(email = email).id
+    #     mydic = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk)
+    #     mydic1 = MYBOOK.objects.filter(email_id = email_id).filter(mydic = pk)
+    #     myread = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk).values('myread')[0].get('myread')
 
         # print(mydic1)
         # print("post")
-        print(myread)
+        # print(myread)
 
 
-        if len(mydic) > 0:
-            isbook = False # 책이 저장되어 있는 경우
+        # if len(mydic) > 0:
+        #     isbook = False # 책이 저장되어 있는 경우
 
         # print(response)
-        context = {
-            'response': response, # 책정보 보내줌
-            'isbook': isbook, # 책이 있나없나 true값
-            'myread': myread
-        }
-        return render(request, "board/detail.html", context)
+    context = {
+        'detail_data': detail_data,
+        'keyword': keyword
+        # 'response': response, # 책정보 보내줌
+        # 'isbook': isbook, # 책이 있나없나 true값
+        # 'myread': myread,
+    }
+    return render(request, "board/detail.html", context)
 
-    else:
-        # print("get")
-        # print(response)
+    # else:
+    #     # print("get")
+    #     # print(response)
 
-        context = {
-            'response': response,
-            'isbook': isbook,
-        }
-        return render(request, "board/detail.html", context)
+    #     context = {
+    #         'response': response,
+    #         'isbook': isbook,
+    #     }
+    #     return render(request, "board/detail.html", context)
 
 
 
@@ -183,9 +187,12 @@ def search(request, **kwargs):
                         apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start={page}&SearchTarget=eBook&Sort=PublishTime&Cover=Big&output=js&Version=20131101"
                     response = requests.get(apiurl).json()
 
+                    search_data = data[data['제목'].str.contains(search_word)].to_dict('records')
+                    print(search_data)
+
                     # print(response)
                     context = {
-                        'response': response,
+                        'response': search_data,
                         'searchType': search_type,
                         'sortType': sort_type,
                         'pr_text': search_word,

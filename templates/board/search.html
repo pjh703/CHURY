@@ -1298,19 +1298,19 @@
         <!-- ======= 책 정보 ======== -->
         <div class="book-info">
             
-            {% for i in response.item %}
+            {% for i in response %}
             <div class="books">
                 <!-- <div class="book-number">1</div> -->
                 <a href="#"><div class="book-thumbnail">
 
-                    <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                    <form action="{% url 'board:detail' pk=i.id %}" method="post">
                         {% csrf_token %}
                         <input value="{{ user.email }}" name="email" id="email" style="display: none;">
                         <!-- <div class="descr" style="pointer-events: none;">
                             {{ i.title }}<br><br>
                             {{ i.customerReviewRank }}점
                         </div> -->
-                        <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지" style="width: 220px;
+                        <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지" style="width: 220px;
                         height: 280px;
                         margin-top: 30px;
                         margin-left: 50px;
@@ -1319,10 +1319,10 @@
                     </form>
                 </div></a>
                 <div class="book-titles">
-                    <a href="#"><div class="book-title">{{ i.title }}</div></a>
-                    <div class="book-author">{{ i.author }}</div><br>                    
+                    <a href="#"><div class="book-title">{{ i.제목 }}</div></a>
+                    <div class="book-author">{{ i.작가 }}</div><br>                    
                     
-                    <div class="book-other">{{ i.publisher }} | {{ i.pubDate }}</div>
+                    <div class="book-other">{{ i.조회수 }} | {{ i.추천수 }}</div>
                     
                     {% if i.customerReviewRank %}
                     <div class="eggs">
