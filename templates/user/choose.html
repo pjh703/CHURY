@@ -11,15 +11,16 @@
 
 </head>
 
-<body>
-    <div class="header" style="position: absolute;">
-        <div class="logoArea" style="position: absolute; left: 8%;">
-            <a href="/"><img src="{% static 'user/choose/image/logo.png' %}"></a>
+<body style="overflow-x: hidden;">
+    <nav id="nav" style="height: 80px; margin-left: 80px;">
+
+        <div class="header" style="position: absolute; ">
+            <div class="logoArea" style="position: absolute; left: 8%; margin-top: 25px;">
+                <a href="/"><img src="{% static 'user/choose/image/logo.png' %}"></a>
+            </div>
         </div>
-    </div>
-    <div>
-        <br><br>
-        <hr>
+    </nav>
+    <div style="border-bottom: 1px solid #ddd;">
     </div>
     <div class="text">
         <h1>{{ user.username }} 님, 좋아하는 <br>
@@ -38,7 +39,7 @@
     <!-- <input class="choose-btn" type="submit" id="result" name="result" style="display: none;" value="완료되었습니다!"> -->
     <!-- <button id="result">3개 이상 선택해주세요</button> -->
 
-        <div class="tab">
+        <div class="tab" style="margin-top: 60px;">
             {% for i in respon %}
                 {% if forloop.counter == 1 %}<div class="one" style="display: flex;">{% endif %}
                 {% if forloop.counter == 4 %}<div class="one" style="display: flex;">{% endif %}
@@ -47,9 +48,12 @@
                 {% if forloop.counter == 13 %}<div class="one" style="display: flex;">{% endif %}
                 {% if forloop.counter == 16 %}<div class="one" style="display: flex;">{% endif %}
                 {% if forloop.counter == 19 %}<div class="one" style="display: flex;">{% endif %}
-                {% if forloop.counter == 22 %}<div class="one" style="display: flex;">{% endif %}
-                {% if forloop.counter == 25 %}<div class="one" style="display: flex;">{% endif %}
+                <!-- {% if forloop.counter == 22 %}<div class="one" style="display: flex;">{% endif %}
+                {% if forloop.counter == 25 %}<div class="one" style="display: flex;">{% endif %} -->
                     
+                
+                {% if forloop.counter < 19 %}
+                 
                 
                 <input type="checkbox" id="ch{{forloop.counter}}" name="contents" onclick='getCheckedCnt()' style="display:none;">
                 <label for="ch{{forloop.counter}}">
@@ -60,6 +64,8 @@
                     </div>
                 </label>
                 
+                   
+                {% endif %}
             
                 {% if forloop.counter == 3 %}</div>{% endif %}
                 {% if forloop.counter == 6 %}</div>{% endif %}
@@ -68,7 +74,7 @@
                 {% if forloop.counter == 15 %}</div>{% endif %}
                 {% if forloop.counter == 18 %}</div>{% endif %}
                 {% if forloop.counter == 21 %}</div>{% endif %}
-                {% if forloop.counter == 24 %}</div>{% endif %}
+                {% if forloop.counter == 24 %}</div>{% endif %} 
                 {% if forloop.counter == 27 %}</div>{% endif %}
             {% endfor %}
                 

@@ -139,16 +139,6 @@
         </div>
         <div class="side-right" ></div>
     </main>
-     <!-- <div class="arrow-down">
-        <a href="#about">
-            <div class="arrow-3">
-                <span></span>
-                <span></span>
-                <span></span>
-
-            </div>
-        </a>
-    </div> -->
     <section>
         {% if i.description %}
             <div class="introduce">
@@ -162,7 +152,42 @@
 
         {% endif %}
         <br><br>
+          
+        <!-- 평점을 매긴 경우 -->
+        {% if myread  %}
+        <div class="introduce">
+            <div class="title">
+                <br>
+                <h3 style="left: 50px;">{{ user.username }}님 남긴,<br>리뷰 확인하기</h3>
+            </div>
             
+            <form action="{% url 'mypage:mydic2' %}" method="post">
+                {% csrf_token %}
+                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" hidden>
+                <input value="{{ user.email }}" name="email" id="email" hidden>
+                
+                <div class="content2" style="margin-right: 700px;">
+                    <div><hr style="width: 1054px; margin-left: -50px;"><br><br></div>
+                    <span class="star">
+                        <div class="star-imgs">
+                            <img src="{% static 'board/detail/image/1점.JPG' %}" class="star1" id="star1" style="display: none;" alt="">
+                            <img src="{% static 'board/detail/image/2점.JPG' %}" class="star2" id="star2" style="display: none;" alt="">
+                            <img src="{% static 'board/detail/image/3점.JPG' %}" class="star3" id="star3" style="display: none;" alt="">
+                            <img src="{% static 'board/detail/image/4점.JPG' %}" class="star4" id="star4" style="display: none;" alt="">
+                            <img src="{% static 'board/detail/image/5점.JPG' %}" class="star5" id="star5" style="display: none;" alt="">
+                        </div>
+                        <div class="star-point" id="star-point">{{ myread }}</div>
+                        
+                        <br>  
+                    </span>
+                    <input type="submit" value="수정하기" class="enroll"
+                    style="color: white; font-size:15px; letter-spacing: 2px;">
+                </div>
+            </form> 
+        </div>
+        
+        <!-- 평점을 매기지 않은 경우 -->
+        {% else %}
         <div class="introduce">
             <div class="title">
                 <h3 style="left: 50px;">리뷰 남기기</h3>
@@ -178,7 +203,7 @@
                     <span class="star">
                         ★★★★★
                         <span>★★★★★</span>
-                        <input type="range" name="myread" id="myread" oninput="drawStar(this)" value="1" step="1" min="0" max="10">
+                        <input type="range" name="myread" id="myread" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
                         <br>  
                     </span>
                     <input type="submit" value="등록" class="enroll"
@@ -186,9 +211,56 @@
                 </div>
             </form> 
         </div>
+        
+        {% endif %}
+        
         {% endfor %}
     </section>
     <script>
+        // 별 이미지 변경
+        var tabs = document.querySelectorAll(".star-imgs");
+        var img11s = document.querySelector("img.star1");
+        var img22s = document.querySelector("img.star2");
+        var img33s = document.querySelector("img.star3");
+        var img44s = document.querySelector("img.star4");
+        var img55s = document.querySelector("img.star5");
+        var pointss = document.getElementById("star-point").innerText;
+        console.log(pointss)
+        if (pointss>=5) {
+            img11s.style.display = 'none'
+            img22s.style.display = 'none'
+            img33s.style.display = 'none'
+            img44s.style.display = 'none'
+            img55s.style.display = 'inline'
+        }
+        else if (pointss>=4) {
+            img11s.style.display = 'none'
+            img22s.style.display = 'none'
+            img33s.style.display = 'none'
+            img44s.style.display = 'inline'
+            img55s.style.display = 'none'
+        }
+        else if (pointss>=3) {
+            img11s.style.display = 'none'
+            img22s.style.display = 'none'
+            img33s.style.display = 'inline'
+            img44s.style.display = 'none'
+            img55s.style.display = 'none'
+        }
+        else if (pointss>=2) {
+            img11s.style.display = 'none'
+            img22s.style.display = 'inline'
+            img33s.style.display = 'none'
+            img44s.style.display = 'none'
+            img55s.style.display = 'none'
+        }
+        else {
+            img11s.style.display = 'inline'
+            img22s.style.display = 'none'
+            img33s.style.display = 'none'
+            img44s.style.display = 'none'
+            img55s.style.display = 'none'
+        }
         // 카테고리
         const a = document.getElementById("category_name1").innerText;
         const b = document.getElementById("category_name2").innerText;
@@ -199,7 +271,7 @@
 
         // 별점 0.5
         const drawStar = (target) => {
-            document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+            document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
         }
 
         // 계란 이미지 변경
@@ -245,6 +317,8 @@
             img33.style.display = 'none';
             img44.style.display = 'inline'; 
         }
+
+        
     </script>
     {% else %}
     <div class="h3 text-info">잘못된 접근입니다. 로그인해주세요</div>

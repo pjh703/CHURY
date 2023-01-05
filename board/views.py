@@ -90,7 +90,7 @@ def home(request):
     else:
 
         apikey = '6b75188cf5cbc494ffe18d4d302e3aaa'
-        
+
         url = f'https://api.themoviedb.org/3/movie/popular?api_key={apikey}&language=ko-KR&page=1&region=KR'
         genre_url = f'https://api.themoviedb.org/3/genre/movie/list?api_key={apikey}&language=ko-KR'
         respon = requests.get(url).json()['results']
@@ -124,21 +124,27 @@ def BoardDetailView(request, pk):
     response = requests.get(apiurl).json()
 
     isbook = True
+    # 책이 있나없나 검사
     if request.method == "POST":
         email = request.POST['email']
         email_id = User.objects.get(email = email).id
         mydic = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk)
         mydic1 = MYBOOK.objects.filter(email_id = email_id).filter(mydic = pk)
+        myread = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk).values('myread')[0].get('myread')
+
         # print(mydic1)
         # print("post")
+        print(myread)
+
 
         if len(mydic) > 0:
             isbook = False # 책이 저장되어 있는 경우
 
         # print(response)
         context = {
-            'response': response,
-            'isbook': isbook,
+            'response': response, # 책정보 보내줌
+            'isbook': isbook, # 책이 있나없나 true값
+            'myread': myread
         }
         return render(request, "board/detail.html", context)
 
