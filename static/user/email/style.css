@@ -11,7 +11,7 @@
     font-family: 'Pretendard-Regular';
 }
 
-.error-text, 
+.error-text,  
 .error-icon {
     display: none;
 }
@@ -160,7 +160,7 @@
     cursor: pointer;
 }
 
-.error-icon {
+.error-icon { 
     /* display: block; */
     position: absolute;
     width: auto;

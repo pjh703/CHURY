@@ -47,6 +47,8 @@
     letter-spacing: 1px;
 }
 
+
+
 /* 해당카테고리 bold */
 .sidebar-use {
     font-weight: 800;
@@ -174,7 +176,7 @@ ul li:hover a {
 
 
 /* 프로필사진 박스 */
-.profile {
+.pw-change {
   position: absolute;
   margin-left: 580px;
 
@@ -200,7 +202,7 @@ ul li:hover a {
 .right {
   margin-right: 30px;
 }
-.profile:hover {
+.pw-change:hover {
   background-color: rgb(238, 238, 238);
 }
 

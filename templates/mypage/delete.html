@@ -7,14 +7,12 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>CHURY | My Page</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='{% static 'mypage/user-modal/exitmodal.css' %}'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/user-modal/exitmodal.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ont-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div class="sidebar">
-        <div class="logo">
-            <a href="main/main.html"><img src="{% static 'mypage/images/logo.svg' %}"></a>
-        </div>
+        <a href="{% url 'board:home' %}"><div class="logo"></div></a>
 
         <ul>
             <div class="sidebar-home">
@@ -28,15 +26,13 @@
             </div>
             <li class="top"><a href="loglock.html">로그인 및 보안</a></li>
             <li class="bottom"><a href="#">이용권/결제정보</a></li>
-            <li><a href="#">고객지원센터</a></li>
+            <li class="top"><a href="#">고객지원센터</a></li>
+            <li class="bottom"><a href="{% url 'user:logout' %}" style="color: #ffc000;">로그아웃</a></li>
         </ul>
     </div>
 
     <div class="home">
-        <div class="header">
-            <li class="login_btn">
-                <a href="../intro.html"><button class="btn">로그아웃</button></a>
-            </li>    
+        <div class="header">  
         </div>
         <h1>개인정보 관리</h1>
         <h3>추라이에 등록된 개인정보 정보를 확인할 수 있습니다. 최신 정보로 관리해주세요.</h4>
@@ -45,8 +41,8 @@
                 <div class="title">닉네임</div>
                 <div class="right">></div>
             </div>
-            <div class="profile">
-                <div class="title">프로필사진</div>
+            <div class="pc-change">
+                <div class="title">프로필사진 변경</div>
                 <div class="right">></div>
             </div>
             <div class="pw-change">
@@ -60,42 +56,51 @@
             </div>
         </div>
     </div>
-    
+     
 
     <!-- modal -->
     <div class="overlay"></div>
 
-    <div class="modal-wrapper">
+    <div class="modal-wrapper"> 
         <div class="modal-inner">
             <div class="othertxt">
                 <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage/images/close.svg' %}" alt=""></a>
                 <div class="warning">CHURY 탈퇴</div>
-                <!-- <li>회원 탈퇴를 하면 모든 데이터가 삭제됩니다.</li>
-                <li>90이내에 동일한 계정과 이메일로 재가입 할 수 없습니다.</li> -->
-                <div class="description">
-                    <h2 style="text-align: center;">
-                    정말 탈퇴하시겠습니까?
+                <li>회원 탈퇴를 하면 모든 데이터가 삭제됩니다.</li>
+                <li>90이내에 동일한 계정과 이메일로 재가입 할 수 없습니다.</li>                
 
-                    </h2>
-                    
+                <div class='agree'>
+                    <input id='agree' name='option' type='checkbox' value="agree" onclick='is_checked()'>
+                    <label for='agree'>계속 하시겠습니까?</label >
                 </div>
-                <form action="{% url 'mypage:delete' user.pk %}" method="post">
-                    {% csrf_token %}
 
-                <!-- <div class="input-btn">
-                    <input type="password" id="name" name="name" placeholder="비밀번호를 입력해주세요">
-                </div> -->
+                 <div class="field-group">
+                    <input type="password" class="form-confrol" id="password1" name="password1" placeholder="비밀번호를 입력해주세요"
+                        value="{{ form.password1.value|default_if_none:'' }}">
+                    <div id="errorpw">{{ form.errors.password1 }}</div>
                 </div>
-                <div class="modal-buttons">
-                <!-- <a href="../user.html"> -->
-                <button type="submit" class="cancel-btn btn btn-danger">탈퇴</button></a>
-                </form>
+                {% if form.username.value %}
+                    {% if form.password.value %}
+                    <div id="errorpw2">아이디와 비밀번호가 일치하지 않습니다.</div>
+                    {% endif %}
+                {% endif %}
+                
 
-                <!-- <button class="change-btn">확인</button> -->
             </div>
+                <div class="modal-buttons">
+                    <a href="/mypage/env/">
+                        <button class="cancel-btn">취소</button>
+                    </a>
+                    <form  class="field-group" action="{% url 'mypage:delete' user.pk %}" method="post">
+                        {% csrf_token %}
+                        <button id=submit type="submit" class="change-btn" disabled class="submit_toggle">탈퇴</button></a>
+                    </form>
+                </div>
         </div>
     </div>
     
 
 </body>
+<script src="{% static 'mypage/user-modal/exitmodal.js' %}">
+</script>
 </html>

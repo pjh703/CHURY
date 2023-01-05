@@ -21,15 +21,15 @@
 }
 
 .logo {
-    display: block;
-    margin: 0px auto;
-
-    width: 150px;
-    margin-top: 40px;
-    margin-bottom: 40px;
-
-    z-index: 10;
-    cursor: pointer;
+  display: block;
+  width: 150px;
+  height: 40px;
+  background-image: url("../../mypage/images/logo.png");
+  background-size: contain;
+  margin-left: 40px;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  cursor: pointer;
 }
 
 
@@ -174,7 +174,7 @@ ul li:hover a {
 
 
 /* 프로필사진 박스 */
-.profile {
+.pc-change {
   position: absolute;
   margin-left: 580px;
 
@@ -200,7 +200,7 @@ ul li:hover a {
 .right {
   margin-right: 30px;
 }
-.profile:hover {
+.pc-change:hover {
   background-color: rgb(238, 238, 238);
 }
 
@@ -337,7 +337,7 @@ ul li:hover a {
 
 .input-btn input {
   height: 45px;
-  width: 270px;
+  width: 380px;
   margin-left: 60px;
 
   font-size: 16px;

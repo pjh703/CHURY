@@ -26,7 +26,7 @@ const inputs = document.querySelectorAll('.form-container form input');
 // }
 
 
-// 에러 메세지
+// 에러 메세지 
 if (document.getElementById("error1").innerText) {
     let err = document.getElementById("username");
     err.parentElement.classList.add('error');
@@ -35,16 +35,16 @@ if (document.getElementById("error2").innerText) {
     let err = document.getElementById("email");
     err.parentElement.classList.add('error');
 }
-if (document.getElementById("error1").innerText) {
+if (document.getElementById("error3").innerText) {
     let err = document.getElementById("password1");
     err.parentElement.classList.add('error');
 }
-if (document.getElementById("error1").innerText) {
+if (document.getElementById("error4").innerText) {
     let err = document.getElementById("password2");
     err.parentElement.classList.add('error');
 }
 
-
+ 
 function is_checked() {
     const checkbox = document.getElementById('age');
     const is_checked = checkbox.checked;

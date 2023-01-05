@@ -17,6 +17,7 @@ urlpatterns = [
     path('delete/<int:pk>/', UserDeleteView.as_view(), name='delete'),
     path('update/<int:pk>/', UserUpdateView.as_view(), name='update'),
     path('pwupdate/<int:pk>/', PwUpdateView.as_view(), name='pwupdate'),
+    path('picture/<int:pk>/', views.PictureView, name='picture'),
     # path('update/<int:pk>/', UserDetailView.as_view(), name='update'),
 
     # 데이터 처리
