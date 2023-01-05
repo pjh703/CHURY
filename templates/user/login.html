@@ -1,11 +1,11 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html> 
     <head>
         <meta charset='utf-8'>
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-        <title>CHURT-Login</title>
+        <title>CHURY | Login</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         
         <link rel='stylesheet' type='text/css' media='screen' href="{% static 'user/login/style.css' %}">
@@ -43,7 +43,7 @@
                         </div>
                         {% if form.username.value %}
                             {% if form.password.value %}
-                            <div id="erroridpw">아이디와 비밀번호가 일치하지 않습니다</div>
+                            <div id="erroridpw">아이디와 비밀번호가 일치하지 않습니다.</div>
                             {% endif %}
                         {% endif %}
                             

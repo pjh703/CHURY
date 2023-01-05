@@ -4,7 +4,7 @@
     font-style: normal;
 }
 
-* {
+* { 
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -287,4 +287,8 @@
     font-size: .8rem;
     color: hsl(0, 100%, 74%);
     font-style: italic;
+}
+
+#erroridpw {
+    margin-top: 10px;
 }

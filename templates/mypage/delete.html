@@ -67,25 +67,33 @@
                 <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage/images/close.svg' %}" alt=""></a>
                 <div class="warning">CHURY 탈퇴</div>
                 <li>회원 탈퇴를 하면 모든 데이터가 삭제됩니다.</li>
-                <li>90이내에 동일한 계정과 이메일로 재가입 할 수 없습니다.</li>
-                <div class="description">
-                    계속 하시겠습니까?
-                    <input type="checkbox" name="" id="">
+                <li>90이내에 동일한 계정과 이메일로 재가입 할 수 없습니다.</li>                
+
+                <div class='agree'>
+                    <input id='agree' name='option' type='checkbox' value="agree" onclick='is_checked()'>
+                    <label for='agree'>계속 하시겠습니까?</label >
                 </div>
 
-                
-                
-                 <div class="input-btn">
-                    <input type="password" id="name" name="name" placeholder="비밀번호를 입력해주세요">
+                 <div class="field-group">
+                    <input type="password" class="form-confrol" id="password1" name="password1" placeholder="비밀번호를 입력해주세요"
+                        value="{{ form.password1.value|default_if_none:'' }}">
+                    <div id="errorpw">{{ form.errors.password1 }}</div>
                 </div>
+                {% if form.username.value %}
+                    {% if form.password.value %}
+                    <div id="errorpw2">아이디와 비밀번호가 일치하지 않습니다.</div>
+                    {% endif %}
+                {% endif %}
+                
+
             </div>
                 <div class="modal-buttons">
                     <a href="/mypage/env/">
                         <button class="cancel-btn">취소</button>
                     </a>
-                    <form action="{% url 'mypage:delete' user.pk %}" method="post">
+                    <form  class="field-group" action="{% url 'mypage:delete' user.pk %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="change-btn">탈퇴</button></a>
+                        <button id=submit type="submit" class="change-btn" disabled class="submit_toggle">탈퇴</button></a>
                     </form>
                 </div>
         </div>
@@ -93,4 +101,6 @@
     
 
 </body>
+<script src="{% static 'mypage/user-modal/exitmodal.js' %}">
+</script>
 </html>

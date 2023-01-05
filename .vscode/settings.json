@@ -1,0 +1,10 @@
+{
+    "editor.fontSize": 23,
+    "scm.inputFontSize": 15,
+    "debug.console.fontSize": 15,
+    "workbench.sash.size": 4,
+    "markdown.preview.fontSize": 15,
+    "terminal.integrated.fontSize": 30,
+    "editor.scrollbar.horizontalScrollbarSize": 15,
+    "editor.accessibilityPageSize": 10
+}
