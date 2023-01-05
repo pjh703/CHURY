@@ -30,3 +30,9 @@ def ModalView(request):
 
 def AgreementView(request):
     return render(request, 'user/agreement.html')
+
+
+
+# 비밀번호 찾기 창
+def FindView(request):
+    return render(request, 'user/pwfind.html')

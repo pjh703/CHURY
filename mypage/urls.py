@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from . import views
 from .views import UserDeleteView, UserUpdateView, UserDetailView, PwUpdateView
 
-
+ 
 app_name = 'mypage'
 
 urlpatterns = [
@@ -27,5 +27,7 @@ urlpatterns = [
 
     # 별점 데이터 처리
     path('mydic2/', views.mydic2, name='mydic2'),
+
+
 
 ]

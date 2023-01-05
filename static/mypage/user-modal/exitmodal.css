@@ -419,9 +419,10 @@ ul li:hover a {
   /* cursor: pointer; */
   letter-spacing: 2px;
 }
-/* .change-btn:hover {
+
+.submit-hover button[type = submit]:hover {
   background-color: rgb(172, 172, 172);
-} */
+}
 
 .submit-hover button[type = submit]{
   background-color: #636363;

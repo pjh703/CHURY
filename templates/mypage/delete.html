@@ -63,6 +63,7 @@
 
     <div class="modal-wrapper"> 
         <div class="modal-inner">
+            
             <div class="othertxt">
                 <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage/images/close.svg' %}" alt=""></a>
                 <div class="warning">CHURY 탈퇴</div>
@@ -71,31 +72,26 @@
 
                 <div class='agree'>
                     <input id='agree' name='option' type='checkbox' value="agree" onclick='is_checked()'>
-                    <label for='agree'>계속 하시겠습니까?</label >
+                    <label for='agree'>계속 하시겠습니까?</label > 
                 </div>
-
-                 <div class="field-group">
+                
+                <!-- <div class="field-group">
                     <input type="password" class="form-confrol" id="password1" name="password1" placeholder="비밀번호를 입력해주세요"
                         value="{{ form.password1.value|default_if_none:'' }}">
                     <div id="errorpw">{{ form.errors.password1 }}</div>
-                </div>
-                {% if form.username.value %}
-                    {% if form.password.value %}
-                    <div id="errorpw2">아이디와 비밀번호가 일치하지 않습니다.</div>
-                    {% endif %}
-                {% endif %}
-                
-
+                </div> -->
+                    
             </div>
-                <div class="modal-buttons">
-                    <a href="/mypage/env/">
-                        <button class="cancel-btn">취소</button>
-                    </a>
-                    <form  class="field-group" action="{% url 'mypage:delete' user.pk %}" method="post">
-                        {% csrf_token %}
-                        <button id=submit type="submit" class="change-btn" disabled class="submit_toggle">탈퇴</button></a>
-                    </form>
-                </div>
+            <div class="modal-buttons">
+                <a href="/mypage/env/">
+                    <button class="cancel-btn">취소</button>
+                </a>
+                <form  class="field-group" action="{% url 'mypage:delete' user.pk %}" method="post">
+                    {% csrf_token %}
+                    <button id=submit type="submit" class="change-btn" disabled class="submit_toggle">탈퇴</button></a>
+                </form>
+            </div>
+            
         </div>
     </div>
     

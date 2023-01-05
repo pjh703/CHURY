@@ -176,7 +176,7 @@
                                     <div class="description2">
                                         회원님이 모르는 로그인 기록이 확인되었나요?<br>
                                         보안 설정으로 내 계정을 보호해주세요.
-                                    </div>
+                                    </div> 
                                     <a href="{% url 'mypage:loglock' %}">
                                         <div class="go-step2">
                                             <i class="fa-regular fa-hand-pointer fa-lg"></i>
@@ -266,6 +266,12 @@ window.onclick = function(event) {
   }
 };
 
+window.onclick = function(e){
+    if(e.target == modal) {
+        modal.style.visibility = "hidden";
+        modal.style.opacity = 0;
+    }
+}
 
 
 $.datepicker.setDefaults({
