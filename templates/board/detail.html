@@ -36,6 +36,7 @@
         </div>
         <div class="right">
             <form action="{% url 'board:search' %}" method="get" id="searchForm">
+                {% csrf_token %}
                 <div class="input-group">
                     <select name="searchType" class="form-select" style="margin-right: 10px; padding: 5.9px; border: 1px solid black; float:left;">
                         <option value="title">제목별</option>
