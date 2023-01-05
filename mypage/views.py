@@ -2,9 +2,10 @@ from django.shortcuts import render, redirect
 from django.views.generic import UpdateView, DeleteView, DetailView
 
 from .forms import UserUpdateForm
-from .models import MYBOOK, MYINFO, MYCHOOSE
+from .models import MYBOOK, MYCHOOSE
 
-from user.models import User
+
+from user.models import User, MYINFO
 from django.urls import reverse_lazy, reverse
 import requests
 # Create your views here.

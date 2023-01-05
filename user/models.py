@@ -9,7 +9,7 @@ class User(AbstractUser):
     
     
 class MYINFO(models.Model):
-    user_id = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    email = models.ForeignKey("user.User", on_delete=models.CASCADE)
     profile_image = models.ImageField
     hp = models.IntegerField(null=True, unique=True)
     hp_confirm = models.BooleanField(default=False)
