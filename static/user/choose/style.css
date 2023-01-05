@@ -15,12 +15,18 @@
     margin-left: 10px;
 } */
 
+.nav{
+    height: 80px;
+    background-color: #ff750f;
+    border-bottom: solid 1px #ddd;
+}
+
 .text{
     clear: right;
     width: 100%;
     margin: auto;
     position: absolute;
-    left: 200px;
+    left: 130px;
     /* top: 170px; */
     overflow: auto;
     /* margin-right: 50px; */
@@ -33,15 +39,18 @@
     margin-bottom: 0;
     line-height: 80px;
     letter-spacing: 0.5px;
+    position: fixed;
 }
 
 .text > h3{
     color: rgb(119, 117, 117);
     font-size: 25px;
-    font-weight: 500;
-    margin-top: -40px;
+    font-weight: 500; 
+    margin-top: 300px; 
     letter-spacing: 0.5px;
     line-height: 40px;
+    position: fixed;
+    /* fix 전 margintop = 40px */
 }
 
 /* !!!!! tab css !!!!!! */
@@ -53,7 +62,7 @@
     /* box-shadow: 5px 5px 5px 0px lightgray; */
     z-index: 1;
     clear: right;
-    vertical-align : bottom
+    vertical-align : bottom;
 }
 
 .text [class="tab-btn"] {
@@ -74,7 +83,9 @@
     left: 13%;
     bottom: 8%;
     font-size: 22px;
-    padding: 20px 60px;
+    /* padding: 20px 60px; */
+    width: 380px;
+    height: 75px;
     text-align: center;
     font-weight: 600;
     background-size: 100% auto;
@@ -86,7 +97,7 @@
     text-decoration: none;
     z-index: 2;
     display: block; width: 400px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .choose-btn {
@@ -111,6 +122,8 @@
 .poster {
     position: relative;
     line-height: 150px;
+    border-radius: 10px;
+
 
 }
 .egg {

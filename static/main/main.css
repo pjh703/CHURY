@@ -15,7 +15,7 @@
 }
 
 body {
-  background-color: rgb(255, 255, 247);
+  /* background-color: rgb(255, 255, 247); */
   overflow-x: hidden;
 }
 
@@ -40,7 +40,11 @@ nav {
   /* background: linear-gradient(to bottom, rgb(250, 250, 250) 10%, rgba(255, 255, 255, 0.158)); */
   /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 10%, rgba(0, 0, 0, 0)); */
   /* background: linear-gradient(white, rgba(255, 255, 255, 0)); */
+  /* background-color: rgb(255, 252, 245); */
   background-color: white;
+  position: fixed;
+  width: 100%;
+  border-bottom: 2px solid #ddd;
 }
 
 /*  */
@@ -98,6 +102,8 @@ nav .left .menu-list li a {
 nav .right {
   display: flex;
   margin-right: 2em;
+  position: relative;
+
 }
 nav .right .icon {
   padding: 0.5em 1em 0.5em 1em;
@@ -177,6 +183,7 @@ nav .right .search .search-bar input {
 
 main {
   position: relative;
+  top:80px
 }
 /* main 슬라이드 */
 .slider2{
