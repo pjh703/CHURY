@@ -41,7 +41,7 @@
     margin-left: 40px;
 }
 
-.login_btn{
+.login_btn{ 
     /*왼쪽에 붙어있게 해주는 아래 두 줄*/
     display: flex;
     justify-content: flex-end;

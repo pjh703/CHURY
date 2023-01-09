@@ -30,9 +30,9 @@
                 <h1>로그인</h1>
                 <div class="form-container">
                     <form method="post" action="{% url 'user:login' %}">
-                        {% csrf_token %}
+                        {% csrf_token %} 
                         <div class="field-group">
-                            <input type="text" class="form-control" name="username" id="username" placeholder="이메일 (example@gmail.com)"
+                            <input type="text" class="form-control" name="username" id="username" placeholder="닉네임 / 이메일 (example@gmail.com)"
                             value="{{ form.username.value|default_if_none:'' }}">
                            <div id="errorid">{{ form.errors.username }}</div>
                         </div>
