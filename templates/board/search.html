@@ -34,19 +34,22 @@
             <div class="input-group">
                 <select name="searchType" class="form-select2">
                     {% if searchType == 'title' %}
-                    <option value="title" selected="selected">제목별</option>
+                    <option value="title" selected="selected">제목 검색</option>
                     {% else %}
-                    <option value="title">제목별</option>
+                    <option value="title">제목 검색</option>
                     {% endif %}
                     {% if searchType == 'author' %}
-                    <option value="author" selected="selected">저자별</option>
+                    <option value="author" selected="selected">저자 검색</option>
                     {% else %}
-                    <option value="author">저자별</option>
+                    <option value="author">저자 검색</option>
                     {% endif %}
-                    {% if searchType == 'category' %}
-                    <option value="category" selected="selected">장르별</option>
+                    {% if searchType == 'keyword' %}
+                    <option value="keyword" selected="selected">키워드 검색</option>
                     {% else %}
-                    <option value="category">장르별</option>
+                    <option value="keyword">키워드 검색</option>
+                    {% endif %}
+                    {% if searchType == 'genre' %}
+                    <option value="keyword" style="display: none;">장르 검색</option>
                     {% endif %}
                 </select>
                 <div class="icon search">
@@ -58,52 +61,46 @@
                 <div class="sort">
                     {% if searchType == 'title' %}
                     <select name="sortType" class="form-select3" onchange="this.form.submit()">
-                        {% if sortType == 'PublishTime' %}
-                        <option value="PublishTime" selected="selected">출간일 순</option>
+                        {% if sortType == 'ViewRating' %}
+                        <option value="ViewRating" selected="selected">조회 순</option>
                         {% else %}
-                        <option value="PublishTime">출간일 순</option>
-                        {% endif %}
-                        {% if sortType == 'SalesPoint' %}
-                        <option value="SalesPoint" selected="selected">판매량 순</option>
-                        {% else %}
-                        <option value="SalesPoint">판매량 순</option>
+                        <option value="ViewRating">조회 순</option>
                         {% endif %}
                         {% if sortType == 'CustomerRating' %}
-                        <option value="CustomerRating" selected="selected">고객평점 순</option>
+                        <option value="CustomerRating" selected="selected">추천 순</option>
                         {% else %}
-                        <option value="CustomerRating">고객평점 순</option>
+                        <option value="CustomerRating">추천 순</option>
                         {% endif %}
                     </select>
                     {% elif searchType == 'author' %}
                     <select name="sortType" class="form-select3" onchange="this.form.submit()">
-                        {% if sortType == 'PublishTime' %}
-                        <option value="PublishTime" selected="selected">출간일 순</option>
+                        {% if sortType == 'ViewRating' %}
+                        <option value="ViewRating" selected="selected">조회 순</option>
                         {% else %}
-                        <option value="PublishTime">출간일 순</option>
-                        {% endif %}
-                        {% if sortType == 'SalesPoint' %}
-                        <option value="SalesPoint" selected="selected">판매량 순</option>
-                        {% else %}
-                        <option value="SalesPoint">판매량 순</option>
+                        <option value="ViewRating">조회 순</option>
                         {% endif %}
                         {% if sortType == 'CustomerRating' %}
-                        <option value="CustomerRating" selected="selected">고객평점 순</option>
+                        <option value="CustomerRating" selected="selected">추천 순</option>
                         {% else %}
-                        <option value="CustomerRating">고객평점 순</option>
+                        <option value="CustomerRating">추천 순</option>
                         {% endif %}
                     </select>
-                    {% elif searchType == 'category' %}
-                    <select name="queryType" class="form-select3" onchange="this.form.submit()">
-                        {% if queryType == 'Bestseller' %}
-                        <option value="Bestseller" selected="selected">베스트셀러</option>
+                    {% elif searchType == 'keyword' %}
+                    <select name="sortType" class="form-select3" onchange="this.form.submit()">
+                        {% if sortType == 'ViewRating' %}
+                        <option value="ViewRating" selected="selected">조회 순</option>
                         {% else %}
-                        <option value="Bestseller">베스트셀러</option>
+                        <option value="ViewRating">조회 순</option>
                         {% endif %}
-                        {% if queryType == 'ItemNewAll' %}
-                        <option value="ItemNewAll" selected="selected">신간</option>
+                        {% if sortType == 'CustomerRating' %}
+                        <option value="CustomerRating" selected="selected">추천 순</option>
                         {% else %}
-                        <option value="ItemNewAll">신간</option>
+                        <option value="CustomerRating">추천 순</option>
                         {% endif %}
+                    </select>
+                    {% elif searchType == 'genre' %}
+                    <select name="sortType" class="form-select3" onchange="this.form.submit()">
+                        <option value="ViewRating">조회 순</option>
                     </select>
                     {% endif %}
                 </div>
@@ -118,7 +115,7 @@
                     <i class="fa-solid fa-caret-down"></i>
                     <div class="dropdown-content">
                         <a href="{% url 'mypage:profile' %}">내 정보</a>
-                        <a href="{% url 'mypage:library' pk=user.username %}">내 책장</a>
+                        <a href="{% url 'mypage:library' pk=user.id %}">내 책장</a>
                         <a href="{% url 'mypage:env' %}">개인정보 관리</a>
                         <a href="{% url 'mypage:loglock' %}">로그인 및 보안</a>
                         <a href="{% url 'user:logout' %}" style="color: rgb(253, 110, 85);">로그아웃</a>
@@ -131,32 +128,26 @@
     <!-- =================================================================================================== -->
     <div  class="search-result">
         <tbody>
-            {% if response.errorCode == 3 %}
+            {% if empty %}
             검색어를 입력해주세요.
-            {% elif pr_text == '' %}
-            검색어를 입력해주세요.
-            {% elif response.item %}
+            {% elif response|length > 0 %}
             <tr>
                 {% if searchType == 'title' %}
                 '{{ pr_text }}' 에 대한 검색 결과<br>
-                {{ response.totalResults }}건이 검색되었습니다.
+                {{ response|length }}건이 검색되었습니다.
                 {% elif searchType == 'author' %}
                 '{{ pr_text }}' 에 대한 검색 결과<br>
-                {{ response.totalResults }}건이 검색되었습니다.
-                {% elif searchType == 'category' %}
-                '{{ pr_text }}' 카테고리에 대한 검색 결과<br>
-                {{ total_result }}건이 검색되었습니다.
+                {{ response|length }}건이 검색되었습니다.
+                {% elif searchType == 'keyword' %}
+                '{{ pr_text }}' 에 대한 검색 결과<br>
+                {{ response|length }}건이 검색되었습니다.
+                {% elif searchType == 'genre' %}
+                <h3>[{{ genre_text }}]</h3>
+                {% elif searchType == 'list' %}
+                <h3>[{{ list_text }}]</h3>
                 {% endif %}
-                {% for i in response.item %}
-                {% endfor %}
-                {% elif response.status == 'empty' %}
-                '{{ pr_text }}' 카테고리에 대한 검색결과가 없습니다.
-                {% elif response.totalResults == 0 %}
+                {% elif response|length == 0 %}
                 '{{ pr_text }}' 에 대한 검색결과가 없습니다.
-                {% elif total_result == 0 %}
-                '{{ pr_text }}' 에 대한 검색결과가 없습니다.
-                {% else %}
-                검색어를 입력해주세요.
             {% endif %}
             </tr>
         </tbody>
@@ -170,1123 +161,100 @@
             <div id="sidebar" class="sidebar">
 
                 <ul class="sidebar-nav" id="sidebar-nav">
-                    
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                            <span>일반</span><i class="bi bi-chevron-down ms-auto"></i>
-                        </a>
-                        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav2" data-bs-toggle="collapse" href="#">
-                                  <span>경제경영</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav2" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="/board/search/?page=1&searchType=category&searchWord=경제학">
-                                            <span>경제학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/board/search/?page=1&searchType=category&searchWord=기업 경영">
-                                            <span>기업 경영</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/board/search/?page=1&searchType=category&searchWord=마케팅/세일즈">
-                                            <span>마케팅/세일즈</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/board/search/?page=1&searchType=category&searchWord=재테크/투자">
-                                            <span>재테크/투자</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/board/search/?page=1&searchType=category&searchWord=창업/취업/은퇴">
-                                            <span>창업/취업/은퇴</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/board/search/?page=1&searchType=category&searchWord=트렌드/미래예측">
-                                            <span>트렌드/미래예측</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav3" data-bs-toggle="collapse" href="#">
-                                  <span>자기계발</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav3" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>삶의자세/정신훈련</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>성공전략/성공학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>실용능력 계발</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>인간관계</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>진로설계-취업/이민/연수</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>성공</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>리더십</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>행복론</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>힐링</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>정리/심플라이프</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>협상/설득/화술</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>프레젠테이션/회의</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>기획/보고</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>시간관리/정보관리</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>두뇌계발</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>20대의 자기계발</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>여성의 자기계발</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>중년의 자기계발</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav4" data-bs-toggle="collapse" href="#">
-                                  <span>소설/시/희곡</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav4" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>한국소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>일본소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>영미소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>스페인/중남미소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>프랑스소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>독일소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>중국소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>러시아소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>세계의 소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>추리/미스터리소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>판타지/환상문학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>역사소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>과학소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>호러.공포소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>액션/스릴러소설</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>시</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>신춘문예작품집</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>우리나라 옛글</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>문학의 이해</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>희곡</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>문학잡지</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>테마문학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>세계의 문학</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav5" data-bs-toggle="collapse" href="#">
-                                  <span>라이트노벨</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav5" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>국내</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>해외</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav6" data-bs-toggle="collapse" href="#">
-                                  <span>에세이</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav6" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>한국에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>외국에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>동물에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>명상에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>심리치유 에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>사진/그림 에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>여행에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>음식에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>독서에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>예술에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>종교에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>사랑/연애 에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>노년을 위한 에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>자연에세이</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav7" data-bs-toggle="collapse" href="#">
-                                  <span>인문학</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav7" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>사상가/인문학자</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>교양 인문학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>인문 에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>인문 비평</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>인문학 전문사전</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>철학 일반</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>서양철학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>동양철학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>심리학/정신분석학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>신화/종교학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>책읽기/글쓰기</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>서지/출판</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>기호학/언어학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>논리와 비판적 사고</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>인류학/고고학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>문화/문화이론</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>학회/무크/계간지</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav8" data-bs-toggle="collapse" href="#">
-                                  <span>사회과학</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav8" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>비평/칼럼</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>사회문제</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>환경/생태관계서적</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>교육학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>사회운동</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>사회사상/사회사상사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>미래학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>지리학/지정학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>정치학/외교학/행정학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>한국정치사정/정치사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>사회학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>여성학/젠더</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>언론/미디어</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>법과 생활</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>통일/북한관계서적</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>국방/군사학</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav9" data-bs-toggle="collapse" href="#">
-                                  <span>역사</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav9" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="/board/search/?page=1&searchType=category&searchWord=고고학">
-                                            <span>고고학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>동양사일반</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>문화/역사기행</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>북한사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>서양사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>세계사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>아메리카사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>아시아사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>아프리카/오세아니아사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>역사학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>유럽사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>한국고대사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>조선사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>한국근현대사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>조선사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>중국사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>일본사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>이슬람/중동/이스라엘</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>전쟁/분쟁사</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav10" data-bs-toggle="collapse" href="#">
-                                  <span>청소년</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav10" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 경제</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 고전</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 문화/예술</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 수학/과학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 역사</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 영어</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 인문/사회</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 인물</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 자기계발</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 철학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년의 성(性)</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년의 사회생활</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년의 진로선택</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년이 쓴 책</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 문학</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav11" data-bs-toggle="collapse" href="#">
-                                  <span>예술/대중문화</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav11" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>예술/대중문화의 이해</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>미술</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>음악</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>영화</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>사진</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>건축</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>디자인</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>무용</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>미술/음악/예술치료</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav12" data-bs-toggle="collapse" href="#">
-                                  <span>종교/역학</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav12" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>기독교</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>가톨릭</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>불교</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>세계의 종교</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>역학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>명상/선</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>종교일반</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav13" data-bs-toggle="collapse" href="#">
-                                  <span>좋은 부모</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav13" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>육아에세이</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>좋은 부모</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>임신/출산</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>영유아</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>초등 자녀</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>청소년 자녀</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>육아</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>교육</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>진로/적성</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ========================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav14" data-bs-toggle="collapse" href="#">
-                                  <span>과학</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav14" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>기초과학/교양과학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>과학의 이해</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>과학사회학(STS)</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>과학자의 생애</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>뇌과학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>생명과학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>인체의 이해</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>의학.법의학의 이해</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>동물과 식물</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>물리학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>천문학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>지구과학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>수학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>화학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>공학</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>세계의 불가사의</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>발명/발견 이야기</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>농업 길잡이/생태농업</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ===================================================== -->
-                        </ul>
-                    </li>
-                    <!-- ========================================= -->
-
                     <li class="nav-item">
                         <a class="nav-link collapsed" data-bs-target="#components-nav15" data-bs-toggle="collapse" href="#">
-                            <span>로맨스</span><i class="bi bi-chevron-down ms-auto"></i>
+                            <span>최신 작품</span><i class="bi bi-chevron-down ms-auto"></i>
                         </a>
                         <ul id="components-nav15" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                            <a class="nav-link collapsed" data-bs-toggle="collapse" href="/board/search/?page=1&searchType=category&searchWord=로맨틱판타지&sortType=PublishTime">
-                                <span>로맨틱판타지</span>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=판타지&sortType=new">
+                                <span>판타지</span>
                             </a>
                             </a>
-                            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#">
-                                <span>할리퀸</span>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=무협&sortType=new">
+                                <span>무협</span>
                             </a>
-                            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#">
-                                <span>TL</span>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=퓨전&sortType=new">
+                                <span>퓨전</span>
                             </a>
-                            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#">
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=게임&sortType=new">
+                                <span>게임</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=로맨스&sortType=new">
+                                <span>로맨스</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=로판&sortType=new">
+                                <span>로맨스 판타지</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=BL&sortType=new">
+                                <span>BL</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=GL&sortType=new">
                                 <span>GL</span>
                             </a>
-                            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#">
-                                <span>성인 로맨스소설</span>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=스포츠&sortType=new">
+                                <span>스포츠</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=역사&sortType=new">
+                                <span>역사</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=패러디&sortType=new">
+                                <span>패러디</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=팬픽&sortType=new">
+                                <span>팬픽</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=라이트노벨&sortType=new">
+                                <span>라이트노벨</span>
                             </a>
                             <!-- ========================================== -->
                         </ul>
                     </li>
-                    <!-- ========================================================== -->
-            
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" data-bs-target="#components-nav16" data-bs-toggle="collapse" href="#">
-                            <span>BL</span><i class="bi bi-chevron-down ms-auto"></i>
-                        </a>
-                        <ul id="components-nav16" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav14" data-bs-toggle="collapse" href="#">
-                                  <span>BL소설</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav14" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>국내</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>국외</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ===================================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav17" data-bs-toggle="collapse" href="#">
-                                  <span>BL만화</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav17" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>국내</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>국외</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ===================================================== -->
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav18" data-bs-toggle="collapse" href="#">
-                                  <span>BL연재</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav18" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>만화</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ===================================================== -->
-                        </ul>
-                    </li>
-                    <!-- ========================================= -->
         
                     <li class="nav-item">
                         <a class="nav-link collapsed" data-bs-target="#components-nav19" data-bs-toggle="collapse" href="#">
-                            <span>판타지/무협</span><i class="bi bi-chevron-down ms-auto"></i>
+                            <span>완결 작품</span><i class="bi bi-chevron-down ms-auto"></i>
                         </a>
                         <ul id="components-nav19" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#">
-                                <span>성인</span>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=판타지&sortType=end">
+                                <span>판타지</span>
                             </a>
-                            <a class="nav-link collapsed" data-bs-toggle="collapse" href="#">
-                                <span>연재</span>
                             </a>
-                            <li>
-                                <a class="nav-link2 collapsed" data-bs-target="#components-nav20" data-bs-toggle="collapse" href="#">
-                                  <span>판타지소설</span><i class="bi bi-chevron-down ms-auto"></i>
-                                </a>
-                                <ul id="components-nav20" class="nav-content collapse " data-bs-parent="#components-nav2">
-                                    <li>
-                                        <a href="#">
-                                            <span>정통판타지</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>현대판타지</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>퓨전판타지</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>스포츠물</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>대체역사물</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>게임판타지</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- ===================================================== -->
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=무협&sortType=end">
+                                <span>무협</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=퓨전&sortType=end">
+                                <span>퓨전</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=게임&sortType=end">
+                                <span>게임</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=로맨스&sortType=end">
+                                <span>로맨스</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=로판&sortType=end">
+                                <span>로맨스 판타지</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=BL&sortType=end">
+                                <span>BL</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=GL&sortType=end">
+                                <span>GL</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=스포츠&sortType=end">
+                                <span>스포츠</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=역사&sortType=end">
+                                <span>역사</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=패러디&sortType=end">
+                                <span>패러디</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=팬픽&sortType=end">
+                                <span>팬픽</span>
+                            </a>
+                            <a href="/board/search/?page=1&searchType=genre&searchWord=라이트노벨&sortType=end">
+                                <span>라이트노벨</span>
+                            </a>
                         </ul>
                     </li>
                     <!-- =================================================== -->
@@ -1305,7 +273,7 @@
 
                     <form action="{% url 'board:detail' pk=i.id %}" method="post">
                         {% csrf_token %}
-                        <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                        <input value="{{ user.id }}" name="id" id="id" style="display: none;">
                         <!-- <div class="descr" style="pointer-events: none;">
                             {{ i.title }}<br><br>
                             {{ i.customerReviewRank }}점
@@ -1319,10 +287,11 @@
                     </form>
                 </div></a>
                 <div class="book-titles">
+                    <div>{{ i.tag }} | {{ i.장르 }} </div>
                     <a href="#"><div class="book-title">{{ i.제목 }}</div></a>
                     <div class="book-author">{{ i.작가 }}</div><br>                    
                     
-                    <div class="book-other">{{ i.조회수 }} | {{ i.추천수 }}</div>
+                    <div class="book-other">조회수 {{ i.조회수 }} | 추천수 {{ i.추천수 }}</div>
                     
                     {% if i.customerReviewRank %}
                     <div class="eggs">

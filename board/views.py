@@ -14,31 +14,31 @@ import numpy as np
 import pandas as pd
 
 
-data = pd.read_excel('book_data.xlsx')
-# Create your views here.
+data = pd.read_excel('book_db.xlsx')
+
 
 def home(request):
     a = User.objects.filter(username = request.user).values('id')
     e_id = a.values('id')[0]['id']
-    choo1 = MYCHOOSE.objects.filter(email_id = e_id).values('Action')
-    choo2 = MYCHOOSE.objects.filter(email_id = e_id).values('Adventure')
-    choo3 = MYCHOOSE.objects.filter(email_id = e_id).values('Animation')
-    choo4 = MYCHOOSE.objects.filter(email_id = e_id).values('Comedy')
-    choo5 = MYCHOOSE.objects.filter(email_id = e_id).values('Crime')
-    choo6 = MYCHOOSE.objects.filter(email_id = e_id).values('Documentary')
-    choo7 = MYCHOOSE.objects.filter(email_id = e_id).values('Drama')
-    choo8 = MYCHOOSE.objects.filter(email_id = e_id).values('Family')
-    choo9 = MYCHOOSE.objects.filter(email_id = e_id).values('Fantasy')
-    choo10 = MYCHOOSE.objects.filter(email_id = e_id).values('History')
-    choo11 = MYCHOOSE.objects.filter(email_id = e_id).values('Horror')
-    choo12 = MYCHOOSE.objects.filter(email_id = e_id).values('Music')
-    choo13 = MYCHOOSE.objects.filter(email_id = e_id).values('Mystery')
-    choo14 = MYCHOOSE.objects.filter(email_id = e_id).values('Romance')
-    choo15 = MYCHOOSE.objects.filter(email_id = e_id).values('ScienceFiction')
-    choo16 = MYCHOOSE.objects.filter(email_id = e_id).values('TVMovie')
-    choo17 = MYCHOOSE.objects.filter(email_id = e_id).values('Thriller')
-    choo18 = MYCHOOSE.objects.filter(email_id = e_id).values('War')
-    choo19 = MYCHOOSE.objects.filter(email_id = e_id).values('Western')
+    choo1 = MYCHOOSE.objects.filter(user_id = e_id).values('Action')
+    choo2 = MYCHOOSE.objects.filter(user_id = e_id).values('Adventure')
+    choo3 = MYCHOOSE.objects.filter(user_id = e_id).values('Animation')
+    choo4 = MYCHOOSE.objects.filter(user_id = e_id).values('Comedy')
+    choo5 = MYCHOOSE.objects.filter(user_id = e_id).values('Crime')
+    choo6 = MYCHOOSE.objects.filter(user_id = e_id).values('Documentary')
+    choo7 = MYCHOOSE.objects.filter(user_id = e_id).values('Drama')
+    choo8 = MYCHOOSE.objects.filter(user_id = e_id).values('Family')
+    choo9 = MYCHOOSE.objects.filter(user_id = e_id).values('Fantasy')
+    choo10 = MYCHOOSE.objects.filter(user_id = e_id).values('History')
+    choo11 = MYCHOOSE.objects.filter(user_id = e_id).values('Horror')
+    choo12 = MYCHOOSE.objects.filter(user_id = e_id).values('Music')
+    choo13 = MYCHOOSE.objects.filter(user_id = e_id).values('Mystery')
+    choo14 = MYCHOOSE.objects.filter(user_id = e_id).values('Romance')
+    choo15 = MYCHOOSE.objects.filter(user_id = e_id).values('ScienceFiction')
+    choo16 = MYCHOOSE.objects.filter(user_id = e_id).values('TVMovie')
+    choo17 = MYCHOOSE.objects.filter(user_id = e_id).values('Thriller')
+    choo18 = MYCHOOSE.objects.filter(user_id = e_id).values('War')
+    choo19 = MYCHOOSE.objects.filter(user_id = e_id).values('Western')
     choo = choo1.exists()+choo2.exists()+choo3.exists()+choo4.exists()+choo5.exists()+choo6.exists()+choo7.exists()+choo8.exists()+choo9.exists()+choo10.exists()+choo11.exists()+choo12.exists()+choo13.exists()+choo14.exists()+choo15.exists()+choo16.exists()+choo17.exists()+choo18.exists()+choo19.exists()     
    
 
@@ -114,53 +114,44 @@ def home(request):
 
 
 def BoardDetailView(request, pk):
-    page = 1
-    list = []
-    Key = 'ttbsaspower81040001'
-
-    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey={Key}&itemIdType=ISBN13&ItemId={pk}&Cover=Big&output=js&Version=20131101&OptResult=ebookList,usedList,reviewList"
-    response = requests.get(apiurl).json()
-
+    """상세페이지"""
+    # 웹에서 받아온 pk(id)값과 책DB의 id값이 같은 책 데이터를 딕셔너리 형태로 받아옴
     detail_data = data[data['id'] == int(pk)].to_dict('records')
-    if len(eval(data[data['id'] == 506445]['keyword'].iloc[0])) > 0:
+    # 책에 키워드가 존재하면 keyword에 리스트 형태로 저장
+    if len(eval(data[data['id'] == int(pk)]['keyword'].iloc[0])) > 0:
         keyword = eval(data[data['id'] == int(pk)]['keyword'].iloc[0])
-        print(keyword)
-    isbook = True
-    # 책이 있나없나 검사
-    # if request.method == "POST":
-    #     email = request.POST['email']
-    #     email_id = User.objects.get(email = email).id
-    #     mydic = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk)
-    #     mydic1 = MYBOOK.objects.filter(email_id = email_id).filter(mydic = pk)
-    #     myread = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk).values('myread')[0].get('myread')
+        # print(keyword)
 
-        # print(mydic1)
-        # print("post")
-        # print(myread)
+    isbook = False # 책이 있는지 없는지 검사하는 값
+    if request.method == "POST":
+        id = request.POST['id']
+        user_id = User.objects.get(id = id).id
+        my_book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = pk)
+
+        # print(my_book)
+        # print(len(my_book))
 
 
-        # if len(mydic) > 0:
-        #     isbook = False # 책이 저장되어 있는 경우
+        if len(my_book) > 0:
+            isbook = True # 책이 저장되어 있는 경우
 
+        context = {
+            'detail_data': detail_data, # 책 정보
+            'keyword': keyword, # 책 키워드 리스트
+            'isbook': isbook # 책이 있나없나 true값
+        }
+        return render(request, "board/detail.html", context)
+
+    else:
+        # print("get")
         # print(response)
-    context = {
-        'detail_data': detail_data,
-        'keyword': keyword
-        # 'response': response, # 책정보 보내줌
-        # 'isbook': isbook, # 책이 있나없나 true값
-        # 'myread': myread,
-    }
-    return render(request, "board/detail.html", context)
 
-    # else:
-    #     # print("get")
-    #     # print(response)
-
-    #     context = {
-    #         'response': response,
-    #         'isbook': isbook,
-    #     }
-    #     return render(request, "board/detail.html", context)
+        context = {
+            'detail_data': detail_data, # 책 정보
+            'keyword': keyword, # 책 키워드 리스트
+            'isbook': isbook,
+        }
+        return render(request, "board/detail.html", context)
 
 
 
@@ -170,98 +161,88 @@ def search(request, **kwargs):
     search_word = request.GET.get('searchWord')
     search_type = request.GET.get('searchType')
     sort_type = request.GET.get('sortType')
-    query_type = request.GET.get('queryType')
-    
-    if search_type and search_type: # 검색기준 및 검색어를 전달받은 경우
-            match search_type:
-                case 'title':
-                    page = request.GET.get('page', 1)
-                    list = []
-                    Key = 'ttbsaspower81040001'
-                    
-                    if sort_type == 'SalesPoint':
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start={page}&SearchTarget=eBook&Sort=SalesPoint&Cover=Big&output=js&Version=20131101"
-                    elif sort_type == 'CustomerRating':
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start={page}&SearchTarget=eBook&Sort=CustomerRating&Cover=Big&output=js&Version=20131101"
-                    else:
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=title&MaxResults=10&start={page}&SearchTarget=eBook&Sort=PublishTime&Cover=Big&output=js&Version=20131101"
-                    response = requests.get(apiurl).json()
 
-                    search_data = data[data['제목'].str.contains(search_word)].to_dict('records')
-                    print(search_data)
+    if search_word in ('', ' '):
+        response = []
+        empty = True
+        context = {
+            'empty': empty,
+            'response': response,
+            'searchType': search_type,
+            'sortType': sort_type,
+            'pr_text': search_word,
+        }
+        return render(request, "board/search.html", context)
 
-                    # print(response)
-                    context = {
-                        'response': search_data,
-                        'searchType': search_type,
-                        'sortType': sort_type,
-                        'pr_text': search_word,
-                    }
+    elif search_word and search_type: # 검색기준 및 검색어를 전달받은 경우
+        match search_type:
+            case 'title':
+                if sort_type == 'CustomerRating':
+                    response = data[data['제목'].str.contains(search_word)].sort_values('추천수_단위', ascending=False).to_dict('records')
+                else:
+                    response = data[data['제목'].str.contains(search_word)].sort_values('조회수_단위', ascending=False).to_dict('records')
 
-                    return render(request, "board/search.html", context)
+                # print(response)
+                context = {
+                    'response': response,
+                    'searchType': search_type,
+                    'sortType': sort_type,
+                    'pr_text': search_word,
+                }
 
-                case 'author':
-                    page = request.GET.get('page', 1)
-                    list = []
-                    Key = 'ttbsaspower81040001'
-                    
-                    if sort_type == 'SalesPoint':
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start={page}&SearchTarget=eBook&Sort=SalesPoint&Cover=Big&output=js&Version=20131101"
-                    elif sort_type == 'CustomerRating':
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start={page}&SearchTarget=eBook&Sort=CustomerRating&Cover=Big&output=js&Version=20131101"
-                    else:
-                        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey={Key}&Query={search_word}&QueryType=Author&MaxResults=10&start={page}&SearchTarget=eBook&Sort=PublishTime&Cover=Big&output=js&Version=20131101"
-                    response = requests.get(apiurl).json()
+                return render(request, "board/search.html", context)
 
-                    # print(response)
-                    context = {
-                        'response': response,
-                        'searchType': search_type,
-                        'sortType': sort_type,
-                        'pr_text': search_word,
-                    }
+            case 'author':
+                if sort_type == 'CustomerRating':
+                    response = data[data['작가'].str.contains(search_word)].sort_values('추천수_단위', ascending=False).to_dict('records')
+                else:
+                    response = data[data['작가'].str.contains(search_word)].sort_values('조회수_단위', ascending=False).to_dict('records')
 
-                    return render(request, "board/search.html", context)
+                # print(response)
+                context = {
+                    'response': response,
+                    'searchType': search_type,
+                    'sortType': sort_type,
+                    'pr_text': search_word,
+                }
 
-                case 'category':
-                    # 카테고리 검색 기능
-                    wb = open_workbook('board/aladin_Category.xls')
-                    sheet = wb.sheet_by_index(0)
-                    sheet.cell_value(0, 0)
-                    column_index = 2
-                    column = sheet.cell_value(0, column_index)
+                return render(request, "board/search.html", context)
 
-                    page = request.GET.get('page', 1)
-                    response = {}
-                    response_list = []
-                    total_result = 0
-                    Key = 'ttbsaspower81040001'
-                    COUNT = 0
-                    for row in range(1, sheet.nrows):
-                        if sheet.cell_value(row, column_index) == '전자책':
-                            if search_word == '':
-                                response = {'status': 'empty'}
-                            elif (search_word in (str)(sheet.cell_value(row, column_index - 1)))|(search_word in (str)(sheet.cell_value(row, column_index + 1))):
-                                categor = (int)(sheet.cell_value(row, column_index - 2))
-                                if query_type == 'ItemNewAll':
-                                    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=ItemNewAll&MaxResults=10&start={page}&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
-                                else:
-                                    apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start={page}&SearchTarget=eBook&Cover=Big&CategoryId={categor}&output=js&Version=20131101"
-                                # requests를 이용하여 json을 불러옵니다.
-                                response_url = requests.get(apiurl).json()
-                                response_list.append(response_url['item'])
-                                total_result += response_url['totalResults']
-                                response['item'] = sum(response_list, [])
+            case 'keyword':
+                # 키워드 검색 기능
+                if sort_type == 'CustomerRating':
+                    response = data[data['keyword'].str.contains(search_word)].sort_values('추천수_단위', ascending=False).to_dict('records')
+                else:
+                    response = data[data['keyword'].str.contains(search_word)].sort_values('조회수_단위', ascending=False).to_dict('records')
 
-                    context = {
-                        'response': response,
-                        'searchType': search_type,
-                        'queryType': query_type,
-                        'pr_text': search_word,
-                        'total_result' : total_result,
-                    }
+                # print(response)
+                context = {
+                    'response': response,
+                    'searchType': search_type,
+                    'sortType': sort_type,
+                    'pr_text': search_word,
+                }
 
-                    return render(request, "board/search.html", context)
+                return render(request, "board/search.html", context)
+            
+            case 'genre':
+                # 사이드바 장르
+                if sort_type == 'end':
+                    response = data[np.logical_and(data['장르'] == search_word, data['tag'] == '완결')].sort_values('조회수_단위', ascending=False).to_dict('records')
+                else:
+                    response = data[np.logical_and(data['장르'] == search_word, data['tag'] == '최신')].sort_values('조회수_단위', ascending=False).to_dict('records')
+
+                pr_text = ''
+                # print(response)
+                context = {
+                    'response': response,
+                    'searchType': search_type,
+                    'sortType': sort_type,
+                    'pr_text': pr_text,
+                    'genre_text': search_word,
+                }
+
+                return render(request, "board/search.html", context)
 
                         
     else:

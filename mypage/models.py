@@ -3,19 +3,19 @@ from django.db import models
 
 
 class MYBOOK(models.Model):
-    email = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
     book_id = models.CharField(null=True, max_length=15)
 
     
 class MYSTAR(models.Model):
-    email = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
     book_id = models.CharField(null=True, max_length=15)
     b_like = models.BooleanField(default=False)
     star = models.IntegerField(null=True, default=0)
     
     
 class COMMENT(models.Model):
-    email = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
     reply = models.CharField(null=True, max_length=100)
     c_date = models.DateTimeField(auto_now_add=True)
     u_date = models.DateTimeField(auto_now=True)
@@ -26,7 +26,7 @@ class COMMENT(models.Model):
 
 
 class MYCHOOSE(models.Model):
-    email = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
     Action = models.IntegerField(null=True, default=0)
     Adventure = models.IntegerField(null=True, default=0)
     Animation = models.IntegerField(null=True, default=0)

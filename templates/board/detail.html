@@ -57,7 +57,7 @@
                     <i class="fa-solid fa-caret-down"></i>
                     <div class="dropdown-content">
                         <a href="{% url 'mypage:profile' %}">내 정보</a>
-                        <a href="{% url 'mypage:library' pk=user.username %}">내 책장</a>
+                        <a href="{% url 'mypage:library' pk=user.id %}">내 책장</a>
                         <a href="{% url 'mypage:env' %}">개인정보 관리</a>
                         <a href="{% url 'mypage:loglock' %}">로그인 및 보안</a>
                         <a href="{% url 'user:logout' %}" style="color: rgb(253, 110, 85);">로그아웃</a>
@@ -104,19 +104,10 @@
                         <div class="icons">
                             <i class="fa-solid fa-circle-play fa-3x" title="바로 보기" style="float:left;"></i>
                             {% if isbook %}
-                            <form action="{% url 'mypage:mydic' %}" method="post" style="float:left; margin-left: 10px;"> 
-                                {% csrf_token %}
-                                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" style="display: none;">
-                                <input value="{{ user.email }}" name="email" id="email" style="display: none;">
-                                <input value="{{ user.username }}" name="username" id="username" style="display: none;">
-                                
-                                <button type="submit" class="fa-solid fa-circle-plus fa-3x" title="내 책장에 담기"></button>
-                            </form>
-                            {% else %}
                             <form action="{% url 'mypage:mydic_del' %}" method="post" style="float:left; margin-left: 10px;"> 
                                 {% csrf_token %}
-                                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" style="display: none;">
-                                <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                                <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
+                                <input value="{{ user.id }}" name="id" id="id" style="display: none;">
                                 
                                 <button type="submit" class="fa-solid fa-circle-minus fa-3x" onclick="button1_click();" title="내 책장에서 빼기"></button>
                                 <script>
@@ -124,6 +115,14 @@
                                         alert("내 책장에서 제외되었습니다.");
                                     }
                                     </script>
+                            </form>
+                            {% else %}
+                            <form action="{% url 'mypage:mydic' %}" method="post" style="float:left; margin-left: 10px;"> 
+                                {% csrf_token %}
+                                <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
+                                <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                                
+                                <button type="submit" class="fa-solid fa-circle-plus fa-3x" title="내 책장에 담기"></button>
                             </form>
                             {% endif %}
                         </div>
