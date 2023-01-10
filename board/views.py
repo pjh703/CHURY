@@ -49,30 +49,16 @@ def home(request):
         list = []
         Key = 'ttbsaspower81040001'
 
-        response_data = data.head(10).to_dict('records')
+        response_data = data.head(20).to_dict('records') # 유저 추천
 
-        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&output=js&Version=20131101"
-        response_top10 = requests.get(apiurl).json()
+        response_top10 = data.sort_values('추천수_단위', ascending=False).head(10).to_dict('records')
 
-
-        wb = open_workbook('board/aladin_Category.xls')
-        sheet = wb.sheet_by_index(0)
-        sheet.cell_value(0, 0)
-        column_index = 2
-        column = sheet.cell_value(0, column_index)
-
-        categor_sf = '40112'
-        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=20&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor_sf}&output=js&Version=20131101"
-        response_sf = requests.get(apiurl).json()
+        response_sf = data[data['keyword'].str.contains('sf')].sort_values('추천수_단위', ascending=False).head(10).to_dict('records')
                 
-        categor_fear = '56552'
-        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId={categor_fear}&output=js&Version=20131101"
-        response_fear = requests.get(apiurl).json()
+        response_fear = data[data['keyword'].str.contains('공포')].sort_values('추천수_단위', ascending=False).head(10).to_dict('records')
         
-        
-        apiurl =f"http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey={Key}&QueryType=ItemNewSpecial&MaxResults=20&start=1&SearchTarget=eBook&Cover=Big&output=js&Version=20131101"
-        response_new = requests.get(apiurl).json()
-        
+        response_new = data.sort_values('조회수_단위').head(20).to_dict('records')
+
         context = {
             'response_data': response_data,
             'response_top10': response_top10,
@@ -228,9 +214,16 @@ def search(request, **kwargs):
             case 'genre':
                 # 사이드바 장르
                 if sort_type == 'end':
-                    response = data[np.logical_and(data['장르'] == search_word, data['tag'] == '완결')].sort_values('조회수_단위', ascending=False).to_dict('records')
+                    response = data[np.logical_and(data['장르'] == search_word, data['tag'] == '완결')].sort_values('추천수_단위', ascending=False).to_dict('records')
+                elif sort_type == 'new':
+                    response = data[np.logical_and(data['장르'] == search_word, data['tag'] == '최신')].sort_values('추천수_단위', ascending=False).to_dict('records')
                 else:
-                    response = data[np.logical_and(data['장르'] == search_word, data['tag'] == '최신')].sort_values('조회수_단위', ascending=False).to_dict('records')
+                    if search_word == '로맨스':
+                        response = data[np.logical_or(data['장르'] == '판타지', data['장르'] == '로판')].sort_values('추천수_단위', ascending=False).to_dict('records')
+                    elif search_word == 'BL':
+                        response = data[data['장르'] == 'BL'].sort_values('추천수_단위', ascending=False).to_dict('records')
+                    else:
+                        response = data[np.logical_or(data['장르'] == '판타지', data['장르'] == '무협')].sort_values('추천수_단위', ascending=False).to_dict('records')
 
                 pr_text = ''
                 # print(response)

@@ -21,16 +21,16 @@
             <div class="mobile-menu">메뉴</div>
             <ul class="menu-list">
                 <li>
-                    <!-- <a href="/board/search/?page=1&searchType=list&sortType=new">최신</a> -->
+                    <a href="#"></a>
                 </li>
                 <li>
-                    <!-- <a href="/board/search/?page=1&searchType=list&sortType=old">완결</a> -->
+                    <a href="/board/search/?page=1&searchType=genre&searchWord=로맨스&sortType=all">로맨스</a>
                 </li>
                 <li>
-                    <!-- <a href="#">BL</a> -->
+                    <a href="/board/search/?page=1&searchType=genre&searchWord=BL&sortType=all">BL</a>
                 </li>
                 <li>
-                    <!-- <a href="#">판타지/무협</a> -->
+                    <a href="/board/search/?page=1&searchType=genre&searchWord=판타지/무협&sortType=all">판타지/무협</a>
                 </li>
             </ul>
         </div>
@@ -118,7 +118,7 @@
     </main>
     <section class="contents">
         <div class="content-list">
-            <h1>{{ user.username }}님 취향저격 웹소설</h1>
+            <h1>{{ user.username }}님 취향저격</h1>
             <div class="slider">
                 {% for i in response_data %}
                 <div class="item">
@@ -139,18 +139,18 @@
             <br><br>
         </div>
         <div class="content-list">
-            <h1>오늘 한국의 TOP 10 도서</h1>
+            <h1>CHURY TOP 10</h1>
             <div class="slider">
-                {% for i in response_top10.item %}
+                {% for i in response_top10 %}
                 <div class="item">
-                    <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                    <form action="{% url 'board:detail' pk=i.id %}" method="post">
                         {% csrf_token %}
-                        <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                        <input value="{{ user.id }}" name="id" id="id" style="display: none;">
                         <div class="descr" style="pointer-events: none;">
-                            {{ i.title }}<br><br>
-                            {{ i.customerReviewRank }}점
+                            {{ i.제목 }}<br><br>
+                            추천수: {{ i.추천수 }}
                         </div>
-                        <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
+                        <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
                     </form>
                 </div>
                 {% endfor %}
@@ -162,16 +162,16 @@
         <div class="content-list">
             <h1>상상력을 자극하는 SF 소설</h1>
             <div class="slider">
-                {% for i in response_sf.item %}
+                {% for i in response_sf %}
                 <div class="item">
-                    <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                    <form action="{% url 'board:detail' pk=i.id %}" method="post">
                         {% csrf_token %}
-                        <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                        <input value="{{ user.id }}" name="id" id="id" style="display: none;">
                         <div class="descr" style="pointer-events: none;">
-                            {{ i.title }}<br><br>
-                            {{ i.customerReviewRank }}점
+                            {{ i.제목 }}<br><br>
+                            추천수: {{ i.추천수 }}
                         </div>
-                        <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
+                        <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
                     </form>
                 </div>
                 {% endfor %}
@@ -183,16 +183,16 @@
         <div class="content-list">
             <h1>손에 땀을 쥐게하는 공포 소설</h1>
             <div class="slider">
-                {% for i in response_fear.item %}
+                {% for i in response_fear %}
                 <div class="item">
-                    <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                    <form action="{% url 'board:detail' pk=i.id %}" method="post">
                         {% csrf_token %}
-                        <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                        <input value="{{ user.id }}" name="id" id="id" style="display: none;">
                         <div class="descr" style="pointer-events: none;">
-                            {{ i.title }}<br><br>
-                            {{ i.customerReviewRank }}점
+                            {{ i.제목 }}<br><br>
+                            추천수: {{ i.추천수 }}
                         </div>
-                        <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
+                        <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
                     </form>
                 </div>
                 {% endfor %}
@@ -202,18 +202,18 @@
             <br><br>
         </div>
         <div class="content-list">
-            <h1>이번주 신간 도서</h1>
+            <h1>이번주 신규 작품</h1>
             <div class="slider">
-                {% for i in response_new.item %}
+                {% for i in response_new %}
                 <div class="item">
-                    <form action="{% url 'board:detail' pk=i.isbn13 %}" method="post">
+                    <form action="{% url 'board:detail' pk=i.id %}" method="post">
                         {% csrf_token %}
-                        <input value="{{ user.email }}" name="email" id="email" style="display: none;">
+                        <input value="{{ user.id }}" name="id" id="id" style="display: none;">
                         <div class="descr" style="pointer-events: none;">
-                            {{ i.title }}<br><br>
-                            {{ i.customerReviewRank }}점
+                            {{ i.제목 }}<br><br>
+                            추천수: {{ i.추천수 }}
                         </div>
-                        <input type="image" class="imgs" src="{{ i.cover }}" alt="책 이미지">
+                        <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
                     </form>
                 </div>
                 {% endfor %}
