@@ -53,9 +53,9 @@ def home(request):
 
         response_top10 = data.sort_values('추천수_단위', ascending=False).head(10).to_dict('records')
 
-        response_sf = data[data['keyword'].str.contains('sf')].sort_values('추천수_단위', ascending=False).head(10).to_dict('records')
+        response_sf = data[data['keyword'].str.contains('sf')].sort_values('추천수_단위', ascending=False).head(20).to_dict('records')
                 
-        response_fear = data[data['keyword'].str.contains('공포')].sort_values('추천수_단위', ascending=False).head(10).to_dict('records')
+        response_fear = data[data['keyword'].str.contains('공포')].sort_values('추천수_단위', ascending=False).head(20).to_dict('records')
         
         response_new = data.sort_values('조회수_단위').head(20).to_dict('records')
 
