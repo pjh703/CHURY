@@ -129,12 +129,12 @@ def BoardDetailView(request, pk):
         email = request.POST['email']
         email_id = User.objects.get(email = email).id
         mydic = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk)
-        mydic1 = MYBOOK.objects.filter(email_id = email_id).filter(mydic = pk)
-        myread = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk).values('myread')[0].get('myread')
+        # mydic1 = MYBOOK.objects.filter(email_id = email_id).filter(mydic = pk)
+        # myread = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk).values('myread')[0].get('myread')
 
         # print(mydic1)
         # print("post")
-        print(myread)
+        # print(myread)
 
 
         if len(mydic) > 0:
@@ -144,7 +144,7 @@ def BoardDetailView(request, pk):
         context = {
             'response': response, # 책정보 보내줌
             'isbook': isbook, # 책이 있나없나 true값
-            'myread': myread
+            # 'myread': myread
         }
         return render(request, "board/detail.html", context)
 

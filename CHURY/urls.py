@@ -18,6 +18,7 @@ from django.urls import path, include
 
 from django.views.generic import TemplateView
 
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +31,5 @@ urlpatterns = [
     path('mypage/', include('mypage.urls')),
     path('board/', include('board.urls')),
 
+    path('password_reset/', auth_views.PasswordResetView.as_view(), name="password_reset"),
 ]

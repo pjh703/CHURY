@@ -4,7 +4,7 @@ from django.db import models
 
 class MYBOOK(models.Model):
     email = models.ForeignKey("user.User", on_delete=models.CASCADE)
-    book_id = models.CharField(null=True, max_length=15)
+    mydic = models.CharField(null=True, max_length=15)
 
     
 class MYSTAR(models.Model):
