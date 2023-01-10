@@ -12,6 +12,7 @@ from xlrd import open_workbook
 
 import numpy as np
 import pandas as pd
+import math
 
 
 data = pd.read_excel('book_db.xlsx')
@@ -147,7 +148,8 @@ def search(request, **kwargs):
     search_word = request.GET.get('searchWord')
     search_type = request.GET.get('searchType')
     sort_type = request.GET.get('sortType')
-
+    page = request.GET.get('page')
+   
     if search_word in ('', ' '):
         response = []
         empty = True
@@ -168,12 +170,24 @@ def search(request, **kwargs):
                 else:
                     response = data[data['제목'].str.contains(search_word)].sort_values('조회수_단위', ascending=False).to_dict('records')
 
-                # print(response)
+                # print(len(response))
+                page = request.GET.get('page', '1')  # 페이지
+                pagination = []
+                for i in range(math.ceil((len(response)/10))):
+                    print(i)
+                    if i+1 == (math.ceil((len(response)/10))):
+                        pagination[i] = response[:(len(response)%10)]
+                    else:
+                        pagination[i] = response[10*i:10*(i+1)]
+                
+                print(pagination)
+                # print(page_dic)
                 context = {
                     'response': response,
                     'searchType': search_type,
                     'sortType': sort_type,
                     'pr_text': search_word,
+                    # 'question_list': page_obj,
                 }
 
                 return render(request, "board/search.html", context)
@@ -190,6 +204,7 @@ def search(request, **kwargs):
                     'searchType': search_type,
                     'sortType': sort_type,
                     'pr_text': search_word,
+                    'posts': posts,
                 }
 
                 return render(request, "board/search.html", context)
@@ -207,6 +222,7 @@ def search(request, **kwargs):
                     'searchType': search_type,
                     'sortType': sort_type,
                     'pr_text': search_word,
+                    'posts': posts,
                 }
 
                 return render(request, "board/search.html", context)
@@ -233,6 +249,7 @@ def search(request, **kwargs):
                     'sortType': sort_type,
                     'pr_text': pr_text,
                     'genre_text': search_word,
+                    'posts': posts,
                 }
 
                 return render(request, "board/search.html", context)

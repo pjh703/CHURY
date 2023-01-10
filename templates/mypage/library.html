@@ -8,6 +8,10 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/book.css' %}">
     <script src="{% static 'mypage/book.js' %}"></script>
+    
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
     <div class="sidebar">
@@ -40,25 +44,52 @@
             <div class="tab_content" id="all_content">
                 <div class="up">
                     <div class="count">{{ response|length }}권의 책</div>
-                    <div class="buttons">
-                        <button class="recent">최근에 추가한 순</button>
-                        <button class="title">제목순</button>
-                        <button class="author">저자순</button>
-                        <button class="new">발행순</button>
+                        <div class="select_Bar">
+                            <form action="{% url 'mypage:library' pk=user.id %}" method="get" id="searchForm">
+                                <div class="input-group">
+                                    <select name="sortType" class="form-select2" onchange="this.form.submit()">
+                                        {% if sortType == 'recent' %}
+                                        <option value="recent" selected="selected">최근에 추가한 순</option>
+                                        {% else %}
+                                        <option value="recent">최근에 추가한 순</option>
+                                        {% endif %}
+                                        {% if sortType == 'title' %}
+                                        <option value="title" selected="selected">제목순</option>
+                                        {% else %}
+                                        <option value="title">제목순</option>
+                                        {% endif %}
+                                        {% if sortType == 'star' %}
+                                        <option value="star" selected="selected">별점순</option>
+                                        {% else %}
+                                        <option value="star">별점순</option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="down">
-                    <div class="book-up">
-                        {% for i in response %}
-                        <span class="item">
-                            <form action="{% url 'board:detail' pk=i.id %}" method="post">
-                                {% csrf_token %}
-                                <input value="{{ user.id }}" name="id" id="id" style="display: none;">
-                                <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
-                            </form>
-                        </span>
-                        {% endfor %}
-                    </div>
+                    <section class="contents">
+                        <div class="content-list">
+                            <div class="slider">
+                                {% for i in response %}
+                                <div class="item">
+                                    <form action="{% url 'board:detail' pk=i.id %}" method="post">
+                                        {% csrf_token %}
+                                        <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                                        <div class="descr" style="pointer-events: none;">
+                                            {{ i.제목 }}
+                                        </div>
+                                        <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
+                                    </form>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+                            <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+                        </div>
+                    </section>
                 </div>
             </div>
             <div class="tab_content" id="programming_content">
@@ -68,3 +99,44 @@
 
 </body>
 </html>
+<script>
+    const next = document.querySelectorAll('.next');
+    const prev = document.querySelectorAll('.prev');
+    const slider = document.querySelectorAll('.slider')
+
+    for(let i =0;i<slider.length;i++){
+        getBooks(slider[i],i+1);
+        makeSlider(slider[i],prev[i],next[i]);
+    }
+    function makeSlider(element,prev,next){
+        next.addEventListener('click',()=>{
+            const offsetX = element.offsetWidth;
+            element.scrollBy(offsetX,0)
+        })
+        prev.addEventListener('click',()=>{
+            const offsetX = element.offsetWidth;
+            element.scrollBy(-offsetX,0)
+        })
+    }
+    function getBooks(element,page){
+        // Key = 'ttbsaspower81040001'
+        // categor = '170370'
+        // fetch(`http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=${Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId=${categor}&output=js&Version=20131101`)
+        //     .then(data=>data.json())
+        //     .then(data=>{
+        //         const books = data.item;
+        //         books.forEach(book=>{
+        //             const div = document.createElement('div');
+        //             div.className='item';
+        //             div.innerHTML = `<img src="" alt="책 이미지" style="width: 150px; height: 200px;">`;
+        //             element.appendChild(div);
+        //         })
+        //     })
+    };
+
+    document.getElementsByClassName("recent").addEventListener('click',hello);
+    function hello(){
+    alert("안녕?");
+    }
+
+</script>

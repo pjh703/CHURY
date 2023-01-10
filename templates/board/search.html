@@ -321,27 +321,44 @@
 
             
     
-            <!-- pagination -->
-            <div class="pagination">
-                <ul>
-                    <li class="btn prev2" onclick="backBtn2()"><span><<</span></li>
-                    <li class="btn prev" onclick="backBtn()"><span><</span></li>
-                    <!-- <li class="numb active" value="1" onclick="activeLink(1)">1</li> -->
-                    <li class="numb" value="1" onclick="activeLink(1)">1</li>
-                    <li class="numb" value="2" onclick="activeLink(2)">2</li>
-                    <li class="numb" value="3" onclick="activeLink(3)">3</li>
-                    <li class="numb" value="4" onclick="activeLink(4)">4</li>
-                    <li class="numb" value="5" onclick="activeLink(5)">5</li>
-                    <li class="numb" value="6" onclick="activeLink(6)">6</li>
-                    <li class="numb" value="7" onclick="activeLink(7)">7</li>
-                    <li class="numb" value="8" onclick="activeLink(8)">8</li>
-                    <li class="numb" value="9" onclick="activeLink(9)">9</li>
-                    <li class="numb" value="10" onclick="activeLink(10)">10</li>
-                    <li class="btn next" onclick="nextBtn()">></li>
-                    <li class="btn next2" onclick="nextBtn2()">>></li>
-                </ul>
-            </div>
-
+    <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if question_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ question_list.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in question_list.paginator.page_range %}
+        {% if page_number >= question_list.number|add:-3 and page_number <= question_list.number|add:3 %}
+        {% if page_number == question_list.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if question_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ question_list.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
 
             
         </div><!-- book-info 끝 -->

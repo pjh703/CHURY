@@ -14,15 +14,28 @@ import pandas as pd
 data = pd.read_excel('book_db.xlsx')
 
 def LibraryView(request, pk):
+    sort_type = request.GET.get('sortType')
+    print(sort_type)
+
     response = []
     id = User.objects.get(id = pk).id
     mybooks = MYBOOK.objects.filter(user_id = id).values('book_id')
     for book in mybooks:
         res = data[data['id'] == int(book['book_id'])].to_dict('records')
         response.append(res[0])
+    
+    df_response = pd.DataFrame(response)
+    
+    if sort_type == 'title':
+        df_response = df_response.sort_values('제목')
+    else:
+        df_response = df_response[::-1]
+
+    lib = df_response.to_dict('records')
         
     context = {
-        'response': response,
+        'response': lib,
+        'sortType': sort_type,
     }
     return render(request, "mypage/library.html", context)
     # return render(request, "mypage/library.html")

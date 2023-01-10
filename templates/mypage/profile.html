@@ -18,7 +18,7 @@
             <div class="sidebar-home">
                 <li><a href="{% url 'mypage:profile' %}">내정보 홈</a></li>
             </div>
-            <li><a href="{% url 'mypage:library' pk=user.username %}">내 책장</a></li>
+            <li><a href="{% url 'mypage:library' pk=user.id %}">내 책장</a></li>
             <li><a href="{% url 'mypage:env' %}">개인정보 관리</a></li>
             <li class="top"><a href="{% url 'mypage:loglock' %}">로그인 및 보안</a></li>
             <li class="bottom"><a href="#">이용권/결제정보</a></li>
