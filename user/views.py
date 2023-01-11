@@ -34,14 +34,14 @@ def AgreementView(request):
     return render(request, 'user/agreement.html')
 
 
-
+ 
 # 비밀번호 찾기 창
 def FindView(request):
     return render(request, 'user/pwfind.html')
 
 
 from django.core.mail.message import EmailMessage
- 
+
 def send_email(request):
 
     
@@ -76,5 +76,9 @@ def send_email(request):
 
 
     return render(request, 'user/login.html')
+
+
+
+    
 
 
