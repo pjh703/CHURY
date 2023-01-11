@@ -465,6 +465,7 @@ section .content-list .next {
 }
 
 footer {
+  margin-top: -70px;
   width: 100%;
   margin-bottom: 2rem;
 }

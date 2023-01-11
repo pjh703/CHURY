@@ -169,7 +169,17 @@ ul li:hover a {
   }
   
   /* 탭 컨텐츠 스타일 */
-.tab_content {
+.lib_tab_content {
+    margin-top: -370px;
+    display: none;
+    /* padding: 40px 40px 0; */
+    clear: both;
+    overflow: hidden;
+}
+
+.graph_tab_content {
+    margin-left: 150px;
+    margin-top: -370px;
     display: none;
     /* padding: 40px 40px 0; */
     clear: both;
@@ -248,7 +258,7 @@ ul li:hover a {
 /* =========================== */
 /* 책정보 content 하단*/
 .down {
-    height: 410px;
+    /* height: 410px; */
     /* width: 1200px; */
     /* background-color: palegreen; */
     /* overflow-x: scroll; */

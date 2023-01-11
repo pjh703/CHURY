@@ -9,6 +9,9 @@ from user.models import User, MYINFO
 from django.urls import reverse_lazy, reverse
 import requests
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import mpld3
 # Create your views here.
 
 data = pd.read_excel('book_db.xlsx')
@@ -25,7 +28,10 @@ def LibraryView(request, pk):
         response.append(res[0])
     
     df_response = pd.DataFrame(response)
-    
+
+    genre = np.array(df_response.groupby('장르').count()['id'].index)
+    value = np.array(df_response.groupby('장르').count()['id'])
+   
     if sort_type == 'title':
         df_response = df_response.sort_values('제목')
     else:
@@ -36,6 +42,9 @@ def LibraryView(request, pk):
     context = {
         'response': lib,
         'sortType': sort_type,
+        'graph_genre': genre,
+        'graph_value': value,
+
     }
     return render(request, "mypage/library.html", context)
     # return render(request, "mypage/library.html")

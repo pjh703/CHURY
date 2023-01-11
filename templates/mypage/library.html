@@ -7,8 +7,7 @@
     <title>CHURY | My Page</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/book.css' %}">
-    <script src="{% static 'mypage/book.js' %}"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -37,11 +36,11 @@
         </div>
         <h1>내 책장</h1>
         <div class="tabs">
-            <input id="all" type="radio" name="tab_item" checked>
+            <input id="all" type="radio" name="tab_item" onclick="nograph()" checked>
             <label class="tab_item" for="all">책정보</label>
-            <input id="programming" type="radio" name="tab_item">
+            <input id="programming" type="radio" name="tab_item" onclick="graph()">
             <label class="tab_item" for="programming">통계</label>
-            <div class="tab_content" id="all_content">
+            <div class="lib_tab_content" id="all_content">
                 <div class="up">
                     <div class="count">{{ response|length }}권의 책</div>
                         <div class="select_Bar">
@@ -91,11 +90,17 @@
                         </div>
                     </section>
                 </div>
-            </div>
-            <div class="tab_content" id="programming_content">
-                완독% / 독서시간 등 그래프
+                <div class="graph_tab_content" id="programming_content" style="display: none; box-sizing: border-box; height: 400px; width: 800px;">
+                {{ user.username }}님 취향 그래프
+                <div>
+                    <canvas id="myChart"></canvas>
+                </div>
+                </div>
+                <p id="graph_genre" style="display: none;">{{ graph_genre }}</p>
+                <p id="graph_value" style="display: none;">{{ graph_value }}</p>
             </div>
         </div>
+
 
 </body>
 </html>
@@ -133,10 +138,67 @@
         //         })
         //     })
     };
+</script>
+<script>
+    let list = []
+    const ctx = document.getElementById('myChart');
+    const genre = document.getElementById('graph_genre').innerText;
+    const value = document.getElementById('graph_value').innerText;
 
-    document.getElementsByClassName("recent").addEventListener('click',hello);
-    function hello(){
-    alert("안녕?");
+    genre_list = genre.replace('[', '').replace(']', '').split(' ')
+    value_list = value.replace('[', '').replace(']', '').replace('\n', '').split(' ');
+
+    for(let i = 0; i < value_list.length; i++) {
+        if(value_list[i] === '')  {
+            value_list.splice(i, 1);
+            i--;
+        }
     }
 
+    console.log(genre)
+    console.log(genre_list)
+
+    const labels = genre_list;
+    const data = {
+        labels: labels,
+        datasets: [{
+            categoryPercentage: 1.0,
+            label: '도서 선호도',
+            data: value_list,
+            backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            // 'rgba(201, 203, 207, 0.2)'
+            ],
+            borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            // 'rgb(201, 203, 207)'
+            ],
+            borderWidth: 1
+        }]
+        };
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            indexAxis: 'y',
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        },
+    });
 </script>
+
+<script src="{% static 'mypage/book.js' %}"></script>
