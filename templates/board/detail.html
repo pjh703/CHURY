@@ -155,8 +155,9 @@
         {% endif %}
         <br><br>
           
+        {{ star }}????????????????
         <!-- 평점을 매긴 경우 -->
-        {% if myread  %}
+        {% if i.star %}
         <div class="introduce">
             <div class="title">
                 <br>
@@ -165,8 +166,8 @@
             
             <form action="{% url 'mypage:mydic2' %}" method="post">
                 {% csrf_token %}
-                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" hidden>
-                <input value="{{ user.email }}" name="email" id="email" hidden>
+                <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
                 
                 <div class="content2" style="margin-right: 700px;">
                     <div><hr style="width: 1054px; margin-left: -50px;"><br><br></div>
@@ -197,15 +198,15 @@
             
             <form action="{% url 'mypage:mydic2' %}" method="post">
                 {% csrf_token %}
-                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" hidden>
-                <input value="{{ user.email }}" name="email" id="email" hidden>
+                <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
                 
                 <div class="content2" style="margin-right: 700px;">
                     <!-- <div><hr style="width: 1054px; margin-left: -50px;"><br><br></div> -->
                     <span class="star">
                         ★★★★★
                         <span>★★★★★</span>
-                        <input type="range" name="myread" id="myread" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
+                        <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
                         <br>  
                     </span>
                     <input type="submit" value="등록" class="enroll"
@@ -219,6 +220,11 @@
         {% endfor %}
     </section>
     <script>
+        // 별점
+        const drawStar = (target) => {
+        document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
+        }
+
         // 별 이미지 변경
         var tabs = document.querySelectorAll(".star-imgs");
         var img11s = document.querySelector("img.star1");
@@ -271,10 +277,7 @@
         document.getElementById("category_name1").innerText = c;
         document.getElementById("category_name2").innerText = d;
 
-        // 별점 0.5
-        const drawStar = (target) => {
-            document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
-        }
+
 
         // 계란 이미지 변경
         var tab = document.querySelectorAll(".egg-imgs");
@@ -319,9 +322,8 @@
             img33.style.display = 'none';
             img44.style.display = 'inline'; 
         }
-
-        
     </script>
+
     {% else %}
     <div class="h3 text-info">잘못된 접근입니다. 로그인해주세요</div>
     

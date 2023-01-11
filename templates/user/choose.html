@@ -40,7 +40,9 @@
     <!-- <button id="result">3개 이상 선택해주세요</button> -->
 
         <div class="tab" style="margin-top: 60px;">
+
             {% for i in respon %}
+
                 {% if forloop.counter == 1 %}<div class="one" style="display: flex;">{% endif %}
                 {% if forloop.counter == 4 %}<div class="one" style="display: flex;">{% endif %}
                 {% if forloop.counter == 7 %}<div class="one" style="display: flex;">{% endif %}
@@ -61,6 +63,7 @@
                         <img src="{% static 'user/choose/image/egg.png' %}" width="100px" height="auto" id="egg{{forloop.counter}}" class="egg" style="display:none; margin-left: 23px; margin-top: 15px;">
                         <img src="https://image.tmdb.org/t/p/original/{{ i.poster_path }}" alt="포스터" width="200" height="250" class="poster">
                         <input value="{{ i.gen_ko }}" id="choose" name="choose" class="choose" hidden disabled>
+                        <input value="{{ i.overview }}" name="overview" id="overview" class="overview" hidden disabled>
                     </div>
                 </label>
                 
@@ -76,6 +79,7 @@
                 {% if forloop.counter == 21 %}</div>{% endif %}
                 {% if forloop.counter == 24 %}</div>{% endif %} 
                 {% if forloop.counter == 27 %}</div>{% endif %}
+
             {% endfor %}
                 
         </form>
