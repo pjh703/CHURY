@@ -538,6 +538,14 @@ ul li:hover a {
   padding-bottom: 65px;
 }
 
+.modal-buttons2 {
+    display: flex;
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 65px;
+}
+
+
 .cancel-btn {
   width: 190px;
   height: 45px;

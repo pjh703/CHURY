@@ -175,6 +175,12 @@ EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SITE_ID = 1
 
+# 이메일 인증(2단계인증)
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_EMAIL_VARIFICATION = 'optional'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+
 # django-allauth setting
 LOGIN_REDIRECT_URL = 'board:home' # 로그인 후 리디렉션할 페이지
 ACCOUNT_LOGOUT_REDIRECT_URL = "user:login"  # 로그아웃 후 리디렉션 할 페이지

@@ -4,9 +4,17 @@ from django.views.generic import UpdateView, DeleteView, DetailView
 from .forms import UserUpdateForm
 from .models import MYBOOK, MYINFO, MYCHOOSE
 
-from user.models import User
+from django.core.mail import EmailMessage # 이메일보내기
+from django.conf import settings
+from django.core.mail import send_mail, EmailMultiAlternatives
+
+from user.models import User 
 from django.urls import reverse_lazy, reverse
 import requests
+
+# 2단계인증 메일보낼때
+from django.template.loader import render_to_string
+
 # Create your views here.
 
 
@@ -31,8 +39,47 @@ def LibraryView(request, pk):
     # return render(request, "mypage/library.html")
 
 
-def LogLock(request):
+def LogLock(request, pk):
+    if request.method == 'POST' :
+        my_email = User.objects.filter(username = pk).values('email')[0]['email']
+        email = EmailMessage(
+            '[CHURY] 메일인증',                # 제목
+            "안녕하세요.\n"
+            "\n다음 링크를 누르면 http://127.0.0.1:8000/mypage/email_done/"
+            "\n이메일 인증을 요청하지 않았다면 이 이메일을 무시하셔도 됩니다.\nCHURY와 함께 해주셔서 감사합니다.",
+            to=[my_email],  # 받는 이메일 리스트
+        )
+        email.send()
     return render(request, "mypage/loglock.html")
+
+
+# from django.core.mail import EmailMessage
+# from django.template.loader import render_to_string
+
+# def LogLock(request):
+#     if request.method == 'POST' :
+#         mail_subject = 'smtp를 사용하여 이메일 보내기'
+#         message = render_to_string('templates/test.html', {
+#             'name': 'chungchung'
+#             })
+#         email = 'hongsb5837@naver.com'
+#         # send_email = EmailMessage(mail_subject, message, to=[to_email])
+#         email.send()
+#     return render(request, "mypage/loglock.html")
+
+
+# def LogLock(site_id, email):
+#     subject = "Sub"
+#     from_email, to = EMAIL_FROM, email
+#     text_content = 'Text'
+#     html_content = render_to_string(
+#         'app/includes/email.html',
+#         {'pk': site_id}
+#     )
+#     msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+#     msg.attach_alternative(html_content, "text/html")
+#     msg.send()
+
 
 
 def EnvView(request):
@@ -225,3 +272,9 @@ def choose(request):
         post.save()
     return redirect("/board/home")
     
+
+def email_done(request):
+    return render(request, "mypage/email_done.html")
+
+def email_done2(request):
+    return render(request, "mypage/email_done2.html")

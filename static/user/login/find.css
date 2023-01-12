@@ -173,6 +173,14 @@
     margin-bottom: 20px;
 }
 
+/* 이메일 인증 완료 버튼 위에 있는 문구 */
+.find4 { 
+    font-size: 12px;
+    font-weight: 400;
+    color: #636363;
+    letter-spacing: 0.7px;
+}
+
 .find2 {
     margin-top: 5px;
     font-size: 12px;
