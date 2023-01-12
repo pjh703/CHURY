@@ -102,7 +102,11 @@
                         </div>
                         {% endif %}
                         <div class="icons">
-                            <i class="fa-solid fa-circle-play fa-3x" title="바로 보기" style="float:left;"></i>
+                            {% if i.tag == '최신' %}
+                            <a class="fa-solid fa-circle-play fa-3x" title="바로 보기" href="https://www.joara.com/book/{{ i.book_url }}" style="float:left;"></a>
+                            {% else %}
+                            <a class="fa-solid fa-circle-play fa-3x" title="바로 보기" href="https://www.joara.com/book/" style="float:left;"></a>
+                            {% endif %}
                             {% if isbook %}
                             <form action="{% url 'mypage:mydic_del' %}" method="post" style="float:left; margin-left: 10px;"> 
                                 {% csrf_token %}

@@ -90,10 +90,10 @@
                         </div>
                     </section>
                 </div>
-                <div class="graph_tab_content" id="programming_content" style="display: none; box-sizing: border-box; height: 400px; width: 800px;">
+                <div class="graph_tab_content" id="programming_content" style="display: none; box-sizing: border-box; height: 600px; width: 600px;">
                 {{ user.username }}님 취향 그래프
                 <div>
-                    <canvas id="myChart"></canvas>
+                    <canvas id="myChart" style="margin-top: -90px;"></canvas>
                 </div>
                 </div>
                 <p id="graph_genre" style="display: none;">{{ graph_genre }}</p>
@@ -188,13 +188,27 @@
         };
 
     new Chart(ctx, {
-        type: 'bar',
+        type: 'polarArea',
         data: data,
         options: {
-            indexAxis: 'y',
+            responsive: true,
             scales: {
-            y: {
-                beginAtZero: true
+            r: {
+                pointLabels: {
+                display: true,
+                centerPointLabels: true,
+                font: {
+                    size: 10
+                }
+                }
+            }
+            },
+            plugins: {
+            legend: {
+                position: 'right',
+            },
+            title: {
+                display: false,
             }
             }
         },
