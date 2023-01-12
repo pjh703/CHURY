@@ -7,7 +7,8 @@ function handleClick(element) {
     var btnTarget = element.currentTarget;
     var eggImg = btnTarget.querySelector("img.egg");
     var posterImg = btnTarget.querySelector("img.poster");
-    var disinput = btnTarget.querySelector("input");
+    var disinput = btnTarget.querySelector("input.choose");
+    var overinput = btnTarget.querySelector("input.overview");
 
     if (btnTarget.dataset.value == 1){
         // 계란 이미지가 보이는 경우
@@ -20,7 +21,7 @@ function handleClick(element) {
         // document.write(count+"회 클릭하셨습니다.");
 
         disinput.disabled = true;
-        
+        overinput.disabled = true;
 
     } else{
         // 계란 이미지가 보이지 않는 경우
@@ -35,6 +36,7 @@ function handleClick(element) {
         // document.write(count+"회 클릭하셨습니다.");
 
         disinput.disabled = false;
+        overinput.disabled = false;
     }
 
 }
