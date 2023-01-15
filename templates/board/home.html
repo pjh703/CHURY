@@ -24,13 +24,13 @@
                     <a href="#"></a>
                 </li>
                 <li>
-                    <a href="/board/search/?page=1&searchType=genre&searchWord=로맨스&sortType=all">로맨스</a>
+                    <a href="/board/search/?page=1&searchType=genre&genreWord=로맨스&sortType2=all">로맨스</a>
                 </li>
                 <li>
-                    <a href="/board/search/?page=1&searchType=genre&searchWord=BL&sortType=all">BL</a>
+                    <a href="/board/search/?page=1&searchType=genre&genreWord=BL&sortType2=all">BL</a>
                 </li>
                 <li>
-                    <a href="/board/search/?page=1&searchType=genre&searchWord=판타지/무협&sortType=all">판타지/무협</a>
+                    <a href="/board/search/?page=1&searchType=genre&genreWord=판타지/무협&sortType2=all">판타지/무협</a>
                 </li>
             </ul>
         </div>
@@ -224,16 +224,17 @@
         </div>
         <br><br><br><br><br>
     </section>
-    <!-- <footer>
+    <footer>
         <div class="wrap">
+            <span class="logo">
+                <a href="{% url 'board:home' %}"><img src="{% static 'main/image/logo.png' %}" alt=""></a>
+            </span>
             <div class="options">
                 <div class="option">자막 및 음성</div>
                 <div class="option">음성 지원</div>
                 <div class="option">고객 센터</div>
                 <div class="option">기프트카드</div>
                 <div class="option">미디어 센터</div>
-                <div class="option">투자 정보(IR)</div>
-                <div class="option">입사 정보</div>
                 <div class="option">이용 약관</div>
                 <div class="option">개인정보</div>
                 <div class="option">문의하기</div>
@@ -241,7 +242,7 @@
                 <div class="option">쿠키 설정</div>
             </div>
         </div>
-    </footer> -->
+    </footer>
     <script>
         const next = document.querySelectorAll('.next');
         const prev = document.querySelectorAll('.prev');

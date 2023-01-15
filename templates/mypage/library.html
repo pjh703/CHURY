@@ -7,7 +7,10 @@
     <title>CHURY | My Page</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/book.css' %}">
-    <script src="{% static 'mypage/book.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
     <div class="sidebar">
@@ -33,38 +36,183 @@
         </div>
         <h1>내 책장</h1>
         <div class="tabs">
-            <input id="all" type="radio" name="tab_item" checked>
+            <input id="all" type="radio" name="tab_item" onclick="nograph()" checked>
             <label class="tab_item" for="all">책정보</label>
-            <input id="programming" type="radio" name="tab_item">
+            <input id="programming" type="radio" name="tab_item" onclick="graph()">
             <label class="tab_item" for="programming">통계</label>
-            <div class="tab_content" id="all_content">
+            <div class="lib_tab_content" id="all_content">
                 <div class="up">
                     <div class="count">{{ response|length }}권의 책</div>
-                    <div class="buttons">
-                        <button class="recent">최근에 추가한 순</button>
-                        <button class="title">제목순</button>
-                        <button class="author">저자순</button>
-                        <button class="new">발행순</button>
+                        <div class="select_Bar">
+                            <form action="{% url 'mypage:library' pk=user.id %}" method="get" id="searchForm">
+                                <div class="input-group">
+                                    <select name="sortType" class="form-select2" onchange="this.form.submit()">
+                                        {% if sortType == 'recent' %}
+                                        <option value="recent" selected="selected">최근에 추가한 순</option>
+                                        {% else %}
+                                        <option value="recent">최근에 추가한 순</option>
+                                        {% endif %}
+                                        {% if sortType == 'title' %}
+                                        <option value="title" selected="selected">제목순</option>
+                                        {% else %}
+                                        <option value="title">제목순</option>
+                                        {% endif %}
+                                        {% if sortType == 'star' %}
+                                        <option value="star" selected="selected">별점순</option>
+                                        {% else %}
+                                        <option value="star">별점순</option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="down">
-                    <div class="book-up">
-                        {% for i in response %}
-                        <span class="item">
-                            <form action="{% url 'board:detail' pk=i.id %}" method="post">
-                                {% csrf_token %}
-                                <input value="{{ user.id }}" name="id" id="id" style="display: none;">
-                                <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
-                            </form>
-                        </span>
-                        {% endfor %}
-                    </div>
+                    <section class="contents">
+                        <div class="content-list">
+                            <div class="slider">
+                                {% for i in response %}
+                                <div class="item">
+                                    <form action="{% url 'board:detail' pk=i.id %}" method="post">
+                                        {% csrf_token %}
+                                        <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                                        <div class="descr" style="pointer-events: none;">
+                                            {{ i.제목 }}
+                                        </div>
+                                        <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
+                                    </form>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="prev"><i class="fa-solid fa-angle-right prev-arrow"></i></div>
+                            <div class="next"><i class="fa-solid fa-angle-right"></i></div>
+                        </div>
+                    </section>
                 </div>
-            </div>
-            <div class="tab_content" id="programming_content">
-                완독% / 독서시간 등 그래프
+                <div class="graph_tab_content" id="programming_content" style="display: none; box-sizing: border-box; height: 600px; width: 600px;">
+                {{ user.username }}님 취향 그래프
+                <div>
+                    <canvas id="myChart" style="margin-top: -90px;"></canvas>
+                </div>
+                </div>
+                <p id="graph_genre" style="display: none;">{{ graph_genre }}</p>
+                <p id="graph_value" style="display: none;">{{ graph_value }}</p>
             </div>
         </div>
 
+
 </body>
 </html>
+<script>
+    const next = document.querySelectorAll('.next');
+    const prev = document.querySelectorAll('.prev');
+    const slider = document.querySelectorAll('.slider')
+
+    for(let i =0;i<slider.length;i++){
+        getBooks(slider[i],i+1);
+        makeSlider(slider[i],prev[i],next[i]);
+    }
+    function makeSlider(element,prev,next){
+        next.addEventListener('click',()=>{
+            const offsetX = element.offsetWidth;
+            element.scrollBy(offsetX,0)
+        })
+        prev.addEventListener('click',()=>{
+            const offsetX = element.offsetWidth;
+            element.scrollBy(-offsetX,0)
+        })
+    }
+    function getBooks(element,page){
+        // Key = 'ttbsaspower81040001'
+        // categor = '170370'
+        // fetch(`http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=${Key}&QueryType=Bestseller&MaxResults=10&start=1&SearchTarget=eBook&Cover=Big&CategoryId=${categor}&output=js&Version=20131101`)
+        //     .then(data=>data.json())
+        //     .then(data=>{
+        //         const books = data.item;
+        //         books.forEach(book=>{
+        //             const div = document.createElement('div');
+        //             div.className='item';
+        //             div.innerHTML = `<img src="" alt="책 이미지" style="width: 150px; height: 200px;">`;
+        //             element.appendChild(div);
+        //         })
+        //     })
+    };
+</script>
+<script>
+    let list = []
+    const ctx = document.getElementById('myChart');
+    const genre = document.getElementById('graph_genre').innerText;
+    const value = document.getElementById('graph_value').innerText;
+
+    genre_list = genre.replace('[', '').replace(']', '').split(' ')
+    value_list = value.replace('[', '').replace(']', '').replace('\n', '').split(' ');
+
+    for(let i = 0; i < value_list.length; i++) {
+        if(value_list[i] === '')  {
+            value_list.splice(i, 1);
+            i--;
+        }
+    }
+
+    console.log(genre)
+    console.log(genre_list)
+
+    const labels = genre_list;
+    const data = {
+        labels: labels,
+        datasets: [{
+            categoryPercentage: 1.0,
+            label: '도서 선호도',
+            data: value_list,
+            backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            // 'rgba(201, 203, 207, 0.2)'
+            ],
+            borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            // 'rgb(201, 203, 207)'
+            ],
+            borderWidth: 1
+        }]
+        };
+
+    new Chart(ctx, {
+        type: 'polarArea',
+        data: data,
+        options: {
+            responsive: true,
+            scales: {
+            r: {
+                pointLabels: {
+                display: true,
+                centerPointLabels: true,
+                font: {
+                    size: 10
+                }
+                }
+            }
+            },
+            plugins: {
+            legend: {
+                position: 'right',
+            },
+            title: {
+                display: false,
+            }
+            }
+        },
+    });
+</script>
+
+<script src="{% static 'mypage/book.js' %}"></script>

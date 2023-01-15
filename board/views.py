@@ -9,9 +9,11 @@ from django.views.generic import DetailView
 from user.models import User
 from mypage.models import MYBOOK, MYCHOOSE
 from xlrd import open_workbook
+from django.core.paginator import Paginator  
 
 import numpy as np
 import pandas as pd
+import math
 
 
 data = pd.read_excel('book_db.xlsx')
@@ -149,8 +151,12 @@ def search(request, **kwargs):
     search_word = request.GET.get('searchWord')
     search_type = request.GET.get('searchType')
     sort_type = request.GET.get('sortType')
-
-    if search_word in ('', ' '):
+    sort_type2 = request.GET.get('sortType2')
+    genre_word = request.GET.get('genreWord')
+    if genre_word:
+        search_word = '#'
+   
+    if search_word in ('', ' ', '\\'):
         response = []
         empty = True
         context = {
@@ -162,7 +168,7 @@ def search(request, **kwargs):
         }
         return render(request, "board/search.html", context)
 
-    elif search_word and search_type: # 검색기준 및 검색어를 전달받은 경우
+    elif search_type: # 검색기준 및 검색어를 전달받은 경우
         match search_type:
             case 'title':
                 if sort_type == 'CustomerRating':
@@ -170,9 +176,23 @@ def search(request, **kwargs):
                 else:
                     response = data[data['제목'].str.contains(search_word)].sort_values('조회수_단위', ascending=False).to_dict('records')
 
-                # print(response)
+                # print(len(response))
+                page = request.GET.get('page', '1')  # 페이지
+                paginator = Paginator(response, 10)  # 페이지당 10개씩 보여주기
+                page_obj = paginator.get_page(page)
+                # pagination = {}
+                # for i in range(math.ceil((len(response)/10))):
+                #     print(i)
+                #     if i+1 == (math.ceil((len(response)/10))):
+                #         pagination[i] = response[-(len(response)%10):]
+                #     else:
+                #         pagination[i] = response[10*i:10*(i+1)]
+                
+                # print(pagination[page-1])
+                # print(page_dic)
                 context = {
-                    'response': response,
+                    'total': response,
+                    'response': page_obj,
                     'searchType': search_type,
                     'sortType': sort_type,
                     'pr_text': search_word,
@@ -186,9 +206,13 @@ def search(request, **kwargs):
                 else:
                     response = data[data['작가'].str.contains(search_word)].sort_values('조회수_단위', ascending=False).to_dict('records')
 
+                page = request.GET.get('page', '1')  # 페이지
+                paginator = Paginator(response, 10)  # 페이지당 10개씩 보여주기
+                page_obj = paginator.get_page(page)
                 # print(response)
                 context = {
-                    'response': response,
+                    'total': response,
+                    'response': page_obj,
                     'searchType': search_type,
                     'sortType': sort_type,
                     'pr_text': search_word,
@@ -203,9 +227,13 @@ def search(request, **kwargs):
                 else:
                     response = data[data['keyword'].str.contains(search_word)].sort_values('조회수_단위', ascending=False).to_dict('records')
 
+                page = request.GET.get('page', '1')  # 페이지
+                paginator = Paginator(response, 10)  # 페이지당 10개씩 보여주기
+                page_obj = paginator.get_page(page)
                 # print(response)
                 context = {
-                    'response': response,
+                    'total': response,
+                    'response': page_obj,
                     'searchType': search_type,
                     'sortType': sort_type,
                     'pr_text': search_word,
@@ -215,26 +243,46 @@ def search(request, **kwargs):
             
             case 'genre':
                 # 사이드바 장르
-                if sort_type == 'end':
-                    response = data[np.logical_and(data['장르'] == search_word, data['tag'] == '완결')].sort_values('추천수_단위', ascending=False).to_dict('records')
-                elif sort_type == 'new':
-                    response = data[np.logical_and(data['장르'] == search_word, data['tag'] == '최신')].sort_values('추천수_단위', ascending=False).to_dict('records')
-                else:
-                    if search_word == '로맨스':
-                        response = data[np.logical_or(data['장르'] == '판타지', data['장르'] == '로판')].sort_values('추천수_단위', ascending=False).to_dict('records')
-                    elif search_word == 'BL':
-                        response = data[data['장르'] == 'BL'].sort_values('추천수_단위', ascending=False).to_dict('records')
+                if sort_type2 == 'end':
+                    if sort_type == 'CustomerRating':
+                        response = data[np.logical_and(data['장르'] == genre_word, data['tag'] == '완결')].sort_values('추천수_단위', ascending=False).to_dict('records')
                     else:
-                        response = data[np.logical_or(data['장르'] == '판타지', data['장르'] == '무협')].sort_values('추천수_단위', ascending=False).to_dict('records')
+                        response = data[np.logical_and(data['장르'] == genre_word, data['tag'] == '완결')].sort_values('조회수_단위', ascending=False).to_dict('records')
+                elif sort_type2 == 'new':
+                    if sort_type == 'CustomerRating':
+                        response = data[np.logical_and(data['장르'] == genre_word, data['tag'] == '최신')].sort_values('추천수_단위', ascending=False).to_dict('records')
+                    else:
+                        response = data[np.logical_and(data['장르'] == genre_word, data['tag'] == '최신')].sort_values('조회수_단위', ascending=False).to_dict('records')
+                else:
+                    if genre_word == '로맨스':
+                        if sort_type == 'CustomerRating':
+                            response = data[np.logical_or(data['장르'] == '판타지', data['장르'] == '로판')].sort_values('추천수_단위', ascending=False).to_dict('records')
+                        else:
+                            response = data[np.logical_or(data['장르'] == '판타지', data['장르'] == '로판')].sort_values('조회수_단위', ascending=False).to_dict('records')
+                    elif genre_word == 'BL':
+                        if sort_type == 'CustomerRating':
+                            response = data[data['장르'] == 'BL'].sort_values('추천수_단위', ascending=False).to_dict('records')
+                        else:
+                            response = data[data['장르'] == 'BL'].sort_values('조회수_단위', ascending=False).to_dict('records')
+                    else:
+                        if sort_type == 'CustomerRating':
+                            response = data[np.logical_or(data['장르'] == '판타지', data['장르'] == '무협')].sort_values('추천수_단위', ascending=False).to_dict('records')
+                        else:
+                            response = data[np.logical_or(data['장르'] == '판타지', data['장르'] == '무협')].sort_values('조회수_단위', ascending=False).to_dict('records')
 
                 pr_text = ''
+                page = request.GET.get('page', '1')  # 페이지
+                paginator = Paginator(response, 10)  # 페이지당 10개씩 보여주기
+                page_obj = paginator.get_page(page)
                 # print(response)
                 context = {
-                    'response': response,
+                    'total': response,
+                    'response': page_obj,
                     'searchType': search_type,
                     'sortType': sort_type,
+                    'sortType2': sort_type2,
                     'pr_text': pr_text,
-                    'genre_text': search_word,
+                    'genre_text': genre_word,
                 }
 
                 return render(request, "board/search.html", context)

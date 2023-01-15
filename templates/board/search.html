@@ -30,7 +30,7 @@
         </div>
 
         <form action="{% url 'board:search' %}" method="get" id="searchForm">
-            <input type="hidden" id="search_page_num" name="page" value="1">
+            <input type="hidden" id="page" name="page" value="1">
             <div class="input-group">
                 <select name="searchType" class="form-select2">
                     {% if searchType == 'title' %}
@@ -49,7 +49,9 @@
                     <option value="keyword">키워드 검색</option>
                     {% endif %}
                     {% if searchType == 'genre' %}
-                    <option value="keyword" style="display: none;">장르 검색</option>
+                    <option value="genre" selected="selected" style="display: none;">검색 설정</option>
+                    <input type="hidden" name="genreWord" value="{{ genre_text|default_if_none:'' }}">
+                    <input type="hidden" name="sortType2" value="{{ sortType2|default_if_none:'' }}">
                     {% endif %}
                 </select>
                 <div class="icon search">
@@ -100,7 +102,16 @@
                     </select>
                     {% elif searchType == 'genre' %}
                     <select name="sortType" class="form-select3" onchange="this.form.submit()">
+                        {% if sortType == 'ViewRating' %}
+                        <option value="ViewRating" selected="selected">조회 순</option>
+                        {% else %}
+                        <option value="ViewRating">조회 순</option>
+                        {% endif %}
+                        {% if sortType == 'CustomerRating' %}
+                        <option value="CustomerRating" selected="selected">추천 순</option>
+                        {% else %}
                         <option value="CustomerRating">추천 순</option>
+                        {% endif %}
                     </select>
                     {% endif %}
                 </div>
@@ -130,23 +141,23 @@
         <tbody>
             {% if empty %}
             검색어를 입력해주세요.
-            {% elif response|length > 0 %}
+            {% elif total|length > 0 %}
             <tr>
                 {% if searchType == 'title' %}
                 '{{ pr_text }}' 에 대한 검색 결과<br>
-                {{ response|length }}건이 검색되었습니다.
+                {{ total|length }}건이 검색되었습니다.
                 {% elif searchType == 'author' %}
                 '{{ pr_text }}' 에 대한 검색 결과<br>
-                {{ response|length }}건이 검색되었습니다.
+                {{ total|length }}건이 검색되었습니다.
                 {% elif searchType == 'keyword' %}
                 '{{ pr_text }}' 에 대한 검색 결과<br>
-                {{ response|length }}건이 검색되었습니다.
+                {{ total|length }}건이 검색되었습니다.
                 {% elif searchType == 'genre' %}
                 <h3>[{{ genre_text }}]</h3>
                 {% elif searchType == 'list' %}
                 <h3>[{{ list_text }}]</h3>
                 {% endif %}
-                {% elif response|length == 0 %}
+                {% elif total|length == 0 %}
                 '{{ pr_text }}' 에 대한 검색결과가 없습니다.
             {% endif %}
             </tr>
@@ -166,44 +177,44 @@
                             <span>최신 작품</span><i class="bi bi-chevron-down ms-auto"></i>
                         </a>
                         <ul id="components-nav15" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=판타지&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=판타지&sortType2=new">
                                 <span>판타지</span>
                             </a>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=무협&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=무협&sortType2=new">
                                 <span>무협</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=퓨전&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=퓨전&sortType2=new">
                                 <span>퓨전</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=게임&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=게임&sortType2=new">
                                 <span>게임</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=로맨스&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=로맨스&sortType2=new">
                                 <span>로맨스</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=로판&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=로판&sortType2=new">
                                 <span>로맨스 판타지</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=BL&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=BL&sortType2=new">
                                 <span>BL</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=GL&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=GL&sortType2=new">
                                 <span>GL</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=스포츠&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=스포츠&sortType2=new">
                                 <span>스포츠</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=역사&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=역사&sortType2=new">
                                 <span>역사</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=패러디&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=패러디&sortType2=new">
                                 <span>패러디</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=팬픽&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=팬픽&sortType2=new">
                                 <span>팬픽</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=라이트노벨&sortType=new">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=라이트노벨&sortType2=new">
                                 <span>라이트노벨</span>
                             </a>
                             <!-- ========================================== -->
@@ -215,44 +226,44 @@
                             <span>완결 작품</span><i class="bi bi-chevron-down ms-auto"></i>
                         </a>
                         <ul id="components-nav19" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=판타지&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=판타지&sortType2=end">
                                 <span>판타지</span>
                             </a>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=무협&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=무협&sortType2=end">
                                 <span>무협</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=퓨전&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=퓨전&sortType2=end">
                                 <span>퓨전</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=게임&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=게임&sortType2=end">
                                 <span>게임</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=로맨스&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=로맨스&sortType2=end">
                                 <span>로맨스</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=로판&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=로판&sortType2=end">
                                 <span>로맨스 판타지</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=BL&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=BL&sortType2=end">
                                 <span>BL</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=GL&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=GL&sortType2=end">
                                 <span>GL</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=스포츠&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=스포츠&sortType2=end">
                                 <span>스포츠</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=역사&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=역사&sortType2=end">
                                 <span>역사</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=패러디&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=패러디&sortType2=end">
                                 <span>패러디</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=팬픽&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=팬픽&sortType2=end">
                                 <span>팬픽</span>
                             </a>
-                            <a href="/board/search/?page=1&searchType=genre&searchWord=라이트노벨&sortType=end">
+                            <a href="/board/search/?page=1&searchType=genre&genreWord=라이트노벨&sortType2=end">
                                 <span>라이트노벨</span>
                             </a>
                         </ul>
@@ -320,28 +331,57 @@
             {% endfor %}
 
             
-    
-            <!-- pagination -->
-            <div class="pagination">
-                <ul>
-                    <li class="btn prev2" onclick="backBtn2()"><span><<</span></li>
-                    <li class="btn prev" onclick="backBtn()"><span><</span></li>
-                    <!-- <li class="numb active" value="1" onclick="activeLink(1)">1</li> -->
-                    <li class="numb" value="1" onclick="activeLink(1)">1</li>
-                    <li class="numb" value="2" onclick="activeLink(2)">2</li>
-                    <li class="numb" value="3" onclick="activeLink(3)">3</li>
-                    <li class="numb" value="4" onclick="activeLink(4)">4</li>
-                    <li class="numb" value="5" onclick="activeLink(5)">5</li>
-                    <li class="numb" value="6" onclick="activeLink(6)">6</li>
-                    <li class="numb" value="7" onclick="activeLink(7)">7</li>
-                    <li class="numb" value="8" onclick="activeLink(8)">8</li>
-                    <li class="numb" value="9" onclick="activeLink(9)">9</li>
-                    <li class="numb" value="10" onclick="activeLink(10)">10</li>
-                    <li class="btn next" onclick="nextBtn()">></li>
-                    <li class="btn next2" onclick="nextBtn2()">>></li>
-                </ul>
-            </div>
-
+    {% if empty %}
+    <div></div>
+    {% elif total|length == 0 %}
+    <div></div>
+    {% elif total|length > 0 %}
+    <!-- 페이징 -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if response.has_previous %}
+        <li class="page-item">
+            <a href="javascript:void(0)" class="page-link" data-page="{{ response.previous_page_number }}">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        {% for page_number in response.paginator.page_range %} 
+            {% if page_number >= response.number|add:-5 and page_number <= response.number|add:5 %}   
+                {% if page_number == response.number %}
+                    <li class="page-item active">
+                        <a href="javascript:void(0)" class="page-link" data-page="{{ page_number }}">{{ page_number }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a href="javascript:void(0)" class="page-link" data-page="{{ page_number }}">{{ page_number }}</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if response.has_next %}
+        <li class="page-item">
+            <a href="javascript:void(0)" class="page-link" data-page="{{ response.next_page_number }}">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+    {% endif %}
 
             
         </div><!-- book-info 끝 -->
@@ -359,8 +399,24 @@
 
     <script src="../../static/board/search/search.js"></script>
 
-    <script src="../../static/board/search/search.js"></script>
-
 </body>
 
 </html>
+<script>
+    // 페이지네이션 ----
+    window.onload = function() {
+        // 페이징에 사용한 모든 a 태그를 가져와서 변수에 저장
+        let a_list = document.getElementsByClassName('page-link');
+    
+        // 위 a 태그를 반복하면서 클릭 이벤트를 적용
+        Array.from(a_list).forEach(function(e) {
+            e.addEventListener('click', function() {
+                // a 태그에 클릭이 발생하면, a 태그에 작성된 data-page속성 값을 input type hidden에 저장
+                document.getElementById('page').value = this.dataset.page
+    
+                // 검색 양식을 제출해서 뷰로 전달
+                document.getElementById('searchForm').submit();
+            });
+        });
+    }
+</script>

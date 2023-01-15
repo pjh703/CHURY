@@ -402,6 +402,7 @@ section .content-list .slider {
   /* 콘텐츠 슬라이드 여백*/
   margin-left: 60px;
   margin-right: 60px;
+  padding: 5px;
 }
 section .content-list .slider::-webkit-scrollbar {
   display: none;
@@ -423,7 +424,7 @@ section .content-list .slider .item .imgs {
   /* 포스터 사이즈만 바뀜. 틀은 안바뀜 */
   width: 200px;
   height: 280px;
-  object-fit: cover;
+  /* object-fit: cover; */
   border-radius: 15px;
   z-index: 2;
 }
@@ -464,6 +465,7 @@ section .content-list .next {
 }
 
 footer {
+  margin-top: -70px;
   width: 100%;
   margin-bottom: 2rem;
 }
