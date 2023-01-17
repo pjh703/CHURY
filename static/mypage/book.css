@@ -298,7 +298,6 @@ ul li:hover a {
     .imgs {
         width: 200px;
         height: 280px;
-        margin-right: 55px;
         margin-bottom: 50px;
         /* object-fit: cover; */
         border-radius: 15px;

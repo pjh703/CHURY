@@ -180,35 +180,30 @@ nav .right .search .search-bar input {
 .main {
   display: flex;
   /* background-color: rgb(247, 247, 247); */
+  margin-left: 310px;
+  margin-right: 310px;
 }
-
-.side-left {
+.section {
   margin-left: 300px;
-  height: 500px;
+  margin-right: 280px;
+  position: relative;
 }
-
-.side-right {
-  margin-left: auto;
-  align-items: flex-end;
-  /* background-color: blue; */
-  padding-right: 300px;
-  height: 500px;
+.section2 {
+  margin-left: 300px;
+  margin-right: 280px;
+  position: relative;
 }
-
 .book-info {
   display: flex;
 }
 
 .book-img {
-  width: 360px;
-  height: 495px;
-  background-color: #ddd;
   margin-top: 70px;
   border-radius: 10px;
 }
 
 .text {
-  margin-left: 60px;
+  margin-left: 120px;
   margin-top: 70px;
 }
 
@@ -238,6 +233,7 @@ nav .right .search .search-bar input {
   font-size: 15px;
   color: white;
   padding: 10px;
+  margin: 3px;
 }
 .tag2:hover {
   background-color: #ffbf00a3;
@@ -250,16 +246,8 @@ nav .right .search .search-bar input {
   font-weight: 600;
   letter-spacing: 1px;
 }
-.author {
+.info {
   margin-top: 15px;
-  font-size: 20px;
-}
-.publisher {
-  margin-top: 5px;
-  font-size: 20px;
-}
-.date {
-  margin-top: 5px;
   font-size: 20px;
 }
 .eggs {
@@ -283,7 +271,7 @@ nav .right .search .search-bar input {
 
 .comment {
   margin-top: 10px;
-  margin-right: -90px;
+  margin-right: -500px;
   font-size: 21px;
   color: rgb(61, 61, 61);
 }
@@ -313,32 +301,25 @@ nav .right .search .search-bar input {
   display: flex;
   margin-top: 15px;
   margin-bottom: 50px;
+  float: left;
 }
 
 .related-book {
   width: 145px;
   height: 183px;
-  background-color: #ddd;
+  /* background-color: #ddd; */
   margin-right: 40px;
   border-radius: 5px;
   cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-.related-book2 {
-  width: 145px;
-  height: 183px;
-  background-color: #ddd;
-  margin-right: 40px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.related-book3 {
-  width: 145px;
-  height: 183px;
-  background-color: #ddd;
-  border-radius: 5px;
-  cursor: pointer;
-}
+.related-title {
+  float: left;
+  font-size: 15px;
+  /* text-align: center; */
+  width: 140px;
 
+}
 /* 스크롤 유도 화살표 */
 .arrow-3 {
   border-top: 80%;
@@ -383,10 +364,10 @@ nav .right .search .search-bar input {
 }
 
 /* section */
-section {
+/* section {
   position: relative;
   height: 600px;
-}
+} */
 
 .section .introduce{
   position: absolute;
@@ -409,17 +390,24 @@ section {
   font-size: 23px;
 }
 
-.introduce [class="content"] {
-  float: left;
-  margin-bottom: 50px;
-  /* background-color: crimson; */
+.content {
+  position: static;
+}
+.intro {
   letter-spacing: 2px;
   word-spacing: 3px;
   line-height: 25px;
-  margin-left: 700px;
-  margin-right: 300px;
-  margin-top: -50px;
   font-size: 18px;
+  position: static;
+  margin: 18px;
+}
+.blank-top {
+  height: 50px;
+  position: relative;
+}
+.blank-bottom {
+  height: 50px;
+  position: static;
 }
 
 .introduce [class="content2"] {
@@ -460,6 +448,19 @@ section {
   background-color: black;
 }
 
+/* table */
+.table1 {
+  width: 250px;
+}
+.table2 {
+  width : 900px;
+}
+.table1-1 {
+  text-align: left;
+  padding: 10px;
+  margin: 3px;
+  vertical-align: top;
+}
 
 /* .review {
   margin-top: 50px;
@@ -475,8 +476,6 @@ section {
   font-size: 2rem;
   color: #ddd;
   display: flex;
-  margin-top: 20px;
-
 }
 
 .star input {
@@ -495,9 +494,14 @@ section {
   color: red;
   overflow: hidden;
   pointer-events: none;
-  /* margin-right: 800px; */
 }
-
+.textarea {
+  width: 600px;
+  height: 100px;
+  resize: none;
+  border-width: 1px;
+  font-size: 14px;
+}
 
 
 /* ================================================================== */

@@ -68,22 +68,29 @@
     </nav>
     {% for i in detail_data %}
     <main class="main">
-        <div class="side-left"></div>
         <div class="book-info">
-            <div class="book-img"><img src="{{ i.cover_img_url }}" style="width: 360px;
-                height: 495px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);" alt=""></div>
+            <div class="book-img"><img src="{{ i.cover_img_url }}" style="width: 200px;
+                height: 300px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);" alt=""></div>
             {% if i.keyword %}
             <div class="text">
                 <div class="text1">
                     <button id="category_name1" class="tag1">{{ i.장르 }}</button>
-                    {% for key in keyword %}
-                    <button id="category_name2" class="tag2">{{ key }}</button>
-                    {% endfor %}
             {% endif %}
                     <div class="title">{{ i.제목 }}</div>
-                    <div class="author">{{ i.작가 }}</div>
-                    <div class="publisher">{{ i.조회수 }}</div>
-                    <div class="date">{{ i.추천수 }}</div>
+                    <table border="0" class="info">
+                        <tr>
+                            <td><b>작&nbsp;&nbsp;&nbsp;가&nbsp;&nbsp;</b></td>
+                            <td>&nbsp;&nbsp;{{ i.작가 }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>조회수&nbsp;&nbsp;</b></td>
+                            <td>&nbsp;&nbsp;{{ i.조회수 }}명</td>
+                        </tr>
+                        <tr>
+                            <td><b>추천수&nbsp;&nbsp;</b></td>
+                            <td>&nbsp;&nbsp;{{ i.추천수 }}개</td>
+                        </tr>
+                    </table>
 
                     <div class="eggs">
                         {% if i.customerReviewRank %}
@@ -131,22 +138,41 @@
                             {% endif %}
                         </div>
                     </div>
-
-                    <div class="recommend">
-                        <div class="title2">이 도서를 읽은 독자들이 같이 본 도서</div>
-                        <div class="related-books">
-                            <div class="related-book"></div>
-                            <div class="related-book2"></div>
-                            <div class="related-book3"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-        <div class="side-right" ></div>
     </main>
-    <section>
+    <section class="section">
+        <div class="recommend">
+            <div class="title2">이 도서를 읽은 독자들이 같이 본 도서</div>
+            {% for i in response_gen %}
+            <div class="related-books">
+                {% csrf_token %}
+                <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
+                <table border="0">
+                    <tr>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td><input type="image" class="related-book" src="{{ i.cover_img_url }}" alt="책 이미지"></td>
+                    </tr>
+                    <tr>
+                        <td><div class="related-title" style="text-align: center;">{{ i.제목 }}</div></td>
+                    </tr>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- <section>
         {% if i.인트로 %}
+            <div class="keyword" style="margin-left: 350px; margin-right: 350px; float: left;" >
+                <h3>키워드</h3>
+                {% for key in keyword %}
+                <button id="category_name2" class="tag2">{{ key }}</button>
+                {% endfor %}
+            </div>
             <div class="introduce">
                 <div class="title">
                     <h3><br><br>책 소개</h3>
@@ -157,10 +183,10 @@
             </div>
 
         {% endif %}
-        <br><br>
+        <br><br> -->
           
         <!-- 평점을 매긴 경우 -->
-        {% if myread  %}
+        <!-- {% if i.star %}
         <div class="introduce">
             <div class="title">
                 <br>
@@ -169,8 +195,8 @@
             
             <form action="{% url 'mypage:mydic2' %}" method="post">
                 {% csrf_token %}
-                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" hidden>
-                <input value="{{ user.email }}" name="email" id="email" hidden>
+                <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
                 
                 <div class="content2" style="margin-right: 700px;">
                     <div><hr style="width: 1054px; margin-left: -50px;"><br><br></div>
@@ -190,10 +216,10 @@
                     style="color: white; font-size:15px; letter-spacing: 2px;">
                 </div>
             </form> 
-        </div>
+        </div> -->
         
         <!-- 평점을 매기지 않은 경우 -->
-        {% else %}
+        <!-- {% else %}
         <div class="introduce">
             <div class="title">
                 <h3 style="left: 50px;">리뷰 남기기</h3>
@@ -201,28 +227,155 @@
             
             <form action="{% url 'mypage:mydic2' %}" method="post">
                 {% csrf_token %}
-                <input value="{{ i.isbn13 }}" name="mydic" id="mydic" hidden>
-                <input value="{{ user.email }}" name="email" id="email" hidden>
+                <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
                 
                 <div class="content2" style="margin-right: 700px;">
-                    <!-- <div><hr style="width: 1054px; margin-left: -50px;"><br><br></div> -->
                     <span class="star">
                         ★★★★★
                         <span>★★★★★</span>
-                        <input type="range" name="myread" id="myread" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
+                        <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
                         <br>  
                     </span>
                     <input type="submit" value="등록" class="enroll"
                     style="color: white; font-size:15px; letter-spacing: 2px;">
                 </div>
             </form> 
-        </div>
+        </div> -->
+    <!-- </section> -->
+    <section class="section" style="margin-top: 300px;">
+        <table border="0" align="center">
+            <th class="table1"></th>
+            <th class="table2"></th>
+            <tr>
+                <td class="table1-1"><h3>키워드</td>
+                <td>
+                    {% for key in keyword %}
+                    <button id="category_name2" class="tag2">{{ key }}</button>
+                    {% endfor %} 
+                    <br><br>
+                </td>
+            </tr>
+            <tr>
+                <td class="table1-1"><h3>책 소개</h3></td>
+                <td>
+                    <div class="content">
+                        <p><hr>
+                            <div class="blank-top"></div>
+                            <div class="intro">{{ i.인트로 }}</div>
+                            <div class="blank-bottom"></div>
+                            <hr></p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="table1-1"><h3>리뷰 남기기</h3></td>
+                <!-- 실험 2 -->
+                <td>
+                    {% if star %}
+                    <form action="{% url 'mypage:mydic2' %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                        <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
+                        
+                        <div class="content2" style="margin-right: 700px;">
+                            <div><hr style="width: 1054px; margin-left: -50px;"><br><br></div>
+                            <span class="star">
+                                <div class="star-imgs">
+                                    <img src="{% static 'board/detail/image/1점.JPG' %}" class="star1" id="star1" style="display: none;" alt="">
+                                    <img src="{% static 'board/detail/image/2점.JPG' %}" class="star2" id="star2" style="display: none;" alt="">
+                                    <img src="{% static 'board/detail/image/3점.JPG' %}" class="star3" id="star3" style="display: none;" alt="">
+                                    <img src="{% static 'board/detail/image/4점.JPG' %}" class="star4" id="star4" style="display: none;" alt="">
+                                    <img src="{% static 'board/detail/image/5점.JPG' %}" class="star5" id="star5" style="display: none;" alt="">
+                                </div>
+                                <div class="star-point" id="star-point">{{ myread }}</div>
+                                
+                                <br>  
+                            </span>
+                            <input type="submit" value="수정하기" class="enroll"
+                            style="color: white; font-size:15px; letter-spacing: 2px;">
+                        </div>
+                    </form> 
+
+                    {% else %}
+                    <form action="{% url 'mypage:mydic2' %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                        <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
+                        
+                        <div class="content2" style="margin-right: 700px;">
+                            <span class="star">
+                                ★★★★★
+                                <span>★★★★★</span>
+                                <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
+                                <br>  
+                            </span>
+                            <input type="submit" value="등록" class="enroll"
+                            style="color: white; font-size:15px; letter-spacing: 2px;">
+                        </div>
+                    </form>
+                    {% endif %}
+                </td>
+
+
+
+                <!-- <td>
+                    <span class="star">
+                        ★★★★★
+                        <span>★★★★★</span>
+                        <form action="">
+                            <p><textarea class="textarea" cols="30" rows="10" placeholder="댓글을 남겨보세요!"></textarea></p>
+                            <p><input type="submit" value="등록" class="enroll"
+                            style="color: white; font-size:15px; letter-spacing: 2px;"></p>
+                        </form>
+                        <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
+                    </span>
+                </td> -->
+
+                <!-- 실험 -->
+                <!-- <td>
+                    <form action="{% url 'mypage:mydic2' %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                        <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
+                        
+                        <div class="content2" style="margin-right: 700px;">
+                            <span class="star">
+                                ★★★★★
+                                <span>★★★★★</span>
+                                <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
+                                <br>  
+                            </span>
+                            <input type="submit" value="등록" class="enroll"
+                            style="color: white; font-size:15px; letter-spacing: 2px;">
+                        </div>
+                    </form> 
+                </td> -->
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td><br><br></td>
+                <!-- <td><br><br></td> -->
+            </tr>
+            </tr>
+                <td><br><br><br><br><br></td>
+            </tr>
+        </table>
+    </section>
         
         {% endif %}
         
         {% endfor %}
-    </section>
     <script>
+        // 별점
+        const drawStar = (target) => {
+            document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
+        }
+
         // 별 이미지 변경
         var tabs = document.querySelectorAll(".star-imgs");
         var img11s = document.querySelector("img.star1");
@@ -275,10 +428,6 @@
         document.getElementById("category_name1").innerText = c;
         document.getElementById("category_name2").innerText = d;
 
-        // 별점 0.5
-        const drawStar = (target) => {
-            document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
-        }
 
         // 계란 이미지 변경
         var tab = document.querySelectorAll(".egg-imgs");
