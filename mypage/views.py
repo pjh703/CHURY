@@ -115,7 +115,80 @@ def mydic(request):
         id = request.POST['id']
         post.user = User.objects.get(id=id)      
         post.save()
-    return redirect(f"/mypage/library/{id}")
+
+    # 웹에서 받아온 pk(id)값과 책DB의 id값이 같은 책 데이터를 딕셔너리 형태로 받아옴
+    detail_data = data[data['id'] == int(book_id)].to_dict('records')
+    # 책에 키워드가 존재하면 keyword에 리스트 형태로 저장
+    if len(eval(data[data['id'] == int(book_id)]['keyword'].iloc[0])) > 0:
+        keyword = eval(data[data['id'] == int(book_id)]['keyword'].iloc[0])
+        # print(keyword)
+
+    # 장르 유사도 검사
+    count_vect = CountVectorizer()
+
+    genre_mat = count_vect.fit_transform(data['장르'])
+    genre_sim = cosine_similarity(genre_mat, genre_mat)
+    genre_sim_sorted_idx = genre_sim.argsort()[:,::-1]
+
+    book_id2 = book_id
+
+    def find_sim_book(data, sorted_idx, title_id, top_n=10):
+        target_book = data[data['id'] == int(title_id)] # id 기준
+        
+        title_index = target_book.index.values  # 몇번째 위치인지.
+        similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
+        # print(similar_index)
+        # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
+        similar_index = similar_index.reshape(-1) 
+        
+        return data.iloc[similar_index]
+
+    similar_book = find_sim_book(data, genre_sim_sorted_idx, book_id2, 10)
+
+    similar_book[['제목','id', '장르', '추천수']]
+    # print(similar_book[['제목','id', '장르', '추천수']])
+    # print(similar_book['장르'])
+    # print(similar_book['cover_img_url'])
+
+    response_gen = similar_book.to_dict('records')[1:6] # 1~3위까지
+
+
+    isbook = False # 책이 있는지 없는지 검사하는 값
+    if request.method == "POST":
+        id = request.POST['id'] # html form안의 input 태그에서 가져옴 (input태그 id가 id인 경우)
+        user_id = User.objects.get(id = id).id # 위와 데이터베이스 같은지 (현재 로그인한 회원과)
+        my_book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = book_id) # 위의 상황이 true일때 책 아이디 가져옴.
+
+        star = MYSTAR.objects.filter(user_id=id).filter(book_id=book_id).values('star')
+        # print(my_book)
+        # print(len(my_book))
+        # print(star, my_book, pk, book_id)
+
+
+        if len(my_book) > 0:
+            isbook = True # 책이 저장되어 있는 경우
+
+        context = {
+            'detail_data': detail_data, # 책 정보
+            'keyword': keyword, # 책 키워드 리스트
+            'isbook': isbook, # 책이 있나없나 true값
+            'response_gen' : response_gen, # 유사도검사 장르로
+            # 'star' : star,
+        }
+        return render(request, "board/detail.html", context)
+
+    else:
+        # print("get")
+        # print(response)
+
+        context = {
+            'detail_data': detail_data, # 책 정보
+            'keyword': keyword, # 책 키워드 리스트
+            'isbook': isbook,
+            'response_gen' : response_gen, # 유사도검사 장르로
+            # 'star' : star,
+        }
+        return render(request, "board/detail.html", context)
        
 # 삭제
 def mydic_del(request):
@@ -140,12 +213,85 @@ def mydic2(request):
         star = request.POST['star']
         post.star = star
 
-        id = request.POST['user_id']
+        id = request.POST['id']
         post.user = User.objects.get(id=id)      
 
         post.save()
 
-    return redirect(f"/board/detail/{post.book_id}")
+    # 웹에서 받아온 pk(id)값과 책DB의 id값이 같은 책 데이터를 딕셔너리 형태로 받아옴
+    detail_data = data[data['id'] == int(book_id)].to_dict('records')
+    # 책에 키워드가 존재하면 keyword에 리스트 형태로 저장
+    if len(eval(data[data['id'] == int(book_id)]['keyword'].iloc[0])) > 0:
+        keyword = eval(data[data['id'] == int(book_id)]['keyword'].iloc[0])
+        # print(keyword)
+
+    # 장르 유사도 검사
+    count_vect = CountVectorizer()
+
+    genre_mat = count_vect.fit_transform(data['장르'])
+    genre_sim = cosine_similarity(genre_mat, genre_mat)
+    genre_sim_sorted_idx = genre_sim.argsort()[:,::-1]
+
+    book_id2 = book_id
+
+    def find_sim_book(data, sorted_idx, title_id, top_n=10):
+        target_book = data[data['id'] == int(title_id)] # id 기준
+        
+        title_index = target_book.index.values  # 몇번째 위치인지.
+        similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
+        # print(similar_index)
+        # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
+        similar_index = similar_index.reshape(-1) 
+        
+        return data.iloc[similar_index]
+
+    similar_book = find_sim_book(data, genre_sim_sorted_idx, book_id2, 10)
+
+    similar_book[['제목','id', '장르', '추천수']]
+    # print(similar_book[['제목','id', '장르', '추천수']])
+    # print(similar_book['장르'])
+    # print(similar_book['cover_img_url'])
+
+    response_gen = similar_book.to_dict('records')[1:6] # 1~3위까지
+
+
+    isbook = False # 책이 있는지 없는지 검사하는 값
+    isstar = False
+    if request.method == "POST":
+        id = request.POST['id'] # html form안의 input 태그에서 가져옴 (input태그 id가 id인 경우)
+        user_id = User.objects.get(id = id).id # 위와 데이터베이스 같은지 (현재 로그인한 회원과)
+        my_book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = book_id) # 위의 상황이 true일때 책 아이디 가져옴.
+
+        star = MYSTAR.objects.filter(user_id=id).filter(book_id=book_id).values('star')
+        # print(my_book)
+        # print(len(my_book))
+        print(star)
+
+
+        if len(my_book) > 0:
+            isbook = True # 책이 저장되어 있는 경우
+
+        context = {
+            'detail_data': detail_data, # 책 정보
+            'keyword': keyword, # 책 키워드 리스트
+            'isbook': isbook, # 책이 있나없나 true값
+            'response_gen' : response_gen, # 유사도검사 장르로
+            'star' : star,
+        }
+        return render(request, "board/detail.html", context)
+
+    else:
+        # print("get")
+        # print(response)
+
+        context = {
+            'detail_data': detail_data, # 책 정보
+            'keyword': keyword, # 책 키워드 리스트
+            'isbook': isbook,
+            'response_gen' : response_gen, # 유사도검사 장르로
+            'star' : star,
+        }
+        return render(request, "board/detail.html", context)
          
          
 # 선호 장르 선택

@@ -165,7 +165,7 @@ def BoardDetailView(request, pk):
             'keyword': keyword, # 책 키워드 리스트
             'isbook': isbook, # 책이 있나없나 true값
             'response_gen' : response_gen, # 유사도검사 장르로
-            # 'star' : star,
+            'star' : star,
         }
         return render(request, "board/detail.html", context)
 
@@ -178,7 +178,7 @@ def BoardDetailView(request, pk):
             'keyword': keyword, # 책 키워드 리스트
             'isbook': isbook,
             'response_gen' : response_gen, # 유사도검사 장르로
-            # 'star' : star,
+            'star' : star,
         }
         return render(request, "board/detail.html", context)
 
