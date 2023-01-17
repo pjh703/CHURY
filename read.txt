@@ -3,3 +3,9 @@
 pip install django-allauth
 
 pip install xlrd
+
+pip install konlpy
+
+pip install numpy, pandas
+
+pip install scikit-learn

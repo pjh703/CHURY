@@ -78,9 +78,9 @@ def home(request):
         apikey = '6b75188cf5cbc494ffe18d4d302e3aaa'
 
         url = f'https://api.themoviedb.org/3/movie/popular?api_key={apikey}&language=ko-KR&page=1&region=KR'
-        genre_url = f'https://api.themoviedb.org/3/genre/movie/list?api_key={apikey}&language=ko-KR'
-        respon = requests.get(url).json()['results']
-        res_gen = requests.get(genre_url).json()['genres']
+        genre_url = f'https://api.themoviedb.org/3/genre/movie/list?api_key={apikey}&language=ko-KR'  
+        respon = requests.get(url).json()['results']  # 영화 세부 정보 딕셔너리
+        res_gen = requests.get(genre_url).json()['genres']  # 장르 딕셔너리 {숫자:장르}
         
         for item in respon :
             gen_list = []
@@ -92,8 +92,10 @@ def home(request):
                 a = gen_list[gen_list.index(item['genre_ids'][j])-1]
                 gen_ko.append(a)
            
-            item['gen_ko'] = gen_ko
-            
+            item['gen_ko'] = gen_ko  # 장르id를 한글장르로 바꾼 키 추가
+
+        # print(item.keys())    
+
         context = {
             'respon': respon,
         }
