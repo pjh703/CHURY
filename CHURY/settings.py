@@ -185,3 +185,5 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 LOGIN_REDIRECT_URL = 'board:home' # 로그인 후 리디렉션할 페이지
 ACCOUNT_LOGOUT_REDIRECT_URL = "user:login"  # 로그아웃 후 리디렉션 할 페이지
 ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 버튼 클릭 시 자동 로그아웃
+
+

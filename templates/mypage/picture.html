@@ -67,14 +67,14 @@
 <div class="modal-wrapper">
     <div class="modal-inner">
         <div class="othertxt">
-            <form action="{% url 'mypage:picture' user.pk %}" method="post">
+            <form action="{% url 'mypage:picture' user.pk %}" enctype="multipart/form-data" method="post">
                 {% csrf_token %}
-                <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage\images\close.svg' %}" alt=""></a>
+                <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage\images\close.svg' %}" alt="" id="close"></a>
                 <div class="warning">추라이 서비스 이용 시<br>노출되는<br>프로필사진입니다.</div>
                 <div class="middle">
                     <div class="left">
                         <div class="filebox">
-                            <label for="file" id=uploadBtn>
+                            <label for="file" id=upload>
                                 <i class="fa-solid fa-file-import"></i>
                                 사진 업로드
                             </label> 
@@ -92,16 +92,20 @@
                     </div>   -->
 
                     
-
+                    <div class="profile-pic-div">
+                        <img src="{% static 'mypage\images\profile.jpg' %}" id="photo">
+                        <!-- <input type="file" id="file">
+                        <label for="file" id="uploadBtn">Choose Photo</label> -->
+                    </div>
                 </div>
         
-                <div class="modal-buttons">
-                    <a href="{% url 'mypage:env' %}">
-                        <button class="cancel-btn">취소</button>
-                    </a>
-                    <button type="submit" class="change-btn">변경</button>
-                </div>
             </form>
+            <div class="modal-buttons">
+                <a href="{% url 'mypage:env' %}">
+                    <button class="cancel-btn">취소</button>
+                </a>
+                <button type="submit" class="change-btn">변경</button>
+            </div>
         </div>
     </div>
 </div>
@@ -109,8 +113,8 @@
 </body>
 
 <script>
-    const imgDiv = document.querySelector('picture');
-    const img = document.querySelector('#picture');
+    const imgDiv = document.querySelector('profile-pic-div');
+    const img = document.querySelector('#photo');
     const file = document.querySelector('#file');
     const uploadBtn = document.querySelector('#uploadBtn');
 

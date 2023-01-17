@@ -333,7 +333,7 @@ ul li:hover a {
 }
 
 
-.othertxt img {
+#close {
   position: absolute;
   width: 20px;
   filter: opacity(0.4) drop-shadow(0 0 0 white);
@@ -401,7 +401,7 @@ ul li:hover a {
 /* 취소, 변경 버튼 */
 .modal-buttons {
   text-align: center;
-  padding-top: 40px;
+  padding-top: 80px;
   padding-bottom: 65px;
 }
 
@@ -468,6 +468,7 @@ ul li:hover a {
     align-items: center;
     color: #ffc000;
     font-size: 15px;
+    padding-top: 75px;
     padding-bottom: 20px;
     cursor: pointer;
     letter-spacing: 1px;
@@ -476,3 +477,39 @@ ul li:hover a {
 .filebox i {
   padding-right: 20px;
 }
+
+/* +++++++++++++++++++++++++++ */
+.profile-pic-div{
+  height: 200px;
+  width: 200px;
+  position:absolute;
+  margin-left: 185px;
+  margin-top: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: none;
+}
+
+#photo{
+  height: 100%;
+  width: 100%;
+}
+
+/* #file {
+  display: none;
+}
+
+#uploadBtn{
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  bottom:0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  background: rgba(0,0,0,0.7);
+  color: wheat;
+  line-height: 30px;
+  font-size: 15px;
+  cursor: pointer;
+} */
