@@ -346,9 +346,10 @@ ul li:hover a {
     display: flex;
     align-items: center;
     margin-left: 60px;
+    margin-right: 60px;
 }
 
-.upload {
+/* .upload {
     display: flex;
     align-items: center;
     color: #ffc000;
@@ -359,7 +360,7 @@ ul li:hover a {
 }
 .upload i {
     padding-right: 20px;
-}
+} */
 
 .delete {
     display: flex;
@@ -373,14 +374,28 @@ ul li:hover a {
     padding-right: 20px;
     padding-left: 2px;
 }
-
 .picture {
-    width: 200px;
-    height: 200px;
-    background-color: #ddd;
-    margin-left: 80px;
-    border-radius: 50%;
+  /* position: inherit; */
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: none;
+  margin-left: 22px;
+  cursor: text;
+  overflow: hidden;
 }
+
+#picture {
+  /* position: absolute; */
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: none;
+  margin-left: 22px;
+  cursor: text;
+}
+
+
 
 /* ======================================= */
 /* 취소, 변경 버튼 */
@@ -417,4 +432,47 @@ ul li:hover a {
 }
 .change-btn:hover {
   background-color: rgb(172, 172, 172);
+}
+
+
+
+/* 프로필사진 업로드 input type file*/
+
+/* 기존 디자인 없애기 */
+.filebox input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
+/* 인풋 스타일 변경 */
+.filebox .upload-name {
+  display: inline-block;
+  height: 30px;
+  weight: 150px;
+  padding: 0 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 78%;
+  color: #636363;
+  background-color: rgb(30, 30, 30);
+  border: none;
+}
+
+/* 라벨 스타일 변경 */
+.filebox label {
+  display: flex;
+    align-items: center;
+    color: #ffc000;
+    font-size: 15px;
+    padding-bottom: 20px;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.filebox i {
+  padding-right: 20px;
 }

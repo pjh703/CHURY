@@ -44,9 +44,11 @@ def LogLock(request, pk):
         my_email = User.objects.filter(username = pk).values('email')[0]['email']
         email = EmailMessage(
             '[CHURY] 메일인증',                # 제목
-            "안녕하세요.\n"
-            "\n다음 링크를 누르면 http://127.0.0.1:8000/mypage/email_done/"
-            "\n이메일 인증을 요청하지 않았다면 이 이메일을 무시하셔도 됩니다.\nCHURY와 함께 해주셔서 감사합니다.",
+            "안녕하세요."
+            "\n다음 링크를 누르시면 CHURY 계정의 이메일을 인증하는 화면으로 이동합니다." 
+            "\n\nhttp://127.0.0.1:8000/mypage/email_done/"
+            "\n\n이메일 인증을 요청하지 않았다면 이 이메일을 무시하셔도 됩니다."
+            "\nCHURY와 함께 해주셔서 감사합니다.",
             to=[my_email],  # 받는 이메일 리스트
         )
         email.send()

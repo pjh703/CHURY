@@ -71,29 +71,62 @@
                 {% csrf_token %}
                 <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage\images\close.svg' %}" alt=""></a>
                 <div class="warning">추라이 서비스 이용 시<br>노출되는<br>프로필사진입니다.</div>
-            <div class="middle">
-                <div class="left">
-                    <div class="upload">
-                        <i class="fa-solid fa-file-import"></i>
-                        사진 업로드
+                <div class="middle">
+                    <div class="left">
+                        <div class="filebox">
+                            <label for="file" id=uploadBtn>
+                                <i class="fa-solid fa-file-import"></i>
+                                사진 업로드
+                            </label> 
+                            <input type=hidden class="upload-name">
+                            <input type="file" id="file">
+                        </div>
+                        <div class="delete">
+                            <i class="fa-solid fa-trash"></i>
+                            기본 프로필로 변경
+                        </div>
                     </div>
-                    <div class="delete">
-                        <i class="fa-solid fa-trash"></i>
-                        사진 삭제
-                    </div>
+
+                    <!-- <div class="picture">
+                        <img src="{% static 'mypage\images\profile.jpg' %}" id="picture">
+                    </div>   -->
+
+                    
+
                 </div>
-                <div class="picture"></div>    
-            </div>
+        
+                <div class="modal-buttons">
+                    <a href="{% url 'mypage:env' %}">
+                        <button class="cancel-btn">취소</button>
+                    </a>
+                    <button type="submit" class="change-btn">변경</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-buttons">
-            <a href="/mypage/env/">
-                <button class="cancel-btn">취소</button>
-            </a>
-            <button type="submit" class="change-btn">변경</button>
-        </div>
-    </form>
     </div>
 </div>
 
 </body>
+
+<script>
+    const imgDiv = document.querySelector('picture');
+    const img = document.querySelector('#picture');
+    const file = document.querySelector('#file');
+    const uploadBtn = document.querySelector('#uploadBtn');
+
+    file.addEventListener('change', function(){
+        const choosedFile = this.files[0];
+
+        if (choosedFile) {
+            const reader = new FileReader();
+            reader.addEventListener('load', function(){
+                img.setAttribute('src', reader.
+                result);
+            });
+            reader.readAsDataURL(choosedFile);
+        }
+    })
+
+</script>    
+
 </html>
