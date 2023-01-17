@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 
 from django.views.generic import DetailView
 from user.models import User
-from mypage.models import MYBOOK, MYCHOOSE
+from mypage.models import MYBOOK, MYCHOOSE, MYSTAR, COMMENT
 from xlrd import open_workbook
 from django.core.paginator import Paginator  
 
@@ -15,6 +15,11 @@ import numpy as np
 import pandas as pd
 import math
 
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+from ast import literal_eval
+
+from konlpy.tag import Okt
 
 data = pd.read_excel('book_db.xlsx')
 
@@ -78,9 +83,9 @@ def home(request):
         apikey = '6b75188cf5cbc494ffe18d4d302e3aaa'
 
         url = f'https://api.themoviedb.org/3/movie/popular?api_key={apikey}&language=ko-KR&page=1&region=KR'
-        genre_url = f'https://api.themoviedb.org/3/genre/movie/list?api_key={apikey}&language=ko-KR'  
-        respon = requests.get(url).json()['results']  # 영화 세부 정보 딕셔너리
-        res_gen = requests.get(genre_url).json()['genres']  # 장르 딕셔너리 {숫자:장르}
+        genre_url = f'https://api.themoviedb.org/3/genre/movie/list?api_key={apikey}&language=ko-KR'
+        respon = requests.get(url).json()['results'] # 영화 세부 정보 딕셔너리
+        res_gen = requests.get(genre_url).json()['genres'] # 장르 딕셔너리 {숫자:장르}
         
         for item in respon :
             gen_list = []
@@ -92,10 +97,8 @@ def home(request):
                 a = gen_list[gen_list.index(item['genre_ids'][j])-1]
                 gen_ko.append(a)
            
-            item['gen_ko'] = gen_ko  # 장르id를 한글장르로 바꾼 키 추가
-
-        # print(item.keys())    
-
+            item['gen_ko'] = gen_ko # 장르id를 한글장르로 바꾼 키 추가
+            
         context = {
             'respon': respon,
         }
@@ -112,14 +115,46 @@ def BoardDetailView(request, pk):
         keyword = eval(data[data['id'] == int(pk)]['keyword'].iloc[0])
         # print(keyword)
 
+    # 장르 유사도 검사
+    count_vect = CountVectorizer()
+
+    genre_mat = count_vect.fit_transform(data['장르'])
+    genre_sim = cosine_similarity(genre_mat, genre_mat)
+    genre_sim_sorted_idx = genre_sim.argsort()[:,::-1]
+
+    book_id2 = pk
+
+    def find_sim_book(data, sorted_idx, title_id, top_n=10):
+        target_book = data[data['id'] == int(title_id)] # id 기준
+        
+        title_index = target_book.index.values  # 몇번째 위치인지.
+        similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
+        # print(similar_index)
+        # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
+        similar_index = similar_index.reshape(-1) 
+        
+        return data.iloc[similar_index]
+
+    similar_book = find_sim_book(data, genre_sim_sorted_idx, book_id2, 10)
+
+    similar_book[['제목','id', '장르', '추천수']]
+    # print(similar_book[['제목','id', '장르', '추천수']])
+    # print(similar_book['장르'])
+    # print(similar_book['cover_img_url'])
+
+    response_gen = similar_book.to_dict('records')[1:6] # 1~3위까지
+
+
     isbook = False # 책이 있는지 없는지 검사하는 값
     if request.method == "POST":
-        id = request.POST['id']
-        user_id = User.objects.get(id = id).id
-        my_book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = pk)
+        id = request.POST['id'] # html form안의 input 태그에서 가져옴 (input태그 id가 id인 경우)
+        user_id = User.objects.get(id = id).id # 위와 데이터베이스 같은지 (현재 로그인한 회원과)
+        my_book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = pk) # 위의 상황이 true일때 책 아이디 가져옴.
 
+        star = MYSTAR.objects.filter(user_id=id).filter(book_id=pk).values('star')
         # print(my_book)
         # print(len(my_book))
+        # print(star, my_book, pk, book_id)
 
 
         if len(my_book) > 0:
@@ -128,7 +163,9 @@ def BoardDetailView(request, pk):
         context = {
             'detail_data': detail_data, # 책 정보
             'keyword': keyword, # 책 키워드 리스트
-            'isbook': isbook # 책이 있나없나 true값
+            'isbook': isbook, # 책이 있나없나 true값
+            'response_gen' : response_gen, # 유사도검사 장르로
+            # 'star' : star,
         }
         return render(request, "board/detail.html", context)
 
@@ -140,6 +177,8 @@ def BoardDetailView(request, pk):
             'detail_data': detail_data, # 책 정보
             'keyword': keyword, # 책 키워드 리스트
             'isbook': isbook,
+            'response_gen' : response_gen, # 유사도검사 장르로
+            # 'star' : star,
         }
         return render(request, "board/detail.html", context)
 
