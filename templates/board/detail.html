@@ -197,6 +197,8 @@
                 {% csrf_token %}
                 <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
                 <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
+                <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
                 
                 <div class="content2" style="margin-right: 700px;">
                     <div><hr style="width: 1054px; margin-left: -50px;"><br><br></div>
@@ -229,11 +231,14 @@
                 {% csrf_token %}
                 <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
                 <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
+                <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
                 
                 <div class="content2" style="margin-right: 700px;">
                     <span class="star">
                         ★★★★★
                         <span>★★★★★</span>
+                        <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
                         <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
                         <br>  
                     </span>
@@ -472,9 +477,8 @@
             img33.style.display = 'none';
             img44.style.display = 'inline'; 
         }
-
-        
     </script>
+
     {% else %}
     <div class="h3 text-info">잘못된 접근입니다. 로그인해주세요</div>
     
