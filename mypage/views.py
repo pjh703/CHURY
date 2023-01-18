@@ -280,3 +280,7 @@ def email_done(request):
 
 def email_done2(request):
     return render(request, "mypage/email_done2.html")
+
+# 고객지원센터
+def notice(request):
+    return render(request, "mypage/notice.html")

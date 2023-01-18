@@ -46,10 +46,14 @@
     letter-spacing: 1px;
 }
 
-/* 해당카테고리 bold */
-.top {
+.sidebar-use {
     font-weight: 800;
 }
+
+/* 해당카테고리 bold */
+/* .top {
+    font-weight: 800;
+} */
 
 .top {
     margin-bottom: 15px;

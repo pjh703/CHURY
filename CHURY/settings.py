@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     #네이버
     'allauth.socialaccount.providers.naver',
 
-
 ]
 
 

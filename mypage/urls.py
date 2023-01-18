@@ -32,5 +32,6 @@ urlpatterns = [
     path('email_done/', views.email_done, name='email_done'),
     path('email_done2/', views.email_done2, name='email_done2'),
     
+    # 고객지원센터
+    path('notice/', views.notice, name='notice'),
 ]
-
