@@ -3,11 +3,12 @@ import requests
 from lib2to3.pgen2.token import DOUBLESTAREQUAL
 
 from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
+from django.urls import reverse
+from django.shortcuts import get_object_or_404  
 
 from django.views.generic import DetailView
 from user.models import User
-from mypage.models import MYBOOK, MYCHOOSE, MYSTAR, COMMENT
+from mypage.models import MYBOOK, MYCHOOSE, MYSTAR, COMMENT, MYSELECT
 from xlrd import open_workbook
 from django.core.paginator import Paginator  
 
@@ -77,8 +78,8 @@ def home(request):
         return render(request, "board/home.html", context)
     
 
-    # 장르 데이터베이스 없을 시 choose로
-    else:
+   
+    else:   # 장르 데이터베이스 없을 시 choose로
 
         apikey = '6b75188cf5cbc494ffe18d4d302e3aaa'
 
@@ -329,3 +330,36 @@ def search(request, **kwargs):
                         
     else:
         return render(request, "board/search.html")
+
+
+def loading(request):
+    if request.method == "dialog":
+
+        # book_queryset = request.POST['book_queryset']
+        # print(book_queryset)
+
+        post = MYSELECT()
+
+        book_list = []
+        for l in range(1,20):
+            id = request.POST[f'id{l}'] # html form안의 input 태그에서 가져옴 (input태그 id가 id인 경우)
+            my_book = request.POST[f'book_id{l}']
+            post.user_id = id
+            book_list.append(my_book)
+        
+            post.book_id = my_book
+
+            print(my_book)
+            post.save()
+
+        print(book_list)
+
+        # user_id = User.objects.get(id = id).id
+        # s_book_id = MYSELECT.objects.filter(user_id = user_id)
+        # sel_book = MYBOOK.objects.filter(book_id__in = s_book_id)
+
+        # context = {
+        #     'sel_book':sel_book,
+        # }
+
+    return reverse('board:home')

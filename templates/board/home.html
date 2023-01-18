@@ -124,12 +124,14 @@
                 <div class="item">
                     <form action="{% url 'board:detail' pk=i.id %}" method="post">
                         {% csrf_token %}
+                        {% for j in similar_book %}
                         <input value="{{ user.id }}" name="id" id="id" style="display: none;">
                         <div class="descr" style="pointer-events: none;">
-                            {{ i.제목 }}<br><br>
-                            추천수: {{ i.추천수 }}
+                            {{ j.제목 }}<br><br>
+                            추천수: {{ j.추천수 }}
                         </div>
-                        <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
+                        <input type="image" class="imgs" src="{{ j.cover_img_url }}" alt="책 이미지">
+                        {% endfor %}
                     </form>
                 </div>
                 {% endfor %}
