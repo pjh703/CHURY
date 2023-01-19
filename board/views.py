@@ -22,14 +22,14 @@ from ast import literal_eval
 
 from konlpy.tag import Okt
 
-data = pd.read_excel('book_db.xlsx')
+data = pd.read_excel('book_db.xlsx', nrows=14000)
 
 # 인트로 유사도 검사 앞
-data['인트로_단어']=data['인트로_단어'].apply(literal_eval)
-data['intro_liters']=data['인트로_단어'].apply(lambda x:','.join(x))
+data['total']=data['total'].apply(literal_eval)
+data['total_liters']=data['total'].apply(lambda x:','.join(x))
 count_vect = CountVectorizer(min_df=0, ngram_range=(1,1))
 
-intro_mat = count_vect.fit_transform(data['intro_liters'])
+intro_mat = count_vect.fit_transform(data['total_liters'])
 intro_sim = cosine_similarity(intro_mat, intro_mat)
 intro_sim_sorted_idx = intro_sim.argsort()[:,::-1]
 

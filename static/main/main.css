@@ -1,0 +1,489 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: black;
+  user-select: none;
+  font-family:'Pretendard-Regular';
+}
+
+body {
+  background-color: rgb(255, 255, 247);
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  padding: 0.9em 2em;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  z-index: 98;
+  /* background: linear-gradient(to bottom, rgb(250, 250, 250) 10%, rgba(255, 255, 255, 0.158)); */
+  /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 10%, rgba(0, 0, 0, 0)); */
+  /* background: linear-gradient(white, rgba(255, 255, 255, 0)); */
+  background-color: white;
+}
+
+/*  */
+nav.drop {
+  position: fixed;
+  animation: dropNav 0.2s;
+  z-index: 99;
+}
+
+@keyframes dropNav {
+  0% {
+    top: -5rem;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+/*  */
+
+nav .left {
+  display: flex;
+  margin-left: 40px;
+}
+nav .left .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  padding: 0.5em;
+  width: 8rem;
+}
+nav .left .logo a {
+  width: 100%;
+}
+nav .left .logo a img {
+  max-width: 100%;
+}
+nav .left .mobile-menu {
+  display: none;
+}
+nav .left .menu-list {
+  display: flex;
+}
+nav .left .menu-list li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  padding: 0.2em 1em 0.5em 1em;
+}
+nav .left .menu-list li a {
+  font-size: 1rem;
+}
+nav .right {
+  display: flex;
+  margin-right: 2em;
+}
+nav .right .icon {
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+nav .right .profile {
+  padding: 0;
+}
+nav .right .profile a {
+  display: flex;
+  align-items: center;
+}
+nav .right .profile a .avatar-box {
+  width: 30px;
+  height: 30px;
+  /* background-color: rgb(245, 216, 90); */
+  border-radius: 3px;
+  margin-right: 10px;
+  margin-left : 10px;
+  margin-top: 2px;
+}
+
+.avatar-box {
+  background-image: url("../common/images/profile.jpg");
+  background-size: cover;
+}
+
+nav .right .profile i {
+  transition: all 300ms;
+  margin-right: 40px;
+}
+nav .right .profile:hover i {
+  transform: rotate(180deg);
+}
+
+/* 드롭다운 */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgb(247, 247, 247);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  /* float: left; */
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {background-color: #ddd;}
+
+.profile:hover .dropdown-content {display: block;}
+
+/* .dropdown:hover .dropbtn {background-color: #fce515;} */
+
+/* 드롭다운 끝 */
+
+nav .right .search {
+  border: 1px solid black;
+  background-color: white;
+}
+nav .right .search .search-bar {
+  display: flex;
+  height: 15px;
+}
+nav .right .search .search-bar input {
+  background-color: transparent;
+  border: none;
+  color: black;
+  outline: none;
+  background-color: white;
+  padding-right: 2px;
+  padding-left: 10px;
+}
+
+.right select {
+  font-size: 15px;
+}
+
+
+main {
+  position: relative;
+}
+/* main 슬라이드 */
+.slider2{
+  /* width: 100vw;
+  height: 100vh; */
+  position: relative;
+}
+
+.slides2{
+  width: 500%;
+  height: 500px;
+  display: flex;
+}
+
+.slides2 input{
+  display: none;
+}
+
+.slide2{
+  width: 20%;
+  transition: 2s; /*bg넘어가는속도*/
+}
+
+.slide2 img{
+  width: 100%;
+}
+
+/* css for manual slide navigation */
+
+.navigation-manual{
+  position: absolute;
+  /* width: 800px; */
+  width: 100vw;
+  /* margin-bottom: -40px; */
+  margin-top: 30px; 
+  /* 동그라미 위치 조정 */
+  display: flex;
+  justify-content: center;
+}
+
+.manual-btn{
+  border: 2px solid white;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.manual-btn:not(:last-child){
+  margin-right: 40px;
+}
+
+.manual-btn:hover{
+  background: white;
+}
+
+#radio1:checked ~ .first{
+  margin-left: 0;
+}
+
+#radio2:checked ~ .first{
+  margin-left: -20%;
+}
+
+#radio3:checked ~ .first{
+  margin-left: -40%;
+}
+
+/* css for automatic navigation */
+
+/* 동그라미 위치 조정 */
+.navigation-auto{
+  position: absolute;
+  display: flex;
+  /* width: 800px; */
+  width: 100vw;
+  justify-content: center;
+  margin-top: 530px; 
+  /* 위치가 다름 (원래700) */
+}
+
+.navigation-auto div{
+  border: 2px solid white;
+  padding: 5px;
+  border-radius: 10px;
+  transition: 1s;
+}
+
+.navigation-auto div:not(:last-child){
+  margin-right: 40px;
+}
+
+#radio1:checked ~ .navigation-auto .auto-btn1{
+  background: white;
+}
+
+#radio2:checked ~ .navigation-auto .auto-btn2{
+  background: white;
+}
+
+#radio3:checked ~ .navigation-auto .auto-btn3{
+  background: white;
+}
+/* main 슬라이드 끝 */
+/* ================================================================= */
+
+
+main .video video {
+  width: 100%;
+  height: 100%;
+  max-height: 60vh;
+  object-fit: cover;
+}
+main .description {
+  position: absolute;
+  bottom: 30%;
+  left: 40px;
+  max-width: 500px;
+}
+main .description h1 {
+  margin: 0.5em 0;
+}
+main .description h3 {
+  margin: 0.5em 0;
+}
+main .description p {
+  margin: 0.8em 0 2em 0;
+}
+main .description .buttons {
+  display: flex;
+  gap: 10px;
+}
+main .description .buttons .play {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5em;
+}
+main .description .buttons .play:hover {
+  background-color: #cccccc;
+}
+main .description .buttons .play * {
+  color: black;
+}
+main .description .buttons .play i {
+  color: black;
+  font-size: 1.3rem;
+}
+main .description .buttons .play span {
+  font-size: 1rem;
+}
+main .description .buttons .detail {
+  background-color: rgba(109, 109, 110, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+}
+main .description .buttons .detail i {
+  font-size: 1.3rem;
+}
+main .description .buttons .detail:hover {
+  background-color: rgba(58, 58, 59, 0.7);
+}
+
+
+/* =================================================================== */
+
+.item {
+ position: relative;
+}
+
+.item:hover .imgs{
+  filter: brightness(0.5);
+}
+
+.descr{
+  font-size: large;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 50px;
+  position: absolute;
+  color: white;
+  opacity: 0;
+  transition: all ease 0.5s;
+  z-index: 3;
+  width: 200px;
+} 
+  
+.item:hover .descr{ 
+  opacity: 1;
+}
+
+.contents {
+  background-color: rgb(257, 257, 257);
+  margin-top: 93px;
+  padding-top: 60px;
+}
+
+section .content-list {
+  border-bottom: 1px solid #ddd;
+}
+
+section .content-list {
+  margin-bottom: 20px;
+  position: relative;
+}
+section .content-list h1 {
+  margin-left: 100px;
+  margin-bottom: 1rem;
+}
+section .content-list .slider {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  /* 콘텐츠 슬라이드 여백*/
+  margin-left: 60px;
+  margin-right: 60px;
+}
+section .content-list .slider::-webkit-scrollbar {
+  display: none;
+}
+section .content-list .slider .item {
+  /* 콘텐츠 틀 사이즈 변경 */
+  /* min-width: 250px;
+  height: 150px; */
+  min-width: 200px;
+  height: 280px;
+  margin-right: 40px;
+  margin-left: 40px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  opacity: .99;
+}
+section .content-list .slider .item .imgs {
+  /* 포스터 사이즈만 바뀜. 틀은 안바뀜 */
+  width: 200px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 15px;
+  z-index: 2;
+}
+section .content-list .prev-arrow {
+  transform: rotateY(180deg);
+}
+section .content-list .prev {
+  font-size: 3rem;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-10px);
+  cursor: pointer;
+  margin-left: 25px;
+}
+section .content-list .next {
+  font-size: 3rem;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-10px);
+  cursor: pointer;
+  margin-right: -10px;
+}
+
+.info {
+  margin-left: 50px;
+
+}
+
+.info >p {
+  color: rgb(97, 96, 96);
+  display: flex;
+  float: left;
+  margin-right: 85px;
+  text-align: left;
+  border: 1px solid pink;
+}
+
+footer {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+footer .wrap {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  row-gap: 2em;
+}
+footer .wrap .options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1em;
+}
+footer .wrap .options .option {
+  color: #6f6f6f;
+}
+
+@media screen and (max-width: 1437px) {
+  main .description {
+    bottom: 10%;
+  }
+}

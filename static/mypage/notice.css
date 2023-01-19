@@ -1,0 +1,216 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family:'Pretendard-Regular';
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: black;
+}
+
+.logo {
+    display: block;
+    width: 150px;
+    height: 40px;
+    background-image: url("../mypage/images/logo.png");
+    background-size: contain;
+    margin-left: 40px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+.sidebar ul a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 18px;
+    color: white;
+    padding-left: 40px;
+    box-sizing: border-box;
+    transition: .4s;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+/* 해당카테고리 bold */
+.sidebar-notice {
+    font-weight: 800;
+}
+
+.top {
+    margin-bottom: 15px;
+}
+.bottom {
+    border-top: 1px solid rgb(56, 56, 56);
+    padding-top: 15px;
+}
+
+
+ul li:hover a {
+    padding-left: 50px;
+}
+
+.home { 
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(243, 243, 243);
+}
+
+
+/* =========== */
+
+.header{
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: -1;
+}
+
+.login_btn{
+    /*왼쪽에 붙어있게 해주는 아래 두 줄*/
+    display: flex;
+    justify-content: flex-end;
+
+    margin-right: 40px;
+
+    width: 100%;
+}
+
+.btn{
+    height: 30px;
+    background-color: black;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+ }
+ 
+
+/* =========== */
+
+/* 개인정보 관리 */
+.home h1 {
+    position: fixed;
+    margin-left: 320px;
+    margin-top: 120px;
+}
+
+.home h3 {
+    position: fixed;
+    margin-left: 320px;
+    margin-top: 180px;
+
+    font-size: medium;
+    font-weight: 500;
+    color: #6e6e6e;
+    letter-spacing: 0.5px;
+}
+
+/* =================================== */
+.box {
+    position: fixed;
+    margin-left: 320px;
+    margin-top: 230px;
+    width: 1140px;
+    height: 480px;
+    gap: 20px;
+    /* overflow: auto; */
+    /* background-color: blue; */
+    /* height는 더 늘어나도 됨. 화면 넘어가면 scroll 추가하기 */
+    overflow-y: scroll;
+}
+
+
+/* 스크롤바 숨기기 */
+/* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
+.box::-webkit-scrollbar {
+    display: none;
+}
+  
+.box {
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+}
+ 
+
+/* 아코디언 */
+/* .accordian {
+    width: 90%;
+    max-width: 1000px;
+    margin: 2rem auto;
+} */
+
+.accordion-item {
+    background-color: white;
+    color: black; 
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* height: 80px; */
+}
+
+.accordion-item-header {
+    margin-left: 30px;
+    min-height: 3.5rem;
+    font-size: 18px;
+    font-weight: 500;
+    /* line-height: 1.25rem; */
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    height: 80px;
+}
+
+.accordion-item-header::after {
+    /* content: "\002B"; */
+    content: "\25B4";
+    font-size: 1.7rem;
+    position: absolute;
+    right: 30px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.accordion-item-header.active::after {
+    /* content: "\2212";    */
+    transform: rotate(180deg);
+}
+
+.accordion-item-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.accordion-item-body-content {
+    padding: 20px 30px 20px 30px;
+    line-height: 1.5rem;
+    border-top: 1px solid #ddd;
+}
+
+/* .accordion-item-header.active + .accordion-item-body {
+    max-height: 1000px;
+} */
