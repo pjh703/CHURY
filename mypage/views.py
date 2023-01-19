@@ -200,16 +200,16 @@ def choose(request):
 
         # 영화 overview 단어를 데이터프레임 마지막행에 추가
 
-        data['인트로_단어'] = data['인트로_단어'].apply(literal_eval)
+        data['total'] = data['total'].apply(literal_eval)
 
         data.loc[len(data)] = [len(data),len(data),'mokpyo','mokpyo','장','커버','키','조','조단','추','추단','인','인단','0',overview_word,'2','3','0','0','0']
-        data['인트로_단어_literal'] = data['인트로_단어'].apply(lambda x :  ' '.join(x))
+        data['total_literal'] = data['total'].apply(lambda x :  ' '.join(x))
         
-        # print(data['인트로_단어_literal'].tail())
+        # print(data['total_literal'].tail())
 
 
         count_vect = CountVectorizer(min_df=0, ngram_range=(1,1))
-        data_mat = count_vect.fit_transform(data['인트로_단어_literal'])
+        data_mat = count_vect.fit_transform(data['total_literal'])
         # print(data_mat.shape)
         # print(data_mat.toarray()[:1])
 

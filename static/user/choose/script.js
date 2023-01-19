@@ -77,7 +77,7 @@ function getCheckedCnt()  {
 }
 
 function loading() {
-    alert('?');
+    // alert('?');
     var newImage = document.getElementById("loader");
 
     newImage.style = 'display: block;'

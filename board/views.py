@@ -25,6 +25,16 @@ from konlpy.tag import Okt
 data = pd.read_excel('book_db.xlsx')
 
 
+# 장르 유사도 검사
+count_vect = CountVectorizer()
+
+genre_mat = count_vect.fit_transform(data['장르'])
+genre_sim = cosine_similarity(genre_mat, genre_mat)
+genre_sim_sorted_idx = genre_sim.argsort()[:,::-1]
+
+
+
+
 def home(request):
     a = User.objects.filter(username = request.user).values('id')
     e_id = a.values('id')[0]['id']
@@ -129,13 +139,6 @@ def BoardDetailView(request, pk):
     if len(eval(data[data['id'] == int(pk)]['keyword'].iloc[0])) > 0:
         keyword = eval(data[data['id'] == int(pk)]['keyword'].iloc[0])
         # print(keyword)
-
-    # 장르 유사도 검사
-    count_vect = CountVectorizer()
-
-    genre_mat = count_vect.fit_transform(data['장르'])
-    genre_sim = cosine_similarity(genre_mat, genre_mat)
-    genre_sim_sorted_idx = genre_sim.argsort()[:,::-1]
 
     book_id2 = pk
 
