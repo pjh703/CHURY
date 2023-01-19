@@ -198,17 +198,23 @@ main {
   display: flex;
 }
 
-.slides2 input{
-  display: none;
-}
-
 .slide2{
+  margin-top: 30px;
+  text-align: center;
   width: 20%;
   transition: 2s; /*bg넘어가는속도*/
 }
 
 .slide2 img{
-  width: 100%;
+  width: 50%;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.slide2 input{
+  width: 50%;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 /* css for manual slide navigation */
@@ -218,14 +224,15 @@ main {
   /* width: 800px; */
   width: 100vw;
   /* margin-bottom: -40px; */
-  margin-top: 30px; 
+  /* margin-top: -80px;  */
   /* 동그라미 위치 조정 */
   display: flex;
   justify-content: center;
+  z-index: 2;
 }
 
 .manual-btn{
-  border: 2px solid white;
+  border: 2px solid rgb(245, 216, 90);
   padding: 5px;
   border-radius: 10px;
   cursor: pointer;
@@ -237,7 +244,7 @@ main {
 }
 
 .manual-btn:hover{
-  background: white;
+  background: rgb(245, 216, 90);
 }
 
 #radio1:checked ~ .first{
@@ -261,12 +268,12 @@ main {
   /* width: 800px; */
   width: 100vw;
   justify-content: center;
-  margin-top: 530px; 
+  margin-top: 500px; 
   /* 위치가 다름 (원래700) */
 }
 
 .navigation-auto div{
-  border: 2px solid white;
+  border: 2px solid rgb(245, 216, 90);
   padding: 5px;
   border-radius: 10px;
   transition: 1s;
@@ -277,15 +284,15 @@ main {
 }
 
 #radio1:checked ~ .navigation-auto .auto-btn1{
-  background: white;
+  background: rgb(245, 216, 90);
 }
 
 #radio2:checked ~ .navigation-auto .auto-btn2{
-  background: white;
+  background: rgb(245, 216, 90);
 }
 
 #radio3:checked ~ .navigation-auto .auto-btn3{
-  background: white;
+  background: rgb(245, 216, 90);
 }
 /* main 슬라이드 끝 */
 /* ================================================================= */

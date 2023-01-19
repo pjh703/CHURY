@@ -70,28 +70,42 @@
 
     <main>
         <div class="wrap" style="z-index: 1;">
-            <div class="slider2" style="height: 620px;">
+            <div class="slider2" style="height: 500px;">
     
                 <!-- image slider start -->
                 <div class="slides2">
                     <!-- radio buttons start -->
-                    <input type="radio" name="radio-btn" id="radio1">
-                    <input type="radio" name="radio-btn" id="radio2">
-                    <input type="radio" name="radio-btn" id="radio3">
+                    <input type="radio" name="radio-btn" id="radio1" style="display: none;">
+                    <input type="radio" name="radio-btn" id="radio2" style="display: none;">
+                    <input type="radio" name="radio-btn" id="radio3" style="display: none;">
                     <!-- radio buttons end -->
     
                     <!-- slide images start -->
                     <div class="slide2 first">
-                        <a href="/board/search/?searchType=title&searchWord=파친코">
-                        <img src="{% static 'main/image/banner1.jpg' %}" alt=""></a>
+                        <a href="/board/search/?page=1&searchType=genre&genreWord=판타지&sortType2=new&searchWord=&sortType=CustomerRating">
+                        <img src="{% static 'main/image/banner_img1.png' %}" alt=""></a>
                     </div>
                     <div class="slide2">
-                        <a href="/board/search/?searchType=title&searchWord=검은책">
-                        <img src="{% static 'main/image/banner2.jpg' %}" alt=""></a>
+                        <form action="{% url 'board:detail' pk=168 %}" method="post">
+                            {% csrf_token %}
+                            <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                            <div class="descr" style="pointer-events: none;">
+                                {{ i.제목 }}<br><br>
+                                추천수: {{ i.추천수 }}
+                            </div>
+                            <input type="image" class="imgs" src="{% static 'main/image/banner_img2.jpg' %}" alt="책 이미지">
+                        </form>
                     </div>
                     <div class="slide2">
-                        <a href="/board/search/?searchType=title&searchWord=달러구트 꿈 백화점">
-                        <img src="{% static 'main/image/banner3.jpg' %}" alt=""></a>
+                        <form action="{% url 'board:detail' pk=3285 %}" method="post">
+                            {% csrf_token %}
+                            <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                            <div class="descr" style="pointer-events: none;">
+                                {{ i.제목 }}<br><br>
+                                추천수: {{ i.추천수 }}
+                            </div>
+                            <input type="image" class="imgs" src="{% static 'main/image/banner_img3.png' %}" alt="책 이미지">
+                        </form>
                     </div>
     
                     <!-- slide images end -->
@@ -116,6 +130,7 @@
             </div>
         </div>
     </main>
+
     <section class="contents">
         <div class="content-list">
             <h1>{{ user.username }}님 취향저격</h1>
