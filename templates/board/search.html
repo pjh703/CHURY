@@ -299,7 +299,18 @@
                 </div></a>
                 <div class="book-titles">
                     <div>{{ i.tag }} | {{ i.장르 }} </div>
-                    <a href="#"><div class="book-title">{{ i.제목 }}</div></a>
+                    <form action="{% url 'board:detail' pk=i.id %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                        <button type="submit" id="{{i.id}}" style="display: none;"></button>
+                        <a onclick="document.getElementById('{{i.id}}').click();" href="javascript:void(0)"><div class="book-title">{{ i.제목 }}</div></a>
+                    </form>
+                    <script>
+                        btn = document.getElementById('btn')
+                        function btn_click() {
+                            btn.click()
+                        }
+                    </script>
                     <div class="book-author">{{ i.작가 }}</div><br>                    
                     
                     <div class="book-other">조회수 {{ i.조회수 }} | 추천수 {{ i.추천수 }}</div>

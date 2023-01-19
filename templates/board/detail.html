@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'board/detail/detail.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
     {% if user.is_authenticated %}
@@ -39,9 +40,9 @@
                 {% csrf_token %}
                 <div class="input-group">
                     <select name="searchType" class="form-select" style="margin-right: 10px; padding: 5.9px; border: 1px solid black; float:left;">
-                        <option value="title">제목별</option>
-                        <option value="author">저자별</option>
-                        <option value="category">장르별</option>
+                        <option value="title">제목 검색</option>
+                        <option value="author">저자 검색</option>
+                        <option value="keyword">키워드 검색</option>
                     </select>
                     <div class="icon search" style="float:left;">
                         <div class="search-bar">
@@ -136,7 +137,50 @@
                                 {% endif %}
                             </div>
                         </div>
-                    </div> 
+                        {% endif %}
+                        <div class="icons">
+                            {% if i.tag == '최신' %}
+                            <a class="fa-solid fa-circle-play fa-3x" title="바로 보기" href="https://www.joara.com/book/{{ i.book_url }}" style="float:left;"></a>
+                            {% else %}
+                            <a class="fa-solid fa-circle-play fa-3x" title="바로 보기" href="https://www.joara.com/book/" style="float:left;"></a>
+                            {% endif %}
+                            {% if isbook %}
+                            <form action="{% url 'mypage:mydic_del' %}" method="post" style="float:left; margin-left: 10px;"> 
+                                {% csrf_token %}
+                                <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
+                                <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                                
+                                <button type="submit" class="fa-solid fa-circle-minus fa-3x" onclick="button1_click();" title="내 책장에서 빼기"></button>
+                                <script>
+                                    function button1_click() {
+                                        Swal.fire({
+                                            title: '내 책장에서 제외되었습니다.',
+                                            icon: 'success',
+                                        })
+                                    }
+                                </script>
+                            </form>
+                            {% else %}
+                            <form action="{% url 'mypage:mydic' %}" method="post" style="float:left; margin-left: 10px;"> 
+                                {% csrf_token %}
+                                <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
+                                <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                                
+                                <button type="submit" class="fa-solid fa-circle-plus fa-3x" onclick="button2_click();" title="내 책장에 담기"></button>
+                                <script>
+                                    function button2_click(seq){
+                                        Swal.fire({
+                                            title: '내 책장에 추가되었습니다.',
+                                            imageUrl: "{{ i.cover_img_url }}",
+                                            imageWidth: 150,
+                                            imageHeight: 225,
+                                            })
+                                    }
+                                </script>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -231,34 +275,103 @@
                             </div>
                         </form> 
 
-                        {% else %}
-                        <form action="{% url 'mypage:mydic2' %}" method="post">
-                            {% csrf_token %}
-                            <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
-                            <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
-                            
-                            <div class="content2" style="margin-right: 700px;">
-                                <span class="star">
-                                    ★★★★★
-                                    <span>★★★★★</span>
-                                    <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
-                                    <br>  
-                                </span>
-                                <input type="submit" value="등록" class="enroll"
-                                style="color: white; font-size:15px; letter-spacing: 2px;">
-                            </div>
-                        </form>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                    </td>
-                </tr>
-                <tr>
-                    <td><br><br></td>
-                    <!-- <td><br><br></td> -->
+        {% endif %}
+        <br><br> -->
+          
+        
+    <section class="section" style="margin-top: 300px;">
+        <table border="0" align="center">
+            <th class="table1"></th>
+            <th class="table2"></th>
+            <tr>
+                <td class="table1-1"><h3>키워드</td>
+                <td>
+                    {% for key in keyword %}
+                    <button id="category_name2" class="tag2">{{ key }}</button>
+                    {% endfor %} 
+                    <br><br>
+                </td>
+            </tr>
+            <tr>
+                <td class="table1-1"><h3>책 소개</h3></td>
+                <td>
+                    <div class="content">
+                        <p><hr>
+                            <div class="blank-top"></div>
+                            <div class="intro" style="text-align: justify;">{{ i.인트로 }}</div>
+                            <div class="blank-bottom"></div>
+                            <hr></p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="table1-1"><h3>별점</h3></td>
+                <!-- 실험 2 -->
+                <td>
+                    {% if star %}
+                    <form action="{% url 'mypage:mydic2' %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
+                        <input value="{{ user.id }}" name="id" id="id" hidden>
+                        
+                        <div class="content2" style="margin-right: 700px;">
+                            <span class="star">
+                                ★★★★★
+                                {% if star.0.star == 1 %}
+                                <span style="width: 20%;">★★★★★</span>
+                                {% elif star.0.star == 2 %}
+                                <span style="width: 40%;">★★★★★</span>
+                                {% elif star.0.star == 3 %}
+                                <span style="width: 60%;">★★★★★</span>
+                                {% elif star.0.star == 4 %}
+                                <span style="width: 80%;">★★★★★</span>
+                                {% elif star.0.star == 5 %}
+                                <span style="width: 100%;">★★★★★</span>
+                                {% endif %}
+                                <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
+                                <br>  
+                            </span>
+                            <input type="submit" value="수정하기" onclick="star_re();" class="enroll"
+                            style="color: white; font-size:15px; letter-spacing: 2px;">
+                        </div>
+                        <script>
+                            function star_re(seq){
+                                Swal.fire({
+                                    title: '별점이 수정되었습니다.',
+                                    icon: 'success',
+                                    })
+                            }
+                        </script>
+                    </form> 
+
+                    {% else %}
+                    <form action="{% url 'mypage:mydic2' %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
+                        <input value="{{ user.id }}" name="id" id="id" hidden>
+                        
+                        <div class="content2" style="margin-right: 700px;">
+                            <span class="star">
+                                ★★★★★
+                                <span>★★★★★</span>
+                                <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
+                                <br>  
+                            </span>
+                            <input type="submit" value="등록" onclick="star_click();" class="enroll"
+                            style="color: white; font-size:15px; letter-spacing: 2px;">
+                        </div>
+                        <script>
+                            function star_click(seq){
+                                Swal.fire({
+                                    title: '별점이 등록되었습니다.',
+                                    icon: 'success',
+                                    })
+                            }
+                        </script>
+                    </form>
+                    {% endif %}
+                </td>
+
                 </tr>
             </tr>
                     <td><br><br><br><br><br></td>
@@ -377,7 +490,6 @@
         document.getElementById("category_name1").innerText = c;
         document.getElementById("category_name2").innerText = d;
   
-
 
     </script>
 
