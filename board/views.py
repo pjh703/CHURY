@@ -156,6 +156,8 @@ def BoardDetailView(request, pk):
 
     similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
     similar_book[['제목', 'id', '인트로', '추천수']]
+    similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
+    similar_book[['제목', 'id', '인트로', '추천수']]
 
     response_intro = similar_book.to_dict('reconrds')[1:6]
     #######

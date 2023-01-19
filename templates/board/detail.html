@@ -286,7 +286,42 @@
                     <td><br><br></td>
                     <!-- <td><br><br></td> -->
                 </tr>
+                        {% else %}
+                        <form action="{% url 'mypage:mydic2' %}" method="post">
+                            {% csrf_token %}
+                            <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                            <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
+                            
+                            <div class="content2" style="margin-right: 700px;">
+                                <span class="star">
+                                    ★★★★★
+                                    <span>★★★★★</span>
+                                    <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
+                                    <br>  
+                                </span>
+                                <input type="submit" value="등록" class="enroll"
+                                style="color: white; font-size:15px; letter-spacing: 2px;">
+                            </div>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td><br><br></td>
+                    <!-- <td><br><br></td> -->
+                </tr>
             </tr>
+                    <td><br><br><br><br><br></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
                     <td><br><br><br><br><br></td>
                 </tr>
             </table>
@@ -297,6 +332,58 @@
         // 별점
         const drawStar = (target) => {
             document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
+        }
+
+        // 계란 이미지 변경
+        var tab = document.querySelectorAll(".egg-imgs");
+        var img11 = document.querySelector("img.egg1");
+        var img22 = document.querySelector("img.egg2");
+        var img33 = document.querySelector("img.egg3");
+        var img44 = document.querySelector("img.egg4");
+        var img55 = document.querySelector("img.egg5");
+        var points = document.getElementById("point").innerText;
+        // console.log(parseInt(points.substr(0, 2)))
+        console.log(points)
+
+        if (points==5){
+            //점수가 5점인 경우
+            img11.style.display = 'none';
+            img22.style.display = 'none';
+            img33.style.display = 'none';
+            img44.style.display = 'none';
+            img55.style.display = 'inline';
+
+        } else if (points==4) {
+            // 점수가 4점인 경우
+            img11.style.display = 'none';
+            img22.style.display = 'none';
+            img33.style.display = 'none';
+            img44.style.display = 'inline';
+            img55.style.display = 'none';
+
+        } else if (points==3) {
+            // 점수가 3점인 경우
+            img11.style.display = 'none';
+            img22.style.display = 'none';
+            img33.style.display = 'inline';
+            img44.style.display = 'none';
+            img55.style.display = 'none';
+
+        } else if (points==2) {
+            // 점수가 2점인 경우
+            img11.style.display = 'none';
+            img22.style.display = 'inline';
+            img33.style.display = 'none';
+            img44.style.display = 'none';
+            img55.style.display = 'none';
+
+        } else {
+            // 점수가 1점인 경우
+            img11.style.display = 'inline';
+            img22.style.display = 'none';
+            img33.style.display = 'none';
+            img44.style.display = 'none';
+            img55.style.display = 'none'; 
         }
 
         // 계란 이미지 변경
@@ -402,6 +489,7 @@
         var d = b.split('>').reverse()[0];
         document.getElementById("category_name1").innerText = c;
         document.getElementById("category_name2").innerText = d;
+  
   
 
 
