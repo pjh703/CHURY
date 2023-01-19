@@ -57,7 +57,18 @@ def home(request):
         list = []
         Key = 'ttbsaspower81040001'
 
-        response_data = data.head(20).to_dict('records') # 유저 추천
+
+        book_id = MYSELECT.objects.filter(user_id = e_id).values('book_id')
+
+        book_sel_data = pd.DataFrame()
+        for l in range(0,len(book_id)):
+            book_sel_data = pd.concat([book_sel_data, data[data['id'] == int(book_id[l]['book_id'])]])
+
+        print(book_sel_data)
+
+        response_data2 = book_sel_data.to_dict('records') # 유저 추천
+
+        response_data = data.head(20).to_dict('records')
 
         response_top10 = data.sort_values('추천수_단위', ascending=False).head(10).to_dict('records')
 
@@ -67,8 +78,11 @@ def home(request):
         
         response_new = data.sort_values('조회수_단위').head(20).to_dict('records')
 
+        print(type(response_data2), type(response_data))
+
         context = {
             'response_data': response_data,
+            'response_data2': response_data2,
             'response_top10': response_top10,
             'response_sf': response_sf,
             'response_fear': response_fear,
@@ -331,35 +345,3 @@ def search(request, **kwargs):
     else:
         return render(request, "board/search.html")
 
-
-def loading(request):
-    if request.method == "dialog":
-
-        # book_queryset = request.POST['book_queryset']
-        # print(book_queryset)
-
-        post = MYSELECT()
-
-        book_list = []
-        for l in range(1,20):
-            id = request.POST[f'id{l}'] # html form안의 input 태그에서 가져옴 (input태그 id가 id인 경우)
-            my_book = request.POST[f'book_id{l}']
-            post.user_id = id
-            book_list.append(my_book)
-        
-            post.book_id = my_book
-
-            print(my_book)
-            post.save()
-
-        print(book_list)
-
-        # user_id = User.objects.get(id = id).id
-        # s_book_id = MYSELECT.objects.filter(user_id = user_id)
-        # sel_book = MYBOOK.objects.filter(book_id__in = s_book_id)
-
-        # context = {
-        #     'sel_book':sel_book,
-        # }
-
-    return reverse('board:home')

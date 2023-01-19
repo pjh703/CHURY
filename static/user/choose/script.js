@@ -59,7 +59,7 @@ function getCheckedCnt()  {
     // 선택된 목록의 갯수 세기
     var selectedElementsCnt =
             selectedElements.length;
-    
+
     // 출력
     document.getElementById('result').value
         = selectedElementsCnt+"개 선택하였습니다.";
@@ -76,3 +76,9 @@ function getCheckedCnt()  {
 
 }
 
+function loading() {
+    alert('?');
+    var newImage = document.getElementById("loader");
+
+    newImage.style = 'display: block;'
+}
