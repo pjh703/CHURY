@@ -276,52 +276,9 @@
                         </form>
                         {% endif %}
                     </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                    </td>
-                </tr>
-                <tr>
-                    <td><br><br></td>
-                    <!-- <td><br><br></td> -->
-                </tr>
-                        {% else %}
-                        <form action="{% url 'mypage:mydic2' %}" method="post">
-                            {% csrf_token %}
-                            <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
-                            <input value="{{ user.id }}" name="user_id" id="user_id" hidden>
-                            
-                            <div class="content2" style="margin-right: 700px;">
-                                <span class="star">
-                                    ★★★★★
-                                    <span>★★★★★</span>
-                                    <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
-                                    <br>  
-                                </span>
-                                <input type="submit" value="등록" class="enroll"
-                                style="color: white; font-size:15px; letter-spacing: 2px;">
-                            </div>
-                        </form>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                    </td>
-                </tr>
-                <tr>
-                    <td><br><br></td>
-                    <!-- <td><br><br></td> -->
+            
                 </tr>
             </tr>
-                    <td><br><br><br><br><br></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    {% endfor %}
                     <td><br><br><br><br><br></td>
                 </tr>
             </table>
