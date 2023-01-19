@@ -19,6 +19,11 @@ body {
   overflow-x: hidden;
 }
 
+.wrap {
+  width: 940px;
+  margin: 0 auto;
+}
+
 a {
   text-decoration: none;
 }
@@ -180,21 +185,23 @@ nav .right .search .search-bar input {
 .main {
   display: flex;
   /* background-color: rgb(247, 247, 247); */
-  margin-left: 310px;
-  margin-right: 310px;
+  /* margin-left: 310px;
+  margin-right: 310px; */
 }
-.section {
-  margin-left: 300px;
-  margin-right: 280px;
+.section1 {
+  /* margin-left: 300px;
+  margin-right: 0px; */
   position: relative;
+  height: 300px;
 }
 .section2 {
-  margin-left: 300px;
-  margin-right: 280px;
+  /* margin-left: 300px;
+  margin-right: 280px; */
   position: relative;
 }
 .book-info {
   display: flex;
+  margin-bottom: 20px;
 }
 
 .book-img {
@@ -205,6 +212,15 @@ nav .right .search .search-bar input {
 .text {
   margin-left: 120px;
   margin-top: 70px;
+}
+.text1 {
+  width: 100%;
+  height: 230px;
+
+}
+.text2 {
+  width: 100%
+  
 }
 
 .tag1 {
@@ -251,7 +267,7 @@ nav .right .search .search-bar input {
   font-size: 20px;
 }
 .eggs {
-  margin-top: 15px;
+  /* margin-top: 80px; */
   display: flex;
   align-items: center;
 }
@@ -279,11 +295,14 @@ nav .right .search .search-bar input {
 .point {
   margin-left: 43px;
   font-size: 24px;
+}
+.point-text {
+  font-size: 24px;
   width: 100px;
 }
 
 .icons {
-  margin-left: 250px;
+  margin-left: 310px;
 }
 
 .icons i {
@@ -308,7 +327,8 @@ nav .right .search .search-bar input {
   width: 145px;
   height: 183px;
   /* background-color: #ddd; */
-  margin-right: 40px;
+  margin-right: 17px;
+  margin-left: 17px;
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -318,6 +338,8 @@ nav .right .search .search-bar input {
   font-size: 15px;
   /* text-align: center; */
   width: 140px;
+  margin-left: 17px;
+  margin-right: 17px;
 
 }
 /* 스크롤 유도 화살표 */
@@ -470,7 +492,7 @@ nav .right .search .search-bar input {
   margin-bottom: 100px;
 } */
 
-/* 별점 0.5 */
+/* 별점 */
 .star {
   position: absolute;
   font-size: 2rem;
@@ -495,13 +517,7 @@ nav .right .search .search-bar input {
   overflow: hidden;
   pointer-events: none;
 }
-.textarea {
-  width: 600px;
-  height: 100px;
-  resize: none;
-  border-width: 1px;
-  font-size: 14px;
-}
+
 
 
 /* ================================================================== */
