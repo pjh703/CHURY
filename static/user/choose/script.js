@@ -79,6 +79,8 @@ function getCheckedCnt()  {
 function loading() {
     // alert('?');
     var newImage = document.getElementById("loader");
+    var xnav = document.getElementById("nav");
 
-    newImage.style = 'display: block;'
+    newImage.style = 'display: block;';
+    xnav.style = 'display: none;';
 }

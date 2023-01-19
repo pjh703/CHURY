@@ -4,7 +4,7 @@
     <head>
         <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>choose</title>
+    <title>CHURY | Select</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='{% static 'user/choose/style.css' %}'>
     <link rel='stylesheet' type='text/css' media='screen' href='{% static 'board/loading/style.css' %}'>
@@ -24,7 +24,7 @@
     <div style="border-bottom: 1px solid #ddd;">
     </div>
     <div class="text">
-        <h1>{{ user.username }} 님, 좋아하는 <br>
+        <h1 style="margin-top: 50px;">{{ user.username }} 님, 좋아하는 <br>
         콘텐츠를 3개 이상 <br>
         선택해 주세요. <br><br>
         </h1>
@@ -61,7 +61,7 @@
                 <input type="checkbox" id="ch{{forloop.counter}}" name="contents" onclick='getCheckedCnt()' style="display:none;">
                 <label for="ch{{forloop.counter}}">
                     <div class="tab-btn">
-                        <img src="{% static 'user/choose/image/egg.png' %}" width="100px" height="auto" id="egg{{forloop.counter}}" class="egg" style="display:none; margin-left: 23px; margin-top: 15px;">
+                        <img src="{% static 'user/choose/image/egg.png' %}" width="130px" height="auto" id="egg{{forloop.counter}}" class="egg" style="display:none; margin-left: 23px; margin-top: 15px;">
                         <img src="https://image.tmdb.org/t/p/original/{{ i.poster_path }}" alt="포스터" width="200" height="250" class="poster">
                         <input value="{{ i.gen_ko }}" id="choose" name="choose" class="choose" hidden disabled>
                         <input value="{{ i.overview }}" name="overview" id="overview" class="overview" hidden disabled>

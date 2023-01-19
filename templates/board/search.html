@@ -299,24 +299,42 @@
                 </div></a>
                 <div class="book-titles">
                     <div>{{ i.tag }} | {{ i.장르 }} </div>
-                    <a href="#"><div class="book-title">{{ i.제목 }}</div></a>
+                    <form action="{% url 'board:detail' pk=i.id %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                        <button type="submit" id="{{i.id}}" style="display: none;"></button>
+                        <a onclick="document.getElementById('{{i.id}}').click();" href="javascript:void(0)"><div class="book-title">{{ i.제목 }}</div></a>
+                    </form>
+                    <script>
+                        btn = document.getElementById('btn')
+                        function btn_click() {
+                            btn.click()
+                        }
+                    </script>
                     <div class="book-author">{{ i.작가 }}</div><br>                    
                     
                     <div class="book-other">조회수 {{ i.조회수 }} | 추천수 {{ i.추천수 }}</div>
                     
-                    {% if i.customerReviewRank %}
-                    <div class="eggs">
-                        <div class="point">{{ i.customerReviewRank }}점/10점</div>
+                <div class="eggs">
+                    {% if i.point %}
+                    <div class="egg-imgs">
+                        <img src="{% static 'board/detail/image/1.svg' %}" class="egg1" id="egg1" style="display: none; margin-top: -5px;" alt="">
+                        <img src="{% static 'board/detail/image/2.svg' %}" class="egg2" id="egg2" style="display: none;" alt="">
+                        <img src="{% static 'board/detail/image/3.svg' %}" class="egg3" id="egg3" style="display: none;" alt="">
+                        <img src="{% static 'board/detail/image/4.svg' %}" class="egg4" id="egg4" style="display: none;" alt="">
+                        <img src="{% static 'board/detail/image/5.svg' %}" class="egg5" id="egg5" style="display: none;" alt="">
                     </div>
+                    <div class="point" id="point">{{ i.point }}</div>
+                    <div class="point-text">점/5점</div>
 
                     {% else %}
                     <div class="no-eggs">
-                        <div class="comment">
-                            &ensp;&ensp;&ensp;등록된 리뷰가 없습니다.
+                        <div class="comment">       
+                            등록된 리뷰가 없습니다.&ensp;&ensp;&ensp;
                         </div>
                     </div>
                     {% endif %}
-
+                </div>
                     <!-- <div class="grade">
                         <div class="egg"></div>
                         {{ i.customerReviewRank }}

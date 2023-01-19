@@ -22,7 +22,7 @@ from ast import literal_eval
 
 from konlpy.tag import Okt
 
-data = pd.read_excel('book_db.xlsx', nrows=14000)
+data = pd.read_excel('book_db.xlsx', nrows=15000)
 
 # 인트로 유사도 검사 앞
 data['total']=data['total'].apply(literal_eval)
@@ -183,7 +183,7 @@ def BoardDetailView(request, pk):
             'keyword': keyword, # 책 키워드 리스트
             'isbook': isbook, # 책이 있나없나 true값
             'response_intro' : response_intro, # 유사도검사 인트로
-            # 'star' : star,
+            'star' : star,
         }
         return render(request, "board/detail.html", context)
 
@@ -196,7 +196,7 @@ def BoardDetailView(request, pk):
             'keyword': keyword, # 책 키워드 리스트
             'isbook': isbook,
             'response_intro' : response_intro, # 유사도검사 인트로
-            # 'star' : star,
+            'star' : star,
         }
         return render(request, "board/detail.html", context)
 
@@ -331,7 +331,7 @@ def search(request, **kwargs):
                 page = request.GET.get('page', '1')  # 페이지
                 paginator = Paginator(response, 10)  # 페이지당 10개씩 보여주기
                 page_obj = paginator.get_page(page)
-                # print(response)
+                print(response)
                 context = {
                     'total': response,
                     'response': page_obj,
