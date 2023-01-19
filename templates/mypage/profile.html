@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="sidebar">
+    <div class="sidebar"> 
 
         <a href="{% url 'board:home' %}"><div class="logo"></div></a>
 
@@ -20,9 +20,9 @@
             </div>
             <li><a href="{% url 'mypage:library' pk=user.id %}">내 책장</a></li>
             <li><a href="{% url 'mypage:env' %}">개인정보 관리</a></li>
-            <li class="top"><a href="{% url 'mypage:loglock' %}">로그인 및 보안</a></li>
+            <li class="top"><a href="{% url 'mypage:loglock' pk=user.username %}">로그인 및 보안</a></li>
             <li class="bottom"><a href="#">이용권/결제정보</a></li>
-            <li class="top"><a href="#">고객지원센터</a></li>
+            <li class="top"><a href="{% url 'mypage:notice' %}">FAQ</a></li>
             <li class="bottom"><a href="{% url 'user:logout' %}" style="color: #ffc000;">로그아웃</a></li>
         </ul>
     </div>
@@ -52,7 +52,7 @@
                 </a> 
             </div>
             <div class="login">
-                <a href="{% url 'mypage:loglock' %}">
+                <a href="{% url 'mypage:loglock' pk=user.username %}">
                     <h2>로그인 및 보안</h2>
                     <h3>로그인시 비밀번호를 재설정하고<br>
                         로그인 보안기능을 설정합니다.</h3>

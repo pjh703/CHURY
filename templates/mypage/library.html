@@ -21,9 +21,9 @@
                 <li><a href="#">내 책장</a></li>
             </div>
             <li><a href="{% url 'mypage:env' %}">개인정보 관리</a></li>
-            <li class="top"><a href="{% url 'mypage:loglock' %}">로그인 및 보안</a></li>
+            <li class="top"><a href="{% url 'mypage:loglock' pk=user.username %}">로그인 및 보안</a></li>
             <li class="bottom"><a href="#">이용권/결제정보</a></li>
-            <li class="top"><a href="#">고객지원센터</a></li>
+            <li class="top"><a href="{% url 'mypage:notice' %}">FAQ</a></li>
             <li class="bottom"><a href="{% url 'user:logout' %}" style="color: #ffc000;">로그아웃</a></li>
         </ul>
     </div>

@@ -30,9 +30,9 @@
                 <h1>로그인</h1>
                 <div class="form-container">
                     <form method="post" action="{% url 'user:login' %}">
-                        {% csrf_token %}
+                        {% csrf_token %} 
                         <div class="field-group">
-                            <input type="text" class="form-control" name="username" id="username" placeholder="이메일 (example@gmail.com)"
+                            <input type="text" class="form-control" name="username" id="username" placeholder="닉네임 / 이메일 (example@gmail.com)"
                             value="{{ form.username.value|default_if_none:'' }}">
                            <div id="errorid">{{ form.errors.username }}</div>
                         </div>
@@ -52,10 +52,12 @@
                         </div>
                    
                     </form>
-    
+                    
                         <div class="find">
-                            비밀번호를 잊어버리셨나요?
-                        </div>`
+                            <a href="{% url 'password_reset' %}"> 
+                                비밀번호를 잊어버리셨나요?
+                            </a>
+                        </div>
 
 
                     <h2 class="hr-line">or</h2>

@@ -154,7 +154,9 @@ ul li:hover a {
     position: absolute;
     width: 180px;
     height: 180px;
-    background-color: rgb(236, 236, 236);
+    /* background-color: rgb(236, 236, 236); */
+    background-image: url("../mypage/images/profile.jpg");
+    background-size: cover;
     border-radius: 50%;
     margin-left: 40px;
     margin-top: 40px;
@@ -312,7 +314,7 @@ ul li:hover a {
     width: 365px;
     height: 255px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 10px; 
     margin-top: 275px;
     margin-left: 388px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

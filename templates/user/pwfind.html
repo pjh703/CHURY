@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html> 
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>CHURY | Pwfind</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        
+        <link rel='stylesheet' type='text/css' media='screen' href="{% static 'user/login/find.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+
+    </head> 
+    <body>
+        
+        <div class="header" >
+            <div class="logo">
+                <a href="{% url 'board:home' %}"><img src="{% static 'user/login/images/logo.png' %}"></a>
+            </div>
+            <li class="login_btn">
+                <a href="{% url 'user:login' %}"><button class="btn" style="margin-right: 10px;">로그인</button></a>
+                <a href="{% url 'user:sign' %}"><button class="btn">회원가입</button></a>
+            </li>
+        </div>
+    
+        <section id="intro">
+            <div class="container">
+                <h1>비밀번호 찾기</h1> 
+                <div class="form-container">
+                    <form method="post" action="{% url 'user:send_email' %}">
+                        {% csrf_token %}
+                        <div class="field-group">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="닉네임"
+                            value="{{ form.username.value|default_if_none:'' }}">
+                           <div id="errorid">{{ form.errors.username }}</div>
+                        </div>
+                        <div class="field-group">
+                            <input type="text" class="form-control" name="email" id="email" placeholder="이메일 (example@gmail.com)"
+                            value="{{ form.email.value|default_if_none:'' }}">
+                           <div id="errorid">{{ form.errors.email }}</div>
+                        </div>
+                        {% if form.username.value %}
+                            {% if form.password.value %}
+                            <div id="erroridpw">닉네임과 이메일 주소가 일치하지 않습니다.</div>
+                            {% endif %}
+                        {% endif %}
+                            
+                        <div class="field-group">
+                            <button type="submit">이메일로 전송받기</button>
+                        </div>
+                   
+                    </form>
+
+                    <div class="find">
+                        작성하신 이메일로 비밀번호를 전송해드립니다.
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
