@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-44#-s^r#*z77of9&4_3)wrto8jzvoin^$ojf=u)7l=*wozhv#6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -170,20 +170,19 @@ ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 버튼 클릭 시 자동 로그아�
 
 # 이메일 보내기
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-EMAIL_USE_TLS =True
-
+EMAIL_USE_TLS =True 
 EMAIL_HOST = 'smtp.gmail.com'
-
-EMAIL_HOST_USER = ''
-
-EMAIL_HOST_PASSWORD = ''
-
+EMAIL_HOST_USER = 'project.chury@gmail.com'
+EMAIL_HOST_PASSWORD = 'evbduznzwqwzctgp'
 EMAIL_PORT = 587
-
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
 SITE_ID = 1
+
+# 이메일 인증(2단계인증)
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_EMAIL_VARIFICATION = 'optional'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
 
 # django-allauth setting
 LOGIN_REDIRECT_URL = 'board:home' # 로그인 후 리디렉션할 페이지

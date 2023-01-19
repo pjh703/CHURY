@@ -21,9 +21,11 @@ class COMMENT(models.Model):
     u_date = models.DateTimeField(auto_now=True)
 
 
-# class MYVIEW(models.Model):
-#     user_id = models.ForeignKey("user.User", on_delete=models.CASCADE)
-
+class MYSELECT(models.Model):
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    book_id = models.CharField(null=True, max_length=15)
+    add_date = models.DateTimeField(auto_now_add=True)
+ 
 
 class MYCHOOSE(models.Model):
     user = models.ForeignKey("user.User", on_delete=models.CASCADE)

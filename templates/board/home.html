@@ -9,7 +9,7 @@
     <title>main</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{% static 'main/video/main.css' %}">
+    <link rel="stylesheet" href="{% static 'main/main.css' %}">
 </head>
 <body>
     {% if user.is_authenticated %}
@@ -60,7 +60,7 @@
                         <a href="{% url 'mypage:profile' %}">내 정보</a>
                         <a href="{% url 'mypage:library' pk=user.id %}">내 책장</a>
                         <a href="{% url 'mypage:env' %}">개인정보 관리</a>
-                        <a href="{% url 'mypage:loglock' %}">로그인 및 보안</a>
+                        <a href="{% url 'mypage:loglock' pk=user.username %}">로그인 및 보안</a>
                         <a href="{% url 'user:logout' %}" style="color: rgb(253, 110, 85);">로그아웃</a>
                     </div>
                 </a>
@@ -82,16 +82,16 @@
     
                     <!-- slide images start -->
                     <div class="slide2 first">
-                        <a href="/board/search/?searchType=title&searchWord=파친코">
-                        <img src="{% static 'main/image/banner1.jpg' %}" alt=""></a>
+                        <a href="#">
+                        <img src="{% static 'main/image/1.jpg' %}" alt=""></a>
                     </div>
                     <div class="slide2">
-                        <a href="/board/search/?searchType=title&searchWord=검은책">
-                        <img src="{% static 'main/image/banner2.jpg' %}" alt=""></a>
+                        <a href="#">
+                        <img src="{% static 'main/image/2.jpg' %}" alt=""></a>
                     </div>
                     <div class="slide2">
-                        <a href="/board/search/?searchType=title&searchWord=달러구트 꿈 백화점">
-                        <img src="{% static 'main/image/banner3.jpg' %}" alt=""></a>
+                        <a href="#">
+                        <img src="{% static 'main/image/3.jpg' %}" alt=""></a>
                     </div>
     
                     <!-- slide images end -->
@@ -120,16 +120,16 @@
         <div class="content-list">
             <h1>{{ user.username }}님 취향저격</h1>
             <div class="slider">
-                {% for i in response_data %}
+                {% for i in response_data2 %}
                 <div class="item">
                     <form action="{% url 'board:detail' pk=i.id %}" method="post">
                         {% csrf_token %}
-                        <input value="{{ user.id }}" name="id" id="id" style="display: none;">
-                        <div class="descr" style="pointer-events: none;">
-                            {{ i.제목 }}<br><br>
-                            추천수: {{ i.추천수 }}
-                        </div>
-                        <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
+                            <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                            <div class="descr" style="pointer-events: none;">
+                                {{ i.제목 }}<br><br>
+                                추천수: {{ i.추천수 }}
+                            </div>
+                            <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
                     </form>
                 </div>
                 {% endfor %}

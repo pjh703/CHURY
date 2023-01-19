@@ -25,9 +25,9 @@
         <div class="sidebar-use">
             <li><a href="#">개인정보 관리</a></li>
         </div>
-        <li class="top"><a href="loglock.html">로그인 및 보안</a></li>
+        <li class="top"><a href="{% url 'mypage:loglock' pk=user.username %}">로그인 및 보안</a></li>
         <li class="bottom"><a href="#">이용권/결제정보</a></li>
-        <li class="top"><a href="#">고객지원센터</a></li>
+        <li class="top"><a href="#">FAQ</a></li>
         <li class="bottom"><a href="{% url 'user:logout' %}" style="color: #ffc000;">로그아웃</a></li>
 
     </ul>
@@ -67,33 +67,70 @@
 <div class="modal-wrapper">
     <div class="modal-inner">
         <div class="othertxt">
-            <form action="{% url 'mypage:picture' user.pk %}" method="post">
+            <form action="{% url 'mypage:picture' user.pk %}" enctype="multipart/form-data" method="post">
                 {% csrf_token %}
-                <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage\images\close.svg' %}" alt=""></a>
+                <a href="{% url 'mypage:env' %}"><img src="{% static 'mypage\images\close.svg' %}" alt="" id="close"></a>
                 <div class="warning">추라이 서비스 이용 시<br>노출되는<br>프로필사진입니다.</div>
-            <div class="middle">
-                <div class="left">
-                    <div class="upload">
-                        <i class="fa-solid fa-file-import"></i>
-                        사진 업로드
+                <div class="middle">
+                    <div class="left">
+                        <div class="filebox">
+                            <label for="file" id=upload>
+                                <i class="fa-solid fa-file-import"></i>
+                                사진 업로드
+                            </label> 
+                            <input type=hidden class="upload-name">
+                            <input type="file" id="file">
+                        </div>
+                        <div class="delete">
+                            <i class="fa-solid fa-trash"></i>
+                            기본 프로필로 변경
+                        </div>
                     </div>
-                    <div class="delete">
-                        <i class="fa-solid fa-trash"></i>
-                        사진 삭제
+
+                    <!-- <div class="picture">
+                        <img src="{% static 'mypage\images\profile.jpg' %}" id="picture">
+                    </div>   -->
+
+                    
+                    <div class="profile-pic-div">
+                        <img src="{% static 'mypage\images\profile.jpg' %}" id="photo">
+                        <!-- <input type="file" id="file">
+                        <label for="file" id="uploadBtn">Choose Photo</label> -->
                     </div>
                 </div>
-                <div class="picture"></div>    
+        
+            </form>
+            <div class="modal-buttons">
+                <a href="{% url 'mypage:env' %}">
+                    <button class="cancel-btn">취소</button>
+                </a>
+                <button type="submit" class="change-btn">변경</button>
             </div>
         </div>
-        <div class="modal-buttons">
-            <a href="/mypage/env/">
-                <button class="cancel-btn">취소</button>
-            </a>
-            <button type="submit" class="change-btn">변경</button>
-        </div>
-    </form>
     </div>
 </div>
 
 </body>
+
+<script>
+    const imgDiv = document.querySelector('profile-pic-div');
+    const img = document.querySelector('#photo');
+    const file = document.querySelector('#file');
+    const uploadBtn = document.querySelector('#uploadBtn');
+
+    file.addEventListener('change', function(){
+        const choosedFile = this.files[0];
+
+        if (choosedFile) {
+            const reader = new FileReader();
+            reader.addEventListener('load', function(){
+                img.setAttribute('src', reader.
+                result);
+            });
+            reader.readAsDataURL(choosedFile);
+        }
+    })
+
+</script>    
+
 </html>

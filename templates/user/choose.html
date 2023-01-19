@@ -7,6 +7,7 @@
     <title>choose</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='{% static 'user/choose/style.css' %}'>
+    <link rel='stylesheet' type='text/css' media='screen' href='{% static 'board/loading/style.css' %}'>
     
 
 </head>
@@ -32,12 +33,12 @@
             마음에 드는 콘텐츠를 선택하세요.
         </h3>
    
-    <form action="{% url 'mypage:choose' %}" method="post">
-    {% csrf_token %}
-    <input value="{{ user.id }}" name="id" id="id" hidden>
-    <input class="not-choose-btn" type="submit" id="result" name="result" value="3개 이상 선택해주세요" onmouseup="getCheckedCnt()" disabled>
-    <!-- <input class="choose-btn" type="submit" id="result" name="result" style="display: none;" value="완료되었습니다!"> -->
-    <!-- <button id="result">3개 이상 선택해주세요</button> -->
+    <form action="{% url 'mypage:choose' %}" method="post" onsubmit="return loading(this);">
+        {% csrf_token %}
+        <input value="{{ user.id }}" name="id" id="id" hidden>
+        <input class="not-choose-btn" type="submit" id="result" name="result" value="3개 이상 선택해주세요" onmouseup="getCheckedCnt()" disabled>
+        <!-- <input class="choose-btn" type="submit" id="result" name="result" style="display: none;" value="완료되었습니다!"> -->
+        <!-- <button id="result">3개 이상 선택해주세요</button> -->
 
         <div class="tab" style="margin-top: 60px;">
 
@@ -64,6 +65,7 @@
                         <img src="https://image.tmdb.org/t/p/original/{{ i.poster_path }}" alt="포스터" width="200" height="250" class="poster">
                         <input value="{{ i.gen_ko }}" id="choose" name="choose" class="choose" hidden disabled>
                         <input value="{{ i.overview }}" name="overview" id="overview" class="overview" hidden disabled>
+                        <input value="{{ i.title }}" name="titleview" id="titleview" class="titleview" hidden disabled>
                     </div>
                 </label>
                 
@@ -82,10 +84,13 @@
 
             {% endfor %}
                 
-        </form>
-
+            
+            </div>
         </div>
-    </div>
+    </form>
+
+    <div id="loader" name="loader" class="loader" style="display: none;"></div>
+
 </body>
 
 </html>

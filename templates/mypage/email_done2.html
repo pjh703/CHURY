@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html> 
+    <head> 
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>CHURY | Pwfind</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        
+        <link rel='stylesheet' type='text/css' media='screen' href="{% static 'user/login/find.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    </head>
+    <body>
+        
+        <div class="header" >
+            <div class="logo">
+                <a href="{% url 'board:home' %}"><img src="{% static 'user/login/images/logo.png' %}"></a>
+            </div>
+            <li class="login_btn">
+                <a href="{% url 'user:login' %}"><button class="btn" style="margin-right: 10px;">로그인</button></a>
+                <a href="{% url 'user:sign' %}"><button class="btn">회원가입</button></a>
+            </li>
+        </div>
+    
+        <section id="intro">
+            <div class="container">
+				<div class="mail_img">
+					<img src="{% static 'user/email/images/good.png' %}" alt="">
+				</div>
+              	<h1>인증 완료되었습니다!</h1>
+            
+				<!-- <div class="find3">
+					<li>비밀번호 재설정을 위한 메일이 발송되었습니다.
+					24시간 내에 비밀번호를 재설정 해주세요.</li><br>
+					<li>만약 메일이 오지 않는다면, 이메일 주소를 다시 한번 확인해 주시고, 스팸 폴더를 확인해 주세요.</li>
+				</div> -->
+                  
+
+            </div>
+        </section>
+
+		
+
+    </body>
+</html>

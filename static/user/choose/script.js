@@ -9,6 +9,7 @@ function handleClick(element) {
     var posterImg = btnTarget.querySelector("img.poster");
     var disinput = btnTarget.querySelector("input.choose");
     var overinput = btnTarget.querySelector("input.overview");
+    var titleinput = btnTarget.querySelector("input.titleview");
 
     if (btnTarget.dataset.value == 1){
         // 계란 이미지가 보이는 경우
@@ -22,6 +23,7 @@ function handleClick(element) {
 
         disinput.disabled = true;
         overinput.disabled = true;
+        titleinput.disabled = true;
 
     } else{
         // 계란 이미지가 보이지 않는 경우
@@ -37,6 +39,7 @@ function handleClick(element) {
 
         disinput.disabled = false;
         overinput.disabled = false;
+        titleinput.disabled = false;
     }
 
 }
@@ -56,7 +59,7 @@ function getCheckedCnt()  {
     // 선택된 목록의 갯수 세기
     var selectedElementsCnt =
             selectedElements.length;
-    
+
     // 출력
     document.getElementById('result').value
         = selectedElementsCnt+"개 선택하였습니다.";
@@ -73,3 +76,9 @@ function getCheckedCnt()  {
 
 }
 
+function loading() {
+    // alert('?');
+    var newImage = document.getElementById("loader");
+
+    newImage.style = 'display: block;'
+}
