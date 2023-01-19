@@ -23,6 +23,25 @@ from konlpy.tag import Okt
 
 data = pd.read_excel('book_db.xlsx')
 
+# 장르 유사도 검사 앞
+# count_vect = CountVectorizer()
+
+# genre_mat = count_vect.fit_transform(data['장르'])
+# genre_sim = cosine_similarity(genre_mat, genre_mat)
+# genre_sim_sorted_idx = genre_sim.argsort()[:,::-1]
+
+######
+
+# 인트로 유사도 검사 앞
+data['인트로_단어']=data['인트로_단어'].apply(literal_eval)
+data['intro_liters']=data['인트로_단어'].apply(lambda x:','.join(x))
+count_vect = CountVectorizer(min_df=0, ngram_range=(1,1))
+
+intro_mat = count_vect.fit_transform(data['intro_liters'])
+intro_sim = cosine_similarity(intro_mat, intro_mat)
+intro_sim_sorted_idx = intro_sim.argsort()[:,::-1]
+
+#######
 
 def home(request):
     a = User.objects.filter(username = request.user).values('id')
@@ -115,35 +134,50 @@ def BoardDetailView(request, pk):
         keyword = eval(data[data['id'] == int(pk)]['keyword'].iloc[0])
         # print(keyword)
 
-    # 장르 유사도 검사
-    count_vect = CountVectorizer()
 
-    genre_mat = count_vect.fit_transform(data['장르'])
-    genre_sim = cosine_similarity(genre_mat, genre_mat)
-    genre_sim_sorted_idx = genre_sim.argsort()[:,::-1]
+    # 장르 유사도 검사 뒤
+    # book_id2 = pk
 
-    book_id2 = pk
+    # def find_sim_book(data, sorted_idx, title_id, top_n=10):
+    #     target_book = data[data['id'] == int(title_id)] # id 기준
+        
+    #     title_index = target_book.index.values  # 몇번째 위치인지.
+    #     similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
+    #     # print(similar_index)
+    #     # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
+    #     similar_index = similar_index.reshape(-1) 
+        
+    #     return data.iloc[similar_index]
 
-    def find_sim_book(data, sorted_idx, title_id, top_n=10):
+    # similar_book = find_sim_book(data, genre_sim_sorted_idx, book_id2, 10)
+
+    # similar_book[['제목','id', '장르', '추천수']]
+    # # print(similar_book[['제목','id', '장르', '추천수']])
+    # # print(similar_book['장르'])
+    # # print(similar_book['cover_img_url'])
+
+    # response_gen = similar_book.to_dict('records')[1:6] # 1~n위까지
+
+    # 장르 유사도 검사 end
+
+    # 인트로 유사도 검사 뒤
+    book_id3 = pk
+
+    def find_sim_book2(data, sorted_idx, title_id, top_n=10):
         target_book = data[data['id'] == int(title_id)] # id 기준
         
         title_index = target_book.index.values  # 몇번째 위치인지.
         similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
-        # print(similar_index)
         # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
         similar_index = similar_index.reshape(-1) 
         
         return data.iloc[similar_index]
 
-    similar_book = find_sim_book(data, genre_sim_sorted_idx, book_id2, 10)
+    similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
+    similar_book[['제목', 'id', '인트로', '추천수']]
 
-    similar_book[['제목','id', '장르', '추천수']]
-    # print(similar_book[['제목','id', '장르', '추천수']])
-    # print(similar_book['장르'])
-    # print(similar_book['cover_img_url'])
-
-    response_gen = similar_book.to_dict('records')[1:6] # 1~3위까지
-
+    response_intro = similar_book.to_dict('reconrds')[1:6]
+    #######
 
     isbook = False # 책이 있는지 없는지 검사하는 값
     if request.method == "POST":
@@ -164,7 +198,8 @@ def BoardDetailView(request, pk):
             'detail_data': detail_data, # 책 정보
             'keyword': keyword, # 책 키워드 리스트
             'isbook': isbook, # 책이 있나없나 true값
-            'response_gen' : response_gen, # 유사도검사 장르로
+            # 'response_gen' : response_gen, # 유사도검사 장르
+            'response_intro' : response_intro, # 유사도검사 인트로
             # 'star' : star,
         }
         return render(request, "board/detail.html", context)
@@ -177,7 +212,8 @@ def BoardDetailView(request, pk):
             'detail_data': detail_data, # 책 정보
             'keyword': keyword, # 책 키워드 리스트
             'isbook': isbook,
-            'response_gen' : response_gen, # 유사도검사 장르로
+            # 'response_gen' : response_gen, # 유사도검사 장르로
+            'response_intro' : response_intro, # 유사도검사 인트로
             # 'star' : star,
         }
         return render(request, "board/detail.html", context)
