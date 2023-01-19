@@ -27,40 +27,57 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 # Create your views here.
 
-data = pd.read_excel('book_db.xlsx', nrows=14000)
+data = pd.read_excel('book_db.xlsx', nrows=15000)
+
+# 인트로 유사도 검사 앞
+data['인트로_단어']=data['인트로_단어'].apply(literal_eval)
+data['인트로_단어_liters']=data['인트로_단어'].apply(lambda x:','.join(x))
+count_vect = CountVectorizer(min_df=0, ngram_range=(1,1))
+
+intro_mat = count_vect.fit_transform(data['인트로_단어_liters'])
+intro_sim = cosine_similarity(intro_mat, intro_mat)
+intro_sim_sorted_idx = intro_sim.argsort()[:,::-1]
+
+#######
 
 def LibraryView(request, pk):
     sort_type = request.GET.get('sortType')
-    print(sort_type)
+    # print(sort_type)
 
     response = []
     id = User.objects.get(id = pk).id
     mybooks = MYBOOK.objects.filter(user_id = id).values('book_id')
     for book in mybooks:
         res = data[data['id'] == int(book['book_id'])].to_dict('records')
-        response.append(res[0])
+        if len(res) > 0: 
+            response.append(res[0])
     
-    df_response = pd.DataFrame(response)
+    if response != '[]':
+        df_response = pd.DataFrame(response)
 
-    genre = np.array(df_response.groupby('장르').count()['id'].index)
-    value = np.array(df_response.groupby('장르').count()['id'])
-   
-    if sort_type == 'title':
-        df_response = df_response.sort_values('제목')
+        genre = np.array(df_response.groupby('장르').count()['id'].index)
+        value = np.array(df_response.groupby('장르').count()['id'])
+    
+        if sort_type == 'title':
+            df_response = df_response.sort_values('제목')
+        # elif sort_type == 'star':
+        #     df_response = df_response.sort_values('제목')
+        else:    
+            df_response = df_response[::-1]
+
+        lib = df_response.to_dict('records')
+            
+        context = {
+            'response': lib,
+            'sortType': sort_type,
+            'graph_genre': genre,
+            'graph_value': value,
+
+        }
+        return render(request, "mypage/library.html", context)
+        # return render(request, "mypage/library.html")
     else:
-        df_response = df_response[::-1]
-
-    lib = df_response.to_dict('records')
-        
-    context = {
-        'response': lib,
-        'sortType': sort_type,
-        'graph_genre': genre,
-        'graph_value': value,
-
-    }
-    return render(request, "mypage/library.html", context)
-    # return render(request, "mypage/library.html")
+        return render(request, "mypage/library.html")
 
 
 def LogLock(request, pk):
@@ -133,38 +150,201 @@ def mydic(request):
         id = request.POST['id']
         post.user = User.objects.get(id=id)      
         post.save()
-    return redirect(f"/mypage/library/{id}")
+
+    # 웹에서 받아온 pk(id)값과 책DB의 id값이 같은 책 데이터를 딕셔너리 형태로 받아옴
+    detail_data = data[data['id'] == int(book_id)].to_dict('records')
+    # 책에 키워드가 존재하면 keyword에 리스트 형태로 저장
+    if len(eval(data[data['id'] == int(book_id)]['keyword'].iloc[0])) > 0:
+        keyword = eval(data[data['id'] == int(book_id)]['keyword'].iloc[0])
+        # print(keyword)
+
+    # 인트로 유사도 검사 뒤
+    book_id3 = book_id
+
+    def find_sim_book2(data, sorted_idx, title_id, top_n=10):
+        target_book = data[data['id'] == int(title_id)] # id 기준
+        
+        title_index = target_book.index.values  # 몇번째 위치인지.
+        similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
+        # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
+        similar_index = similar_index.reshape(-1) 
+        
+        return data.iloc[similar_index]
+
+    similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
+    similar_book[['제목', 'id', '인트로', '추천수']]
+
+    response_intro = similar_book.to_dict('reconrds')[1:6]
+    #######
+
+
+    isbook = False # 책이 있는지 없는지 검사하는 값
+    if request.method == "POST":
+        id = request.POST['id'] # html form안의 input 태그에서 가져옴 (input태그 id가 id인 경우)
+        user_id = User.objects.get(id = id).id # 위와 데이터베이스 같은지 (현재 로그인한 회원과)
+        my_book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = book_id) # 위의 상황이 true일때 책 아이디 가져옴.
+
+        star = MYSTAR.objects.filter(user_id=id).filter(book_id=book_id).values('star')
+        # print(my_book)
+        # print(len(my_book))
+        # print(star, my_book, pk, book_id)
+
+
+        if len(my_book) > 0:
+            isbook = True # 책이 저장되어 있는 경우
+
+        context = {
+            'detail_data': detail_data, # 책 정보
+            'keyword': keyword, # 책 키워드 리스트
+            'isbook': isbook, # 책이 있나없나 true값
+            'response_intro' : response_intro, # 유사도검사 인트로
+            'star' : star,
+        }
+        return render(request, "board/detail.html", context)
        
 # 삭제
 def mydic_del(request):
 
     if request.method == "POST":
         post = MYBOOK()
-        post.book_id = request.POST['book_id']
+        book_id = request.POST['book_id']
+        post.book_id = book_id
         id = request.POST['id']
         user_id = User.objects.get(id = id).id
         book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = post.book_id)
         book.delete()
-    return redirect(f"/board/detail/{post.book_id}")
+
+    # 웹에서 받아온 pk(id)값과 책DB의 id값이 같은 책 데이터를 딕셔너리 형태로 받아옴
+    detail_data = data[data['id'] == int(book_id)].to_dict('records')
+    # 책에 키워드가 존재하면 keyword에 리스트 형태로 저장
+    if len(eval(data[data['id'] == int(book_id)]['keyword'].iloc[0])) > 0:
+        keyword = eval(data[data['id'] == int(book_id)]['keyword'].iloc[0])
+        # print(keyword)
+
+    # 인트로 유사도 검사 뒤
+    book_id3 = book_id
+
+    def find_sim_book2(data, sorted_idx, title_id, top_n=10):
+        target_book = data[data['id'] == int(title_id)] # id 기준
+        
+        title_index = target_book.index.values  # 몇번째 위치인지.
+        similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
+        # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
+        similar_index = similar_index.reshape(-1) 
+        
+        return data.iloc[similar_index]
+
+    similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
+    similar_book[['제목', 'id', '인트로', '추천수']]
+
+    response_intro = similar_book.to_dict('reconrds')[1:6]
+    #######
+
+
+    isbook = False # 책이 있는지 없는지 검사하는 값
+    if request.method == "POST":
+        id = request.POST['id'] # html form안의 input 태그에서 가져옴 (input태그 id가 id인 경우)
+        user_id = User.objects.get(id = id).id # 위와 데이터베이스 같은지 (현재 로그인한 회원과)
+        my_book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = book_id) # 위의 상황이 true일때 책 아이디 가져옴.
+
+        star = MYSTAR.objects.filter(user_id=id).filter(book_id=book_id).values('star')
+        # print(my_book)
+        # print(len(my_book))
+        # print(star, my_book, pk, book_id)
+
+
+        if len(my_book) > 0:
+            isbook = True # 책이 저장되어 있는 경우
+
+        context = {
+            'detail_data': detail_data, # 책 정보
+            'keyword': keyword, # 책 키워드 리스트
+            'isbook': isbook, # 책이 있나없나 true값
+            'response_intro' : response_intro, # 유사도검사 인트로
+            'star' : star,
+        }
+        return render(request, "board/detail.html", context)
 
 # 평점
 def mydic2(request):
     if request.method == "POST":
         post = MYSTAR()
         
-        book_id = request.POST['mydic']
-        post.book_id = book_id
-
+        book_id = request.POST['book_id']
+        # print(book_id)
         star = request.POST['star']
-        post.star = star
+        id = request.POST['id']
 
-        id = request.POST['user_id']
-        post.user = User.objects.get(id=id)      
+        user_id = User.objects.get(id = id).id
+        # print('user_id:', user_id)
+        before_star = MYSTAR.objects.filter(user_id = user_id).filter(book_id = book_id)
+        # print('before_star:',before_star)
+        if before_star:
+            before_star.delete()
 
-        post.save()
+            post.user = User.objects.get(id=id)
+            post.book_id = book_id
+            post.star = star
 
-    return redirect(f"/board/detail/{post.book_id}")
-         
+            post.save()
+        else:
+            post.user = User.objects.get(id=id)
+            post.book_id = book_id
+            post.star = star      
+
+            post.save()
+
+    # 웹에서 받아온 pk(id)값과 책DB의 id값이 같은 책 데이터를 딕셔너리 형태로 받아옴
+    detail_data = data[data['id'] == int(book_id)].to_dict('records')
+    # 책에 키워드가 존재하면 keyword에 리스트 형태로 저장
+    if len(eval(data[data['id'] == int(book_id)]['keyword'].iloc[0])) > 0:
+        keyword = eval(data[data['id'] == int(book_id)]['keyword'].iloc[0])
+        # print(keyword)
+
+    # 인트로 유사도 검사 뒤
+    book_id3 = book_id
+
+    def find_sim_book2(data, sorted_idx, title_id, top_n=10):
+        target_book = data[data['id'] == int(title_id)] # id 기준
+        
+        title_index = target_book.index.values  # 몇번째 위치인지.
+        similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
+        # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
+        similar_index = similar_index.reshape(-1) 
+        
+        return data.iloc[similar_index]
+
+    similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
+    similar_book[['제목', 'id', '인트로', '추천수']]
+
+    response_intro = similar_book.to_dict('reconrds')[1:6]
+    #######
+
+
+    isbook = False # 책이 있는지 없는지 검사하는 값
+    if request.method == "POST":
+        id = request.POST['id'] # html form안의 input 태그에서 가져옴 (input태그 id가 id인 경우)
+        user_id = User.objects.get(id = id).id # 위와 데이터베이스 같은지 (현재 로그인한 회원과)
+        my_book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = book_id) # 위의 상황이 true일때 책 아이디 가져옴.
+
+        star = MYSTAR.objects.filter(user_id=id).filter(book_id=book_id).values('star')
+        # print(my_book)
+        # print(len(my_book))
+        # print(star, my_book, pk, book_id)
+
+
+        if len(my_book) > 0:
+            isbook = True # 책이 저장되어 있는 경우
+
+        context = {
+            'detail_data': detail_data, # 책 정보
+            'keyword': keyword, # 책 키워드 리스트
+            'isbook': isbook, # 책이 있나없나 true값
+            'response_intro' : response_intro, # 유사도검사 인트로
+            'star' : star,
+        }
+        return render(request, "board/detail.html", context)
+             
          
 # 선호 장르 선택
 def choose(request):
@@ -220,7 +400,7 @@ def choose(request):
 
         data['total'] = data['total'].apply(literal_eval)
 
-        data.loc[len(data)] = [len(data),len(data),'mokpyo','mokpyo','장','커버','키','조','조단','추','추단','인','인단','0',overview_word,'2','3','0','0','0']
+        data.loc[len(data)] = [len(data),len(data),'mokpyo','mokpyo','장','커버','키','조','조단','추','추단','인','인단','0',overview_word,'2','3','0','0','0','0']
         data['total_literal'] = data['total'].apply(lambda x :  ' '.join(x))
         
         # print(data['total_literal'].tail())
