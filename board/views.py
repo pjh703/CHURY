@@ -3,11 +3,12 @@ import requests
 from lib2to3.pgen2.token import DOUBLESTAREQUAL
 
 from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
+from django.urls import reverse
+from django.shortcuts import get_object_or_404  
 
 from django.views.generic import DetailView
 from user.models import User
-from mypage.models import MYBOOK, MYCHOOSE, MYSTAR, COMMENT
+from mypage.models import MYBOOK, MYCHOOSE, MYSTAR, COMMENT, MYSELECT
 from xlrd import open_workbook
 from django.core.paginator import Paginator  
 
@@ -66,7 +67,18 @@ def home(request):
         list = []
         Key = 'ttbsaspower81040001'
 
-        response_data = data.head(20).to_dict('records') # 유저 추천
+
+        book_id = MYSELECT.objects.filter(user_id = e_id).values('book_id')
+
+        book_sel_data = pd.DataFrame()
+        for l in range(0,len(book_id)):
+            book_sel_data = pd.concat([book_sel_data, data[data['id'] == int(book_id[l]['book_id'])]])
+
+        print(book_sel_data)
+
+        response_data2 = book_sel_data.to_dict('records') # 유저 추천
+
+        response_data = data.head(20).to_dict('records')
 
         response_top10 = data.sort_values('추천수_단위', ascending=False).head(10).to_dict('records')
 
@@ -76,8 +88,11 @@ def home(request):
         
         response_new = data.sort_values('조회수_단위').head(20).to_dict('records')
 
+        print(type(response_data2), type(response_data))
+
         context = {
             'response_data': response_data,
+            'response_data2': response_data2,
             'response_top10': response_top10,
             'response_sf': response_sf,
             'response_fear': response_fear,
@@ -87,8 +102,8 @@ def home(request):
         return render(request, "board/home.html", context)
     
 
-    # 장르 데이터베이스 없을 시 choose로
-    else:
+   
+    else:   # 장르 데이터베이스 없을 시 choose로
 
         apikey = '6b75188cf5cbc494ffe18d4d302e3aaa'
 
@@ -329,3 +344,4 @@ def search(request, **kwargs):
                         
     else:
         return render(request, "board/search.html")
+
