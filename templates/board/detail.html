@@ -288,38 +288,49 @@
                 </td>
             </tr>
             <tr>
-                <td class="table1-1"><h3>리뷰 남기기</h3></td>
+                <td class="table1-1"><h3>별점</h3></td>
                 <!-- 실험 2 -->
                 <td>
                     {% if star %}
                     <form action="{% url 'mypage:mydic2' %}" method="post">
                         {% csrf_token %}
-                        <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                        <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                         <input value="{{ user.id }}" name="id" id="id" hidden>
                         
                         <div class="content2" style="margin-right: 700px;">
-                            <div><hr style="width: 1054px; margin-left: -50px;"><br><br></div>
                             <span class="star">
-                                <div class="star-imgs">
-                                    <img src="{% static 'board/detail/image/1점.JPG' %}" class="star1" id="star1" style="display: none;" alt="">
-                                    <img src="{% static 'board/detail/image/2점.JPG' %}" class="star2" id="star2" style="display: none;" alt="">
-                                    <img src="{% static 'board/detail/image/3점.JPG' %}" class="star3" id="star3" style="display: none;" alt="">
-                                    <img src="{% static 'board/detail/image/4점.JPG' %}" class="star4" id="star4" style="display: none;" alt="">
-                                    <img src="{% static 'board/detail/image/5점.JPG' %}" class="star5" id="star5" style="display: none;" alt="">
-                                </div>
-                                <div class="star-point" id="star-point">{{ myread }}</div>
-                                
+                                ★★★★★
+                                {% if star.0.star == 1 %}
+                                <span style="width: 20%;">★★★★★</span>
+                                {% elif star.0.star == 2 %}
+                                <span style="width: 40%;">★★★★★</span>
+                                {% elif star.0.star == 3 %}
+                                <span style="width: 60%;">★★★★★</span>
+                                {% elif star.0.star == 4 %}
+                                <span style="width: 80%;">★★★★★</span>
+                                {% elif star.0.star == 5 %}
+                                <span style="width: 100%;">★★★★★</span>
+                                {% endif %}
+                                <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
                                 <br>  
                             </span>
-                            <input type="submit" value="수정하기" class="enroll"
+                            <input type="submit" value="수정하기" onclick="star_re();" class="enroll"
                             style="color: white; font-size:15px; letter-spacing: 2px;">
                         </div>
+                        <script>
+                            function star_re(seq){
+                                Swal.fire({
+                                    title: '별점이 수정되었습니다.',
+                                    icon: 'success',
+                                    })
+                            }
+                        </script>
                     </form> 
 
                     {% else %}
                     <form action="{% url 'mypage:mydic2' %}" method="post">
                         {% csrf_token %}
-                        <input value="{{ i.id }}" name="mydic" id="mydic" hidden>
+                        <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                         <input value="{{ user.id }}" name="id" id="id" hidden>
                         
                         <div class="content2" style="margin-right: 700px;">

@@ -93,7 +93,7 @@
                 <div class="graph_tab_content" id="programming_content" style="display: none; box-sizing: border-box; height: 600px; width: 600px;">
                 {{ user.username }}님 취향 그래프
                 <div>
-                    <canvas id="myChart" style="margin-top: -90px;"></canvas>
+                    <canvas id="myChart" style="margin-top: 30px;"></canvas>
                 </div>
                 </div>
                 <p id="graph_genre" style="display: none;">{{ graph_genre }}</p>
@@ -155,15 +155,14 @@
         }
     }
 
-    console.log(genre)
-    console.log(genre_list)
+    // console.log(genre)
+    // console.log(genre_list)
 
     const labels = genre_list;
     const data = {
         labels: labels,
         datasets: [{
             categoryPercentage: 1.0,
-            label: '도서 선호도',
             data: value_list,
             backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
@@ -188,24 +187,13 @@
         };
 
     new Chart(ctx, {
-        type: 'polarArea',
+        type: 'bar',
         data: data,
         options: {
-            responsive: true,
-            scales: {
-            r: {
-                pointLabels: {
-                display: true,
-                centerPointLabels: true,
-                font: {
-                    size: 10
-                }
-                }
-            }
-            },
+            indexAxis: 'y',
             plugins: {
             legend: {
-                position: 'right',
+                display: false,
             },
             title: {
                 display: false,
