@@ -46,7 +46,7 @@
     color: rgb(119, 117, 117);
     font-size: 25px;
     font-weight: 500; 
-    margin-top: 300px; 
+    margin-top: 350px; 
     letter-spacing: 0.5px;
     line-height: 40px;
     position: fixed;
@@ -80,7 +80,7 @@
 
 .not-choose-btn {
     position: fixed;
-    left: 13%;
+    left: 8%;
     bottom: 8%;
     font-size: 22px;
     /* padding: 20px 60px; */
