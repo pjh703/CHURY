@@ -47,35 +47,37 @@ def LibraryView(request, pk):
     response = []
     id = User.objects.get(id = pk).id
     mybooks = MYBOOK.objects.filter(user_id = id).values('book_id')
-    for book in mybooks:
-        res = data[data['id'] == int(book['book_id'])].to_dict('records')
-        if len(res) > 0: 
-            response.append(res[0])
+    if len(mybooks) > 0:
+        for book in mybooks:
+            res = data[data['id'] == int(book['book_id'])].to_dict('records')
+            if len(res) > 0: 
+                response.append(res[0])
+                print("response: ", response)
     
-    if response != '[]':
-        df_response = pd.DataFrame(response)
+        if response != '[]':
+            df_response = pd.DataFrame(response)
 
-        genre = np.array(df_response.groupby('장르').count()['id'].index)
-        value = np.array(df_response.groupby('장르').count()['id'])
-    
-        if sort_type == 'title':
-            df_response = df_response.sort_values('제목')
-        # elif sort_type == 'star':
-        #     df_response = df_response.sort_values('제목')
-        else:    
-            df_response = df_response[::-1]
+            genre = np.array(df_response.groupby('장르').count()['id'].index)
+            value = np.array(df_response.groupby('장르').count()['id'])
+        
+            if sort_type == 'title':
+                df_response = df_response.sort_values('제목')
+            # elif sort_type == 'star':
+            #     df_response = df_response.sort_values('제목')
+            else:    
+                df_response = df_response[::-1]
 
-        lib = df_response.to_dict('records')
-            
-        context = {
-            'response': lib,
-            'sortType': sort_type,
-            'graph_genre': genre,
-            'graph_value': value,
+            lib = df_response.to_dict('records')
+                
+            context = {
+                'response': lib,
+                'sortType': sort_type,
+                'graph_genre': genre,
+                'graph_value': value,
 
-        }
-        return render(request, "mypage/library.html", context)
-        # return render(request, "mypage/library.html")
+            }
+            return render(request, "mypage/library.html", context)
+            # return render(request, "mypage/library.html")
     else:
         return render(request, "mypage/library.html")
 
