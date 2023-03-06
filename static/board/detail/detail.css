@@ -117,8 +117,9 @@ nav .right .profile a {
 }
 nav .right .profile a .avatar-box {
   width: 30px;
-  height: 30px;
-  background-color: rgb(245, 216, 90);
+  height: 30px; 
+  background-image: url("image/profile.jpg");
+  background-size: cover;
   border-radius: 3px;
   margin-right: 10px;
   margin-left : 10px;
