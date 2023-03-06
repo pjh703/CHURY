@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'board/detail/detail.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
     {% if user.is_authenticated %}
@@ -135,6 +135,7 @@
                                 <button type="submit" class="fa-solid fa-circle-plus fa-3x" onclick="button2_click();" title="내 책장에 담기"></button>
                                 <script>
                                     function button2_click(seq){
+                                        
                                         alert('내 책장에 추가되었습니다.')
                                         // Swal.fire({
                                         //     title: '내 책장에 추가되었습니다.',
@@ -143,6 +144,22 @@
                                         //     imageHeight: 225,
                                         //     timer: 3000,
                                         //     })
+
+                                    }
+
+                                    window.alert = function(message, timeout=null){
+                                        const alert = document.createElement('div');
+                                        alert.classList.add('alert');
+                                        alert.setAttribute('style',`
+                                            position: fixed;
+                                            top: 50%;
+                                            left: 50%;
+                                            padding: 20px;
+                                            border-radius: 10px;
+                                            box-shadow: 0 10px 5px 0 #00000044;
+                                        `);
+                                        alert.innerText = message;
+                                        document.body.appendChild(alert);
                                     }
                                 </script>
                             </form>
