@@ -462,6 +462,7 @@ nav .right .search .search-bar input {
   /* margin-right: 10px; */
   margin-top: 20px;
   padding: 6px 10px 6px 10px;
+  cursor: pointer;
 
 }
 
