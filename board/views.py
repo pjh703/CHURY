@@ -196,7 +196,7 @@ def BoardDetailView(request, pk):
             'keyword': keyword, # 책 키워드 리스트
             'isbook': isbook,
             'response_intro' : response_intro, # 유사도검사 인트로
-            'star' : star,
+            # 'star' : star,
         }
         return render(request, "board/detail.html", context)
 
