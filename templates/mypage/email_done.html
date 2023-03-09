@@ -16,7 +16,7 @@
     </head>
     <body>
         
-        <div class="header" >
+        <div class="header" style="display: none;">
             <div class="logo">
                 <a href="{% url 'board:home' %}"><img src="{% static 'user/login/images/logo.png' %}"></a>
             </div>
@@ -33,10 +33,13 @@
                     아래 '이메일 인증 완료' 버튼을 누르면 이메일이 인증됩니다.
                 </div>
                 
+                
                 <div class="field-group">
-                    <a href="{% url 'mypage:email_done2' %}">
+                    <form action="{% url 'mypage:email_done2' %}" method="post">
+                        {% csrf_token %}
+                        <input value="{{ username }}" name="username" hidden>
                         <button type="submit">이메일 인증</button>
-                    </a>
+                    </form>
                 </div>
           </div>
         </section>
