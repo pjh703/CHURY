@@ -13,8 +13,9 @@ import openpyxl
 
 from konlpy.tag import Okt  # 한글 형태소
 import re
+from board.views import dataori, cos_sim_df
 
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from ast import literal_eval
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -27,18 +28,9 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 # Create your views here.
 
-data = pd.read_excel('book_db.xlsx', nrows=15000)
 
-# 인트로 유사도 검사 앞
-data['인트로_단어']=data['인트로_단어'].apply(literal_eval)
-data['인트로_단어_liters']=data['인트로_단어'].apply(lambda x:','.join(x))
-count_vect = CountVectorizer(min_df=0, ngram_range=(1,1))
+data = dataori  
 
-intro_mat = count_vect.fit_transform(data['인트로_단어_liters'])
-intro_sim = cosine_similarity(intro_mat, intro_mat)
-intro_sim_sorted_idx = intro_sim.argsort()[:,::-1]
-
-#######
 
 def LibraryView(request, pk):
     sort_type = request.GET.get('sortType')
@@ -161,20 +153,10 @@ def mydic(request):
     # 인트로 유사도 검사 뒤
     book_id3 = book_id
 
-    def find_sim_book2(data, sorted_idx, title_id, top_n=10):
-        target_book = data[data['id'] == int(title_id)] # id 기준
-        
-        title_index = target_book.index.values  # 몇번째 위치인지.
-        similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
-        # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
-        similar_index = similar_index.reshape(-1) 
-        
-        return data.iloc[similar_index]
+    intro_sim_sorted_idx = cos_sim_df[int(book_id3)].sort_values(ascending=False)[0:11]
+    similar_book = data.loc[intro_sim_sorted_idx.index]
 
-    similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
-    similar_book[['제목', 'id', '인트로', '추천수']]
-
-    response_intro = similar_book.to_dict('reconrds')[1:6]
+    response_intro = similar_book.to_dict('records')[1:6]
     #######
 
 
@@ -185,10 +167,6 @@ def mydic(request):
         my_book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = book_id) # 위의 상황이 true일때 책 아이디 가져옴.
 
         star = MYSTAR.objects.filter(user_id=id).filter(book_id=book_id).values('star')
-        # print(my_book)
-        # print(len(my_book))
-        # print(star, my_book, pk, book_id)
-
 
         if len(my_book) > 0:
             isbook = True # 책이 저장되어 있는 경우
@@ -224,20 +202,10 @@ def mydic_del(request):
     # 인트로 유사도 검사 뒤
     book_id3 = book_id
 
-    def find_sim_book2(data, sorted_idx, title_id, top_n=10):
-        target_book = data[data['id'] == int(title_id)] # id 기준
-        
-        title_index = target_book.index.values  # 몇번째 위치인지.
-        similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
-        # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
-        similar_index = similar_index.reshape(-1) 
-        
-        return data.iloc[similar_index]
+    intro_sim_sorted_idx = cos_sim_df[int(book_id3)].sort_values(ascending=False)[0:11]
+    similar_book = data.loc[intro_sim_sorted_idx.index]
 
-    similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
-    similar_book[['제목', 'id', '인트로', '추천수']]
-
-    response_intro = similar_book.to_dict('reconrds')[1:6]
+    response_intro = similar_book.to_dict('records')[1:6]
     #######
 
 
@@ -304,20 +272,10 @@ def mydic2(request):
     # 인트로 유사도 검사 뒤
     book_id3 = book_id
 
-    def find_sim_book2(data, sorted_idx, title_id, top_n=10):
-        target_book = data[data['id'] == int(title_id)] # id 기준
-        
-        title_index = target_book.index.values  # 몇번째 위치인지.
-        similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
-        # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
-        similar_index = similar_index.reshape(-1) 
-        
-        return data.iloc[similar_index]
+    intro_sim_sorted_idx = cos_sim_df[int(book_id3)].sort_values(ascending=False)[0:11]
+    similar_book = data.loc[intro_sim_sorted_idx.index]
 
-    similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
-    similar_book[['제목', 'id', '인트로', '추천수']]
-
-    response_intro = similar_book.to_dict('reconrds')[1:6]
+    response_intro = similar_book.to_dict('records')[1:6]
     #######
 
 
@@ -328,11 +286,7 @@ def mydic2(request):
         my_book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = book_id) # 위의 상황이 true일때 책 아이디 가져옴.
 
         star = MYSTAR.objects.filter(user_id=id).filter(book_id=book_id).values('star')
-        # print(my_book)
-        # print(len(my_book))
-        # print(star, my_book, pk, book_id)
-
-
+ 
         if len(my_book) > 0:
             isbook = True # 책이 저장되어 있는 경우
 
@@ -392,59 +346,50 @@ def choose(request):
             overview_word += [i for i in word_t if i not in stopword]
             
             overview_word = list(set(overview_word))
+
+        movie_word = ''
+        for i in overview_word:
+            movie_word += i + ' '
+
+
+        df_list = data['장르'].drop_duplicates().to_list()  # 장르 목록
+        data2 = pd.DataFrame(columns=data.columns)
+
+        # 장르별 천개씩
+        for i in df_list:
+            data2 = pd.concat([data2, data[data['장르'] == i][:1000]])
         
-        print(overview_word)
+        # 마지막열에 추가
+        data2.loc[len(data2)] = [len(data2),len(data2),len(data2),'mokpyo', '작', '장','커버','키','조','조단','추','추단','인','인단', movie_word,'0','2','3','0','0']
+
+   
+   
+        vectorizer = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
+        vectorizerfit = vectorizer.fit(data2['total'])
+        vecdf = vectorizer.transform(data2['total']).toarray()
+
+        word_list = sorted(vectorizerfit.vocabulary_.items()) # 단어사전을 정렬합니다.
+
+        # 용이한 시각화를 위하여 데이터프레임 변환
+        tf_idf_df = pd.DataFrame(vecdf, columns = word_list, index = data2.제목)
+        # 코사인 유사도 계산
+        cos_sim_df = pd.DataFrame(cosine_similarity(tf_idf_df, tf_idf_df))
+
+        intro_sim_sorted_idx = cos_sim_df[data2.index[(data2['제목'] == 'mokpyo')].tolist()[0]][0:21]
+        similar_book = data2.loc[intro_sim_sorted_idx.index]
 
 
-        # 영화 overview 단어를 데이터프레임 마지막행에 추가
-
-        data['total'] = data['total'].apply(literal_eval)
-
-        data.loc[len(data)] = [len(data),len(data),'mokpyo','mokpyo','장','커버','키','조','조단','추','추단','인','인단','0',overview_word,'2','3','0','0','0','0']
-        data['total_literal'] = data['total'].apply(lambda x :  ' '.join(x))
-        
-        # print(data['total_literal'].tail())
-
-
-        count_vect = CountVectorizer(min_df=0, ngram_range=(1,1))
-        data_mat = count_vect.fit_transform(data['total_literal'])
-        # print(data_mat.shape)
-        # print(data_mat.toarray()[:1])
-
-        data_sim = cosine_similarity(data_mat, data_mat)
-
-        data_sim_sorted_idx = data_sim.argsort()[:,::-1]  # argsort 정렬된 데이터의 정렬되기 전 위치값  [:,::-1]  내림차순
-        data_sim_sorted_idx[:1,:9]  
-
-        # print(pd.DataFrame(data_sim[:,-1], index=data['제목']).sort_values(-1, ascending=False).head(10))
-
-
-
-        def find_sim_book(data, sorted_idx, title_name, top_n=10):
-            target_title = data[data['제목'] == title_name]
-            book_index = target_title.index.values
-            # sorted_idx 인자로 입력된 genre_sim_sorted_idx 객체에서 유사도 순으로 top_n개의 index 추출
-            similar_index = sorted_idx[book_index, :top_n]
-            # print(similar_index)
-            # DataFrame의 index로 이용하기 위해 1차원 배열로 변경(2차원 -> 1차원)
-            similar_index = similar_index.reshape(-1)
-            
-            return data.iloc[similar_index]
-
-        similar_book = find_sim_book(data, data_sim_sorted_idx, 'mokpyo', 20)
-
-        # print(type(similar_book),similar_book['제목'])
-        
         cols = [k for k in similar_book]
         book_queryset = [dict(zip(cols, k)) for k in similar_book.values]
 
+        print(similar_book)
 
         # 유사도 검사한 결과 데이터베이스에 저장
 
         id = request.POST['id']
         
         book_list = []
-        for l in range(1,20):
+        for l in range(1,21):
             bulk = book_queryset[l]['id']
             book_list.append(bulk)
 
