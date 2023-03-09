@@ -16,18 +16,19 @@ import numpy as np
 import pandas as pd
 import math
 
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from ast import literal_eval
 
 from konlpy.tag import Okt
 
-data = pd.read_excel('book_db.xlsx', nrows=15000)
+data = pd.read_excel('book_db.xlsx', nrows=5000)
 
 # 인트로 유사도 검사 앞
 data['total']=data['total'].apply(literal_eval)
 data['total_liters']=data['total'].apply(lambda x:','.join(x))
-count_vect = CountVectorizer(min_df=0, ngram_range=(1,1))
+count_vect = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
 
 intro_mat = count_vect.fit_transform(data['total_liters'])
 intro_sim = cosine_similarity(intro_mat, intro_mat)
@@ -75,7 +76,7 @@ def home(request):
         for l in range(0,len(book_id)):
             book_sel_data = pd.concat([book_sel_data, data[data['id'] == int(book_id[l]['book_id'])]])
 
-        print(book_sel_data)
+        # print(book_sel_data)
 
         response_data2 = book_sel_data.to_dict('records') # 유저 추천
 
@@ -89,7 +90,7 @@ def home(request):
         
         response_new = data.sort_values('조회수_단위').head(20).to_dict('records')
 
-        print(type(response_data2), type(response_data))
+        # print(type(response_data2), type(response_data))
 
         context = {
             'response_data': response_data,
@@ -159,7 +160,8 @@ def BoardDetailView(request, pk):
     similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
     similar_book[['제목', 'id', '인트로', '추천수']]
 
-    response_intro = similar_book.to_dict('reconrds')[1:6]
+    response_intro = similar_book.to_dict('records')[1:6]
+    print(response_intro)
     #######
 
 
@@ -331,7 +333,7 @@ def search(request, **kwargs):
                 page = request.GET.get('page', '1')  # 페이지
                 paginator = Paginator(response, 10)  # 페이지당 10개씩 보여주기
                 page_obj = paginator.get_page(page)
-                print(response)
+                # print(response)
                 context = {
                     'total': response,
                     'response': page_obj,

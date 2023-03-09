@@ -523,6 +523,20 @@ nav .right .search .search-bar input {
   pointer-events: none;
 }
 
+#buybtn {
+  /* position: absolute; */
+  border-radius: 8px;
+  letter-spacing: 1px;
+  font-weight: 580;
+  font-size: 18px;
+  width: 170px;
+  height: 50px;
+  border: none;
+  background-color: #ffbf00a3;
+  cursor: pointer;
+
+}
+
 
 
 /* ================================================================== */

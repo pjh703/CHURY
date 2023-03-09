@@ -3,6 +3,7 @@ from django.views.generic import UpdateView, DeleteView, DetailView
 
 from .forms import UserUpdateForm
 from .models import MYBOOK, MYCHOOSE, MYSTAR, MYSELECT
+from user.models import MYINFO
 
 from user.models import User, MYINFO
 from django.urls import reverse_lazy, reverse
@@ -14,6 +15,7 @@ import openpyxl
 from konlpy.tag import Okt  # 한글 형태소
 import re
 
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 from ast import literal_eval
 from sklearn.metrics.pairwise import cosine_similarity
@@ -27,12 +29,12 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 # Create your views here.
 
-data = pd.read_excel('book_db.xlsx', nrows=15000)
+data = pd.read_excel('book_db.xlsx', nrows=5000)
 
 # 인트로 유사도 검사 앞
 data['인트로_단어']=data['인트로_단어'].apply(literal_eval)
 data['인트로_단어_liters']=data['인트로_단어'].apply(lambda x:','.join(x))
-count_vect = CountVectorizer(min_df=0, ngram_range=(1,1))
+count_vect = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
 
 intro_mat = count_vect.fit_transform(data['인트로_단어_liters'])
 intro_sim = cosine_similarity(intro_mat, intro_mat)
@@ -564,3 +566,44 @@ def email_done2(request):
 # 고객지원센터
 def notice(request):
     return render(request, "mypage/notice.html")
+
+# 카카오페이 결제
+def pay(request):
+    if request.method == "POST":
+        id = request.POST['user_id']
+        user_id = User.objects.get(id = id).id
+        try:
+            is_regist = MYINFO.objects.get(id = user_id)
+        except:
+            is_regist = 0
+
+        print(is_regist)
+
+        if(is_regist == 1):
+            return render(request, 'mypage/profile.html')
+        else:
+            URL = "https://kapi.kakao.com/v1/payment/ready"
+            headers = {
+                "Authorization": "KakaoAK " + "8014c7551c26de7bcadcd6419eb22777",   # 변경불가
+                "Content-type": "application/x-www-form-urlencoded;charset=utf-8",  # 변경불가
+            }
+            params = {
+                "cid": "TC0ONETIME",    # 테스트용 코드
+                "partner_order_id": "1001",     # 주문번호
+                "partner_user_id": user_id,    # 유저 아이디
+                "item_name": "CHURY 이용권",        # 구매 물품 이름
+                "quantity": "1",                # 구매 물품 수량
+                "total_amount": "4900",        # 구매 물품 가격
+                "tax_free_amount": "0",         # 구매 물품 비과세
+                "approval_url": "http://localhost:8000/mypage/profile/",
+                "cancel_url": "http://localhost:8000/mypage/profile/",
+                "fail_url": "http://localhost:8000/mypage/profile/",
+            }
+
+            res = requests.post(URL, headers=headers, params=params)
+            print(res.json())
+            request.session['tid'] = res.json()['tid']      # 결제 승인시 사용할 tid를 세션에 저장
+            next_url = res.json()['next_redirect_pc_url']   # 결제 페이지로 넘어갈 url을 저장
+            return redirect(next_url)
+    
+    return render(request, 'mypage/env.html')
