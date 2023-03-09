@@ -512,31 +512,20 @@ def email_done(request, pk):
 def email_done2(request):
     if request.method == "POST":
         username = request.POST['username']
-        print(username)
         try:
             id_check = User.objects.filter(username = username)[0].id
         except:
             return redirect("/board/home")
         
-        print(id_check)
         if(id_check != 'null'):
             post = MYINFO()
             post.id = id_check
             post.email_confirm = 1
             post.email_id = id_check
             post.save()
-            print("성공?")
     
     return render(request, "mypage/email_done2.html")
 
 # 고객지원센터
 def notice(request):
     return render(request, "mypage/notice.html")
-
-# if request.method == "POST":
-#         post = MYBOOK()
-#         book_id = request.POST['book_id']
-#         post.book_id = book_id
-#         id = request.POST['id']
-#         post.user = User.objects.get(id=id)      
-#         post.save()
