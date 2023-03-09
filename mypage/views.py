@@ -359,10 +359,12 @@ def choose(request):
         for i in df_list:
             data2 = pd.concat([data2, data[data['장르'] == i][:1000]])
         
+        data2 = data2.reset_index(drop=True)
+
         # 마지막열에 추가
         data2.loc[len(data2)] = [len(data2),len(data2),len(data2),'mokpyo', '작', '장','커버','키','조','조단','추','추단','인','인단', movie_word,'0','2','3','0','0']
 
-   
+        print(data2.tail)
    
         vectorizer = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
         vectorizerfit = vectorizer.fit(data2['total'])
@@ -374,8 +376,9 @@ def choose(request):
         tf_idf_df = pd.DataFrame(vecdf, columns = word_list, index = data2.제목)
         # 코사인 유사도 계산
         cos_sim_df = pd.DataFrame(cosine_similarity(tf_idf_df, tf_idf_df))
-
-        intro_sim_sorted_idx = cos_sim_df[data2.index[(data2['제목'] == 'mokpyo')].tolist()[0]][0:21]
+        print(data2.index[(data2['제목'] == 'mokpyo')])
+        intro_sim_idx = cos_sim_df[data2.index[data2['제목'] == 'mokpyo'].to_list()[0]]
+        intro_sim_sorted_idx = intro_sim_idx.sort_values(ascending=False)[0:21]
         similar_book = data2.loc[intro_sim_sorted_idx.index]
 
 
