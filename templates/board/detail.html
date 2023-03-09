@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'board/detail/detail.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
     {% if user.is_authenticated %}
@@ -116,6 +117,7 @@
                                 try {
                                   function sendLinkDefault() {
                                     Kakao.init('e3040d57d1ed3c96910fded8e58b1675')
+                                    share_data = '/board/detail/{{i.id}}'
                                     Kakao.Link.sendDefault({
                                       objectType: 'feed',
                                       content: {
@@ -124,8 +126,8 @@
                                         imageUrl:
                                         '{{ i.cover_img_url }}',
                                         link: {
-                                          mobileWebUrl: 'https://developers.kakao.com',
-                                          webUrl: 'https://developers.kakao.com',
+                                          mobileWebUrl: '',
+                                          webUrl: '',
                                         },
                                       },
                                     
@@ -133,9 +135,11 @@
                                         {
                                           title: '추천 책 보러가기',
                                           link: {
-                                            webUrl: 'https://developers.kakao.com',
+                                            mobileWebUrl: 'http://127.0.0.1:8000' + share_data,
+                                            webUrl: 'http://127.0.0.1:8000' + share_data,
                                           },
                                         },
+                                        
                                       ],
                                     })
                                   }
