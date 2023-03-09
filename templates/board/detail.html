@@ -7,10 +7,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CHURY | Detail</title>
+    <link rel="shortcut icon" href="/static/board/detail/image/churyico2.ico">
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'board/detail/detail.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
     {% if user.is_authenticated %}
@@ -108,6 +110,41 @@
                             </div>
                             {% endif %}
                             <div class="icons">
+                                <img src="/static/board/detail/image/kakao.png" title="카카오톡으로 공유" width="48px" alt="" onClick="sendLinkDefault();" class="kakao_link">
+                                
+                                <script>
+                                try {
+                                  function sendLinkDefault() {
+                                    Kakao.init('e3040d57d1ed3c96910fded8e58b1675')
+                                    Kakao.Link.sendDefault({
+                                      objectType: 'feed',
+                                      content: {
+                                        title: 'CHURY가 추천하는 추천도서📚✨',
+                                        description: '취향에 꼭 맞는 책을 추천해드립니다.',
+                                        imageUrl:
+                                        '{{ i.cover_img_url }}',
+                                        link: {
+                                          mobileWebUrl: 'https://developers.kakao.com',
+                                          webUrl: 'https://developers.kakao.com',
+                                        },
+                                      },
+                                    
+                                      buttons: [
+                                        {
+                                          title: '추천 책 보러가기',
+                                          link: {
+                                            webUrl: 'https://developers.kakao.com',
+                                          },
+                                        },
+                                      ],
+                                    })
+                                  }
+                                ; window.kakaoDemoCallback && window.kakaoDemoCallback() }
+                                catch(e) { window.kakaoDemoException && window.kakaoDemoException(e) }
+                                </script>
+                                
+                                
+                                
                                 {% if i.tag == '최신' %}
                                 <a class="fa-solid fa-circle-play fa-3x" title="바로 보기" href="https://www.joara.com/book/{{ i.book_url }}" style="float:left;"></a>
                                 {% else %}

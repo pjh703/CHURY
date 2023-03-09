@@ -308,7 +308,7 @@ nav .right .search .search-bar input {
 }
 
 .icons {
-  margin-left: 310px;
+  margin-left: 290px;
 }
 
 .icons i {
@@ -532,4 +532,10 @@ nav .right .search .search-bar input {
   main .description {
     bottom: 10%;
   }
+}
+
+/* ======================================== */
+.kakao_link {
+  margin-left: 10px;
+  cursor: pointer;
 }
