@@ -17,10 +17,12 @@ import pandas as pd
 import math
 
 from sklearn.feature_extraction.text import TfidfVectorizer
+
 from sklearn.metrics.pairwise import cosine_similarity
 from ast import literal_eval
 
 from konlpy.tag import Okt
+
 
 # 글자료 불러오기
 dataori = pd.read_excel('book_db.xlsx')  # import를 위해서 dataori
@@ -29,6 +31,7 @@ data = dataori
 vectorizer = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
 vectorizerfit = vectorizer.fit(data['total'])
 vecdf = vectorizer.transform(data['total']).toarray()
+
 
 word_list = sorted(vectorizerfit.vocabulary_.items()) # 단어사전을 정렬합니다.
 
@@ -152,6 +155,7 @@ def BoardDetailView(request, pk):
     similar_book = data.loc[intro_sim_sorted_idx.index]
 
     response_intro = similar_book.to_dict('records')[1:6]
+
 
 
     isbook = False # 책이 있는지 없는지 검사하는 값

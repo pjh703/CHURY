@@ -1,13 +1,13 @@
 {% load static %}
 
     <div class="header">
-        <div class="logo">
-            <a href="{% url 'board:home' %}"><img src="{% static 'common/images/logo.png' %}"></a>
-        </div>
         
        
         {% if user.is_authenticated %}
             {# 로그인한 경우 #}
+        <div class="logo">
+            <a href="{% url 'board:home' %}"><img src="{% static 'common/images/logo.png' %}"></a>
+        </div>
             <!-- <a href="{% url 'mypage:library' pk=user.username %}" class="btn btn-outline-danger btn-sm">내 추라이</a>
             <a href="{% url 'mypage:env' %}" class="btn btn-outline-danger btn-sm">설정</a>
             <a href="{% url 'mypage:profile' %}" class="btn btn-outline-danger btn-sm">회원정보수정</a>
@@ -21,6 +21,9 @@
 
         {% else %}
             {# 로그인하지 않은 경우 #}
+        <div class="logo">
+            <a href="/"><img src="{% static 'common/images/logo.png' %}"></a>
+        </div>
             <!-- <a href="{% url 'user:sign' %}" class="btn btn-outline-success btn-sm">회원가입?</a>
             <a href="{% url 'user:login' %}" class="btn btn-outline-secondary btn-sm">로그인?</a> -->
 
