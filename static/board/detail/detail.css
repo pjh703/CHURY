@@ -117,8 +117,9 @@ nav .right .profile a {
 }
 nav .right .profile a .avatar-box {
   width: 30px;
-  height: 30px;
-  background-color: rgb(245, 216, 90);
+  height: 30px; 
+  background-image: url("image/profile.jpg");
+  background-size: cover;
   border-radius: 3px;
   margin-right: 10px;
   margin-left : 10px;
@@ -307,7 +308,7 @@ nav .right .search .search-bar input {
 }
 
 .icons {
-  margin-left: 310px;
+  margin-left: 250px;
 }
 
 .icons i {
@@ -461,6 +462,7 @@ nav .right .search .search-bar input {
   /* margin-right: 10px; */
   margin-top: 20px;
   padding: 6px 10px 6px 10px;
+  cursor: pointer;
 
 }
 
@@ -544,4 +546,10 @@ nav .right .search .search-bar input {
   main .description {
     bottom: 10%;
   }
+}
+
+/* ======================================== */
+.kakao_link {
+  margin-left: 10px;
+  cursor: pointer;
 }

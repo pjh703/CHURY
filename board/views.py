@@ -17,24 +17,29 @@ import pandas as pd
 import math
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.feature_extraction.text import CountVectorizer
+
 from sklearn.metrics.pairwise import cosine_similarity
 from ast import literal_eval
 
 from konlpy.tag import Okt
 
-data = pd.read_excel('book_db.xlsx', nrows=5000)
 
-# 인트로 유사도 검사 앞
-data['total']=data['total'].apply(literal_eval)
-data['total_liters']=data['total'].apply(lambda x:','.join(x))
-count_vect = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
+# 글자료 불러오기
+dataori = pd.read_excel('book_db.xlsx')  # import를 위해서 dataori
+data = dataori
 
-intro_mat = count_vect.fit_transform(data['total_liters'])
-intro_sim = cosine_similarity(intro_mat, intro_mat)
-intro_sim_sorted_idx = intro_sim.argsort()[:,::-1]
+vectorizer = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
+vectorizerfit = vectorizer.fit(data['total'])
+vecdf = vectorizer.transform(data['total']).toarray()
 
-#######
+
+word_list = sorted(vectorizerfit.vocabulary_.items()) # 단어사전을 정렬합니다.
+
+# 용이한 시각화를 위하여 데이터프레임 변환
+tf_idf_df = pd.DataFrame(vecdf, columns = word_list, index = data.제목)
+# 코사인 유사도 계산
+cos_sim_df = pd.DataFrame(cosine_similarity(tf_idf_df, tf_idf_df))
+
 
 
 def home(request):
@@ -84,9 +89,9 @@ def home(request):
 
         response_top10 = data.sort_values('추천수_단위', ascending=False).head(10).to_dict('records')
 
-        response_sf = data[data['keyword'].str.contains('sf')].sort_values('추천수_단위', ascending=False).head(20).to_dict('records')
+        response_sf = data[data['keyword'].str.contains('로맨스')].sort_values('추천수_단위', ascending=False).head(20).to_dict('records')
                 
-        response_fear = data[data['keyword'].str.contains('공포')].sort_values('추천수_단위', ascending=False).head(20).to_dict('records')
+        response_fear = data[data['keyword'].str.contains('판타지')].sort_values('추천수_단위', ascending=False).head(20).to_dict('records')
         
         response_new = data.sort_values('조회수_단위').head(20).to_dict('records')
 
@@ -142,27 +147,15 @@ def BoardDetailView(request, pk):
         keyword = eval(data[data['id'] == int(pk)]['keyword'].iloc[0])
         # print(keyword)
 
+
     # 인트로 유사도 검사 뒤
     book_id3 = pk
 
-    def find_sim_book2(data, sorted_idx, title_id, top_n=10):
-        target_book = data[data['id'] == int(title_id)] # id 기준
-        
-        title_index = target_book.index.values  # 몇번째 위치인지.
-        similar_index = sorted_idx[title_index, :top_n] # 위의 top_n의 수만큼 
-        # DataFrame의 index로 이용하기 위해서 1차원 배열로 변경
-        similar_index = similar_index.reshape(-1) 
-        
-        return data.iloc[similar_index]
-
-    similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
-    similar_book[['제목', 'id', '인트로', '추천수']]
-    similar_book = find_sim_book2(data, intro_sim_sorted_idx, book_id3, 10)
-    similar_book[['제목', 'id', '인트로', '추천수']]
+    intro_sim_sorted_idx = cos_sim_df[int(book_id3)].sort_values(ascending=False)[0:11]
+    similar_book = data.loc[intro_sim_sorted_idx.index]
 
     response_intro = similar_book.to_dict('records')[1:6]
-    print(response_intro)
-    #######
+
 
 
     isbook = False # 책이 있는지 없는지 검사하는 값
@@ -172,10 +165,6 @@ def BoardDetailView(request, pk):
         my_book = MYBOOK.objects.filter(user_id = user_id).filter(book_id = pk) # 위의 상황이 true일때 책 아이디 가져옴.
 
         star = MYSTAR.objects.filter(user_id=id).filter(book_id=pk).values('star')
-        # print(my_book)
-        # print(len(my_book))
-        # print(star, my_book, pk, book_id)
-
 
         if len(my_book) > 0:
             isbook = True # 책이 저장되어 있는 경우
@@ -190,15 +179,13 @@ def BoardDetailView(request, pk):
         return render(request, "board/detail.html", context)
 
     else:
-        # print("get")
-        # print(response)
 
         context = {
             'detail_data': detail_data, # 책 정보
             'keyword': keyword, # 책 키워드 리스트
             'isbook': isbook,
             'response_intro' : response_intro, # 유사도검사 인트로
-            'star' : star,
+            # 'star' : star,
         }
         return render(request, "board/detail.html", context)
 
@@ -239,16 +226,8 @@ def search(request, **kwargs):
                 page = request.GET.get('page', '1')  # 페이지
                 paginator = Paginator(response, 10)  # 페이지당 10개씩 보여주기
                 page_obj = paginator.get_page(page)
-                # pagination = {}
-                # for i in range(math.ceil((len(response)/10))):
-                #     print(i)
-                #     if i+1 == (math.ceil((len(response)/10))):
-                #         pagination[i] = response[-(len(response)%10):]
-                #     else:
-                #         pagination[i] = response[10*i:10*(i+1)]
-                
-                # print(pagination[page-1])
-                # print(page_dic)
+
+
                 context = {
                     'total': response,
                     'response': page_obj,
