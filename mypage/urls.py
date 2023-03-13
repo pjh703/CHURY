@@ -37,5 +37,6 @@ urlpatterns = [
 
     # 이용권 구매
     path('pay/', views.pay, name='pay'),
+    path('approval/<pk>/', views.approval, name='approval'),
 
 ]

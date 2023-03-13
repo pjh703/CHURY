@@ -10,7 +10,8 @@ from django.urls import reverse_lazy, reverse
 import requests
 import pandas as pd
 import numpy as np
-import openpyxl
+from datetime import datetime
+from pytz import timezone
 
 from konlpy.tag import Okt  # 한글 형태소
 import re
@@ -573,7 +574,7 @@ def pay(request):
         id = request.POST['user_id']
         user_id = User.objects.get(id = id).id
         try:
-            is_regist = MYINFO.objects.get(id = user_id)
+            is_regist = MYINFO.objects.get(id = user_id).regist
         except:
             is_regist = 0
 
@@ -595,15 +596,42 @@ def pay(request):
                 "quantity": "1",                # 구매 물품 수량
                 "total_amount": "4900",        # 구매 물품 가격
                 "tax_free_amount": "0",         # 구매 물품 비과세
-                "approval_url": "http://localhost:8000/mypage/profile/",
+                "approval_url": f"http://localhost:8000/mypage/approval/{user_id}/",
                 "cancel_url": "http://localhost:8000/mypage/profile/",
                 "fail_url": "http://localhost:8000/mypage/profile/",
             }
 
             res = requests.post(URL, headers=headers, params=params)
-            print(res.json())
             request.session['tid'] = res.json()['tid']      # 결제 승인시 사용할 tid를 세션에 저장
             next_url = res.json()['next_redirect_pc_url']   # 결제 페이지로 넘어갈 url을 저장
             return redirect(next_url)
     
     return render(request, 'mypage/env.html')
+
+
+# 결제 승인
+def approval(request, pk):
+    user_id = User.objects.get(id = pk).id
+    URL = "https://kapi.kakao.com/v1/payment/approve"
+    headers = {
+        "Authorization": "KakaoAK " + "8014c7551c26de7bcadcd6419eb22777",
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+    }
+    params = {
+        "cid": "TC0ONETIME",    # 테스트용 코드
+        "tid": request.session['tid'],  # 결제 요청시 세션에 저장한 tid
+        "partner_order_id": "1001",     # 주문번호
+        "partner_user_id": user_id,    # 유저 아이디
+        "pg_token": request.GET.get("pg_token"),     # 쿼리 스트링으로 받은 pg토큰
+    }
+
+    res = requests.post(URL, headers=headers, params=params)
+    if(res.status_code == 200):
+        post = MYINFO()
+        post.id = user_id
+        post.regist = 1
+        post.email_id = user_id
+        post.reg_date = datetime.now(timezone('Asia/Seoul'))
+        post.save()
+
+    return render(request, 'mypage/profile.html')
