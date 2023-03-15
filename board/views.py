@@ -25,10 +25,10 @@ from konlpy.tag import Okt
 
 
 # 글자료 불러오기
-dataori = pd.read_excel('book_db.xlsx', nrows=15000)  # import를 위해서 dataori
+dataori = pd.read_excel('book_db.xlsx')  # import를 위해서 dataori
+data = dataori
 
-
-vectorizer = TfidfVectorizer(min_df = 100, sublinear_tf = True)
+vectorizer = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
 vectorizerfit = vectorizer.fit(data['total'])
 vecdf = vectorizer.transform(data['total']).toarray()
 
@@ -81,8 +81,66 @@ def home(request):
         for l in range(0,len(book_id)):
             book_sel_data = pd.concat([book_sel_data, data[data['id'] == int(book_id[l]['book_id'])]])
 
-        # print(book_sel_data)
+        
+        # 유저 평점 기반으로 도서 추천
+        star_a = MYSTAR.objects.all()
+        star_aa=pd.DataFrame(star_a.values())
 
+        try : # 
+            # 현재 사용자
+            star_1 = MYSTAR.objects.filter(user_id=e_id)
+            star_11=pd.DataFrame(star_1.values())
+            star_111 = star_11['user_id'][0] # 사용자의 id
+
+            # 1
+            def matrix_factorization(R, K, step=200, learning_rate=0.01, r_lambda=0.01):
+                num_users, num_items = R.shape
+                np.random.seed(0)
+                P = np.random.normal(scale=1./K, size=(num_users, K))  
+                Q = np.random.normal(scale=1./K, size=(num_items, K))  
+                non_zeros = [ (i,j,R[i,j]) for i in range(num_users) for j in range(num_items) if R[i,j] > 0 ]
+                for step in range(step): 
+                    for i, j, r in non_zeros:
+                        e_ij = r - np.dot(P[i,:], Q[j,:].T)
+                        P[i,:] = P[i,:] + learning_rate*(e_ij * Q[j,:] - r_lambda*P[i,:])
+                        Q[j,:] = Q[j,:] + learning_rate*(e_ij * P[i,:] - r_lambda*Q[j,:])     
+                return P, Q
+            # 2
+            star_matrix = star_aa.pivot_table(index='user_id', columns='book_id', values='star')
+            P,Q = matrix_factorization(star_matrix.values, K=50, step=200, 
+                                    learning_rate=0.01, r_lambda=0.01)
+            pred_matrix = np.dot(P, Q.T)
+            # 3
+            star_pred_matrix = pd.DataFrame(pred_matrix, index=star_matrix.index,
+                                            columns=star_matrix.columns)
+            # 4
+            def get_unseen_book(star_matrix, user_id):
+                user_star = star_matrix.loc[user_id]
+                already_seen = user_star[user_star >0].index.tolist()
+                book_list = star_matrix.columns.tolist()
+                unseen_list = set(book_list).difference(set(already_seen))
+                return unseen_list
+
+            def recomm_book_by_userId(pred_df, user_id, unseen_list, top_n=5):
+                recomm_book = pred_df.loc[user_id, unseen_list].sort_values(ascending=False)[:top_n]
+                return recomm_book
+
+            unseen_list = get_unseen_book(star_matrix, star_111) # star_111 : 현재 user_id
+            recomm_book = recomm_book_by_userId(star_pred_matrix, star_111, unseen_list, top_n=5)
+            recomm_book = pd.DataFrame(recomm_book.values, index=recomm_book.index,
+                                        columns=['pred_score'])
+            recomm_book = recomm_book.reset_index()
+
+            ii = pd.DataFrame()
+            for i in recomm_book['book_id'].values:
+                ii = pd.concat([ii, pd.DataFrame(data[data['id'] == int(i)])])
+        
+            response_data_star = ii.to_dict('records') # 별점 기반 다른 사용자로부터 추천
+
+        except : 
+            response_data_star = [] # 별점 기반 다른 사용자로부터 추천
+        
+        
         response_data2 = book_sel_data.to_dict('records') # 유저 추천
 
         response_data = data.head(20).to_dict('records')
@@ -95,7 +153,6 @@ def home(request):
         
         response_new = data.sort_values('조회수_단위').head(20).to_dict('records')
 
-        # print(type(response_data2), type(response_data))
 
         context = {
             'response_data': response_data,
@@ -103,7 +160,8 @@ def home(request):
             'response_top10': response_top10,
             'response_sf': response_sf,
             'response_fear': response_fear,
-            'response_new': response_new
+            'response_new': response_new,
+            'response_data_star' : response_data_star
         }
 
         return render(request, "board/home.html", context)
