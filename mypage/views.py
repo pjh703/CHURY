@@ -164,6 +164,8 @@ def mydic(request):
     similar_book = data.loc[intro_sim_sorted_idx.index]
 
     response_intro = similar_book.to_dict('records')[1:6]
+    for i in range(0, len(response_intro)):
+        response_intro[i]['chu'] = intro_sim_sorted_idx[1:6].to_list()[i] * 100
     #######
 
 
@@ -213,6 +215,8 @@ def mydic_del(request):
     similar_book = data.loc[intro_sim_sorted_idx.index]
 
     response_intro = similar_book.to_dict('records')[1:6]
+    for i in range(0, len(response_intro)):
+        response_intro[i]['chu'] = intro_sim_sorted_idx[1:6].to_list()[i] * 100
     #######
 
 
@@ -283,6 +287,8 @@ def mydic2(request):
     similar_book = data.loc[intro_sim_sorted_idx.index]
 
     response_intro = similar_book.to_dict('records')[1:6]
+    for i in range(0, len(response_intro)):
+        response_intro[i]['chu'] = intro_sim_sorted_idx[1:6].to_list()[i] * 100
     #######
 
 
@@ -360,11 +366,11 @@ def choose(request):
 
 
         df_list = data['장르'].drop_duplicates().to_list()  # 장르 목록
-        data2 = pd.DataFrame(columns=data.columns)
+        data2 = pd.DataFrame(columns=data.columns)  # 빈 데이터 프레임
 
         # 장르별 천개씩
         for i in df_list:
-            data2 = pd.concat([data2, data[data['장르'] == i][:1000]])
+            data2 = pd.concat([data2, data[data['장르'] == i][:1000]])  # 장르별 개수 추가
         
         data2 = data2.reset_index(drop=True)
 
@@ -387,7 +393,8 @@ def choose(request):
         similar_book = data2.loc[intro_sim_sorted_idx.index]
 
         # 코사인 유사도 열에 추가
-        similar_book['cosi'] = intro_sim_sorted_idx[0:21]
+        # similar_book['cosi'] = intro_sim_sorted_idx[0:21]
+
         cols = [k for k in similar_book]
         book_queryset = [dict(zip(cols, k)) for k in similar_book.values]
 
@@ -402,17 +409,18 @@ def choose(request):
             bulk = book_queryset[l]['id']
             book_list.append(bulk)
 
-        cosi_list = []
-        for l in range(1,21):
-            cosi_bulk = book_queryset[l]['cosi']
-            cosi_list.append(cosi_bulk)
+        # cosi_list = []
+        # for l in range(1,21):
+        #     cosi_bulk = book_queryset[l]['cosi']
+        #     cosi_list.append(cosi_bulk)
 
         bulk_list = []
         for l in range(0, len(book_list)):
             bulk_list.append(MYSELECT(
                             user_id=User.objects.get(id=id).id,
                             book_id=book_list[l],
-                            cosi=cosi_list[l]))
+                            # cosi=cosi_list[l]
+                            ))
                             
         selete_data = MYSELECT.objects.bulk_create(bulk_list)
 
@@ -521,19 +529,16 @@ def email_done2(request):
     if request.method == "POST":
         username = request.POST['username']
         try:
-            user_id = User.objects.filter(username = username)[0].id
+            id_check = User.objects.filter(username = username)[0].id
         except:
             return redirect("/board/home")
         
-        try:
-            post = MYINFO.objects.get(id = user_id)
-        except:
+        if(id_check != 'null'):
             post = MYINFO()
-            post.id = user_id
-        
-        post.email_confirm = 1
-        post.email_id = user_id
-        post.save()
+            post.id = id_check
+            post.email_confirm = 1
+            post.email_id = id_check
+            post.save()
     
     return render(request, "mypage/email_done2.html")
 
@@ -601,12 +606,8 @@ def approval(request, pk):
 
     res = requests.post(URL, headers=headers, params=params)
     if(res.status_code == 200):
-        try:
-            post = MYINFO.objects.get(id = user_id)
-        except:
-            post = MYINFO()
-            post.id = user_id
-
+        post = MYINFO()
+        post.id = user_id
         post.regist = 1
         post.email_id = user_id
         post.reg_date = datetime.now(timezone('Asia/Seoul'))

@@ -216,7 +216,7 @@ def BoardDetailView(request, pk):
 
     response_intro = similar_book.to_dict('records')[1:6]
     for i in range(0, len(response_intro)):
-        response_intro[i]['chu'] = intro_sim_sorted_idx[1:6].to_list()[i] * 125
+        response_intro[i]['chu'] = intro_sim_sorted_idx[1:6].to_list()[i] * 100
 
 
     isbook = False # 책이 있는지 없는지 검사하는 값
