@@ -25,6 +25,7 @@ from konlpy.tag import Okt
 
 
 # 글자료 불러오기
+
 dataori = pd.read_excel('book_db.xlsx')  # import를 위해서 dataori
 data = dataori
 
@@ -67,6 +68,7 @@ def home(request):
     choo = choo1.exists()+choo2.exists()+choo3.exists()+choo4.exists()+choo5.exists()+choo6.exists()+choo7.exists()+choo8.exists()+choo9.exists()+choo10.exists()+choo11.exists()+choo12.exists()+choo13.exists()+choo14.exists()+choo15.exists()+choo16.exists()+choo17.exists()+choo18.exists()+choo19.exists()     
    
 
+
     # MYCHOO DATA가 있으면 home, 없으면 choose
     if choo:
         
@@ -76,7 +78,6 @@ def home(request):
 
 
         book_id = MYSELECT.objects.filter(user_id = e_id).values('book_id')
-
         book_sel_data = pd.DataFrame()
         for l in range(0,len(book_id)):
             book_sel_data = pd.concat([book_sel_data, data[data['id'] == int(book_id[l]['book_id'])]])
@@ -137,6 +138,7 @@ def home(request):
         
             response_data_star = ii.to_dict('records') # 별점 기반 다른 사용자로부터 추천
 
+
         except : 
             response_data_star = [] # 별점 기반 다른 사용자로부터 추천
         
@@ -163,9 +165,9 @@ def home(request):
             'response_new': response_new,
             'response_data_star' : response_data_star
         }
-
         return render(request, "board/home.html", context)
-    
+
+
 
    
     else:   # 장르 데이터베이스 없을 시 choose로

@@ -49,14 +49,14 @@
                                     <div class="othertxt">
                                         <a href="{% url 'mypage:profile' %}"><img id="cancelimg" src="{% static 'mypage\images\close.svg' %}" alt=""></a>
                                         <div class="warning">추라이 이용권 구매 혜택</div>
-                                        <img id="subscrimg" src="{% static 'mypage\images\subscribe.png' %}">
+                                        <!-- <img id="subscrimg" src="{% static 'mypage\images\subscribe.png' %}"> -->
                                         <div class="description">
                                             <ul>
                                                 <li>한달 간 추라이의 모든 도서를 이용 가능합니다.</li>
                                                 <li>취향에 꼭 맞는 도서를 추천해 드립니다.</li>
                                             </ul>
                                         </div>
-                                        <div class="warning2">월 4,900원</div>
+                                        <div class="warning2" style="margin-bottom: 30px;">월 4,900원</div>
                                     </div>
                                     <div class="modal-buttons">
                                         <form method="post" action="{% url 'mypage:pay' %}">
