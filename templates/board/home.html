@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} 
 <!doctype html>
 <html lang="kr">
 <head>
@@ -33,15 +33,24 @@
                 <li>
                     <a href="/board/search/?page=1&searchType=genre&genreWord=판타지/무협&sortType2=all">판타지/무협</a>
                 </li>
+
+                
+                <!-- 라이트/다크 토글 -->
+                <li>
+                    <div id="toggle">
+                        <i class="indicator"></i>
+                    </div>
+                </li>
             </ul>
+
         </div>
         <div class="right">
             <form action="{% url 'board:search' %}" method="get" id="searchForm">
                 <div class="input-group">
-                    <select name="searchType" class="form-select" style="margin-right: 10px; padding: 5.9px; border: 1px solid black; float:left;">
-                        <option value="title">제목 검색</option>
-                        <option value="author">저자 검색</option>
-                        <option value="keyword">키워드 검색</option>
+                    <select name="searchType" class="form-select" style="margin-right: 10px; padding: 5.9px; float:left;">
+                        <option value="title" style="color:black; background-color: rgb(247, 247, 247);">제목 검색</option>
+                        <option value="author" style="color:black; background-color: rgb(247, 247, 247);">저자 검색</option>
+                        <option value="keyword" style="color:black; background-color: rgb(247, 247, 247);">키워드 검색</option>
                     </select>
                     <div class="icon search" style="float:left;">
                         <div class="search-bar">
@@ -249,6 +258,7 @@
             </div>
         </div>
     </footer>
+
     <script>
         const next = document.querySelectorAll('.next');
         const prev = document.querySelectorAll('.prev');
@@ -326,4 +336,19 @@
     </script>
     {% endif %}
 </body>
+
+<!-- 라이트/다크 토글 -->
+<script>
+    const section = document.querySelector('section');
+    const nav = document.querySelector('nav');
+    const body = document.querySelector('body');
+    const toggle = document.getElementById('toggle');
+    toggle.onclick = function(){
+        toggle.classList.toggle('active')
+        body.classList.toggle('active')
+        nav.classList.toggle('active')
+        section.classList.toggle('active');
+    }
+</script>
+
 </html>

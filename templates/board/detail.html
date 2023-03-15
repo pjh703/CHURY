@@ -11,11 +11,9 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'board/detail/detail.css' %}">
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-
 </head>
 <body>
     {% if user.is_authenticated %}
@@ -113,7 +111,7 @@
                             </div>
                             {% endif %}
                             <div class="icons">
-                                <img src="/static/board/detail/image/kakao.png" title="카카오톡으로 공유" width="52px" margin-left="10px" alt="" onClick="sendLinkDefault();" class="kakao_link">
+                                <img src="/static/board/detail/image/kakao.png" title="카카오톡으로 공유" width="48px" alt="" onClick="sendLinkDefault();" class="kakao_link">
                                 
                                 <script>
                                 try {
@@ -157,45 +155,36 @@
                                 <a class="fa-solid fa-circle-play fa-3x" title="바로 보기" href="https://www.joara.com/book/" style="float:left;"></a>
                                 {% endif %}
                                 {% if isbook %}
-
-                            <form action="{% url 'mypage:mydic_del' %}" id="lib_out" method="post" style="float:left; margin-left: 10px;"> 
-
+                            <form action="{% url 'mypage:mydic_del' %}" method="post" style="float:left; margin-left: 10px;" id="btn1"> 
                                 {% csrf_token %}
                                 <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                                 <input value="{{ user.id }}" name="id" id="id" style="display: none;">
                                 
                                 <button type="button" class="fa-solid fa-circle-minus fa-3x" onclick="button1_click();" title="내 책장에서 빼기"></button>
                                 <script>
-                                    let out_form = document.getElementById("lib_out");
                                     function button1_click() {
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: '내 책장에서 제외되었습니다.',
-                                            })
-                                        setTimeout(function(){out_form.submit()}, 3000);
-
+                                        alert('내 책장에 제외되었습니다.');
+                                        setTimeout(alerttime1, 500);
+                                    }
+                                    function alerttime1() {
+                                        document.getElementById("btn1").submit();
                                     }
                                 </script>
                             </form>
                             {% else %}
-                            <form action="{% url 'mypage:mydic' %}" id="lib_in" method="post" style="float:left; margin-left: 10px;"> 
-
+                            <form action="{% url 'mypage:mydic' %}" method="post" style="float:left; margin-left: 10px;" id="btn2"> 
                                 {% csrf_token %}
                                 <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                                 <input value="{{ user.id }}" name="id" id="id" style="display: none;">
                                 
                                 <button type="button" class="fa-solid fa-circle-plus fa-3x" onclick="button2_click();" title="내 책장에 담기"></button>
                                 <script>
-                                    let in_form = document.getElementById("lib_in");
-                                    function button2_click(seq){
-                                        // alert('내 책장에 추가되었습니다.')
-                                        Swal.fire({
-                                            title: '내 책장에 추가되었습니다.',
-                                            imageUrl: "{{ i.cover_img_url }}",
-                                            imageWidth: 150,
-                                            imageHeight: 225
-                                            })
-                                        setTimeout(function(){in_form.submit()}, 3000);
+                                    function button2_click() {
+                                        alert('내 책장에 추가되었습니다.');
+                                        setTimeout(alerttime, 500);
+                                    }
+                                    function alerttime() {
+                                        document.getElementById("btn2").submit();
                                     }
                                 </script>
                             </form>
@@ -235,12 +224,19 @@
                                     <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                                     <div class="related-title" style="text-align: center;">{{ i.제목 }}</div>
                                 </form>
-                                
                             </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <canvas id="pieChart{{ forloop.counter0 }}" style="width:20px; position: absolute; margin-left: 60px; margin-top: 5px;"></canvas>
+                                <span id="chu{{ forloop.counter0 }}" style="margin-left: 85px; font-size: small; margin-right: 0px;">
+                                    {{ i.chu|floatformat:1 }} 
+                                </span><span style="font-size: small;">%</span>
+                            </td>       
                         </tr>
                     </table>
                 </div>
-                {% endfor %}
+                {% endfor response_intro %}
             </div>
         </div>
         <div class="section2">
@@ -273,8 +269,7 @@
                     <!-- 실험 2 -->
                     <td>
                         {% if star %}
-
-                        <form action="{% url 'mypage:mydic2' %}" id="star_reform" method="post">
+                        <form action="{% url 'mypage:mydic2' %}" method="post" id="btn3">
                             {% csrf_token %}
                             <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                             <input value="{{ user.id }}" name="id" id="id" hidden>
@@ -300,19 +295,18 @@
                                 style="color: white; font-size:15px; letter-spacing: 2px;">
                             </div>
                             <script>
-                                function star_re(seq){
-                                    let star_reform = document.getElementById("star_reform");
-                                    Swal.fire({
-                                            icon: 'success',
-                                            title: '별점이 수정되었습니다.',
-                                            })
-                                    setTimeout(function(){star_reform.submit()}, 3000);
+                                function star_re() {
+                                    alert('별점이 수정되었습니다.');
+                                    setTimeout(alerttime3, 500);
+                                }
+                                function alerttime3() {
+                                    document.getElementById("btn3").submit();
                                 }
                             </script>
                         </form> 
 
                         {% else %}
-                        <form action="{% url 'mypage:mydic2' %}" id="star_form" method="post">
+                        <form action="{% url 'mypage:mydic2' %}" method="post" id="btn4">
                             {% csrf_token %}
                             <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                             <input value="{{ user.id }}" name="id" id="id" hidden>
@@ -324,17 +318,16 @@
                                     <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
                                     <br>  
                                 </span>
-                                <input type="button" value="등록" onclick="star_re();" class="enroll"
+                                <input type="button" value="등록" onclick="star_click();" class="enroll"
                                 style="color: white; font-size:15px; letter-spacing: 2px;">
                             </div>
                             <script>
-                                function star_re(seq){
-                                    let star_form = document.getElementById("star_form");
-                                    Swal.fire({
-                                            icon: 'success',
-                                            title: '별점이 등록되었습니다.',
-                                            })
-                                    setTimeout(function(){star_form.submit()}, 3000);
+                                function star_click() {
+                                    alert('별점이 등록되었습니다.');
+                                    setTimeout(alerttime4, 500);
+                                }
+                                function alerttime4() {
+                                    document.getElementById("btn4").submit();
                                 }
                             </script>
                         </form>
@@ -528,6 +521,41 @@
         window.location.replace('/user/login/')
     </script>
     {% endif %}
+
+    <script>
+        var data2 = []
+        for (let i = 0; i < 5; i++) {
+        
+            var names2 = ['name1', 'name2', 'name3'];
+            var colors2 = [];
+            var dates2 = ['a'];
+            data2.push([document.getElementById('chu'+i).innerText, 100-document.getElementById('chu'+i).innerText]);
+        
+            console.log(data2);
+            
+            new Chart('pieChart'+i, {
+                type: 'pie',  
+            data: {
+                labels: dates2,  
+                datasets: dates2.map((a, b) => ({
+                label: names2[i],
+                data: data2[i],
+                borderColor: colors2[i],
+                // borderWidth: 1
+                }))  
+            },
+            options:  {
+                responsive: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                }
+            }
+        });
+    }
+            
+    </script>
 
     <!-- alert창 css -->
     <script>
