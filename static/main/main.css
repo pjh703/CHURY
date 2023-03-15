@@ -94,6 +94,7 @@ nav .left .menu-list li {
 }
 nav .left .menu-list li a {
   font-size: 1rem;
+  color: black;
 }
 nav .right {
   display: flex;
@@ -166,19 +167,24 @@ nav .right .search .search-bar {
   display: flex;
   height: 15px;
 }
+input::placeholder{
+  color: black;
+}
 nav .right .search .search-bar input {
   background-color: transparent;
   border: none;
   color: black;
   outline: none;
-  background-color: white;
+  /* background-color: white; */
   padding-right: 2px;
   padding-left: 10px;
 }
 
 .right select {
   font-size: 15px;
+  background-color: white;
 }
+
 
 
 main {
@@ -464,7 +470,7 @@ section .content-list .next {
 
 footer {
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 120px;
 }
 footer .wrap {
   width: 80%;
@@ -487,3 +493,108 @@ footer .wrap .options .option {
     bottom: 10%;
   }
 }
+
+
+
+/* ================================= */
+/* 라이트/다크모드 토글 */
+
+#toggle
+{
+  margin-right: 10px;
+  width: 52px;
+  height: 27px;
+  border-radius: 27px;
+  background-color: #fff1bf;
+  cursor: pointer;
+}
+#toggle .indicator
+{
+  margin-top: 1px;
+  margin-left: 1px;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: rgb(247, 204, 75);
+  border-radius: 50%;
+  transform: scale(0.9);
+}
+
+
+#toggle.active
+{
+  background-color: rgb(88, 98, 125);
+}
+#toggle.active .indicator
+{
+  left:472px;
+  background-color: rgb(105, 153, 200);
+}
+
+
+body.active
+{
+  background-color: rgb(70, 70, 70);
+}
+nav.active
+{
+  background-color: rgb(70, 70, 70);
+}
+section.active
+{
+  background-color: rgb(70, 70, 70);
+}
+
+nav.active .left .menu-list li a
+{
+  color: white;
+}
+section.active h1
+{
+color: #ddd;
+}
+section.active i
+{
+  color: #b7b7b7;
+}
+section.active .content-list
+{
+  border-bottom: 1px solid rgb(95, 95, 95);
+}
+section.active .contents
+{
+  background-color: #6f6f6f;
+}
+nav.active .form-select
+{
+  background-color: rgb(70, 70, 70);
+  border: 1px solid rgb(124, 124, 124);
+  color: #ddd;
+}
+nav.active .search
+{
+  background-color: rgb(70, 70, 70);
+  border: 1px solid rgb(124, 124, 124);
+}
+nav.active input
+{
+  background-color: rgb(70, 70, 70);
+  border: 1px solid rgb(124, 124, 124);
+}
+nav.active i
+{
+  color: white;
+}
+nav.active input::placeholder
+{
+  color: #ddd;
+}
+nav.active .dropdown-content a
+{
+  color: #ddd;
+}
+nav.active .dropdown-content
+{
+  background-color: #6f6f6f;
+}
+nav.active .dropdown-content a:hover {background-color: #565656;}
