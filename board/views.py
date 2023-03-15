@@ -26,7 +26,7 @@ from konlpy.tag import Okt
 
 # 글자료 불러오기
 dataori = pd.read_excel('book_db.xlsx', nrows=15000)  # import를 위해서 dataori
-
+data = dataori
 
 vectorizer = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
 vectorizerfit = vectorizer.fit(data['total'])
