@@ -6,12 +6,15 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>detail</title>
+    <title>CHURY | Detail</title>
+    <link rel="shortcut icon" href="/static/board/detail/image/churyico2.ico">
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'board/detail/detail.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 </head>
 <body>
     {% if user.is_authenticated %}
@@ -109,41 +112,89 @@
                             </div>
                             {% endif %}
                             <div class="icons">
+                                <img src="/static/board/detail/image/kakao.png" title="카카오톡으로 공유" width="52px" margin-left="10px" alt="" onClick="sendLinkDefault();" class="kakao_link">
+                                
+                                <script>
+                                try {
+                                  function sendLinkDefault() {
+                                    Kakao.init('e3040d57d1ed3c96910fded8e58b1675')
+                                    share_data = '/board/detail/{{i.id}}'
+                                    Kakao.Link.sendDefault({
+                                      objectType: 'feed',
+                                      content: {
+                                        title: 'CHURY가 추천하는 추천도서📚✨',
+                                        description: '취향에 꼭 맞는 책을 추천해드립니다.',
+                                        imageUrl:
+                                        '{{ i.cover_img_url }}',
+                                        link: {
+                                          mobileWebUrl: '',
+                                          webUrl: '',
+                                        },
+                                      },
+                                    
+                                      buttons: [
+                                        {
+                                          title: '추천 책 보러가기',
+                                          link: {
+                                            mobileWebUrl: 'http://127.0.0.1:8000' + share_data,
+                                            webUrl: 'http://127.0.0.1:8000' + share_data,
+                                          },
+                                        },
+                                        
+                                      ],
+                                    })
+                                  }
+                                ; window.kakaoDemoCallback && window.kakaoDemoCallback() }
+                                catch(e) { window.kakaoDemoException && window.kakaoDemoException(e) }
+                                </script>
+                                
+                                
+                                
                                 {% if i.tag == '최신' %}
                                 <a class="fa-solid fa-circle-play fa-3x" title="바로 보기" href="https://www.joara.com/book/{{ i.book_url }}" style="float:left;"></a>
                                 {% else %}
                                 <a class="fa-solid fa-circle-play fa-3x" title="바로 보기" href="https://www.joara.com/book/" style="float:left;"></a>
                                 {% endif %}
                                 {% if isbook %}
-                            <form action="{% url 'mypage:mydic_del' %}" method="post" style="float:left; margin-left: 10px;"> 
+
+                            <form action="{% url 'mypage:mydic_del' %}" id="lib_out" method="post" style="float:left; margin-left: 10px;"> 
+
                                 {% csrf_token %}
                                 <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                                 <input value="{{ user.id }}" name="id" id="id" style="display: none;">
                                 
-                                <button type="submit" class="fa-solid fa-circle-minus fa-3x" onclick="button1_click();" title="내 책장에서 빼기"></button>
+                                <button type="button" class="fa-solid fa-circle-minus fa-3x" onclick="button1_click();" title="내 책장에서 빼기"></button>
                                 <script>
+                                    let out_form = document.getElementById("lib_out");
                                     function button1_click() {
-                                        alert('내 책장에서 제외되었습니다.')
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: '내 책장에서 제외되었습니다.',
+                                            })
+                                        setTimeout(function(){out_form.submit()}, 3000);
+
                                     }
                                 </script>
                             </form>
                             {% else %}
-                            <form action="{% url 'mypage:mydic' %}" method="post" style="float:left; margin-left: 10px;"> 
+                            <form action="{% url 'mypage:mydic' %}" id="lib_in" method="post" style="float:left; margin-left: 10px;"> 
+
                                 {% csrf_token %}
                                 <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                                 <input value="{{ user.id }}" name="id" id="id" style="display: none;">
                                 
-                                <button type="submit" class="fa-solid fa-circle-plus fa-3x" onclick="button2_click();" title="내 책장에 담기"></button>
+                                <button type="button" class="fa-solid fa-circle-plus fa-3x" onclick="button2_click();" title="내 책장에 담기"></button>
                                 <script>
+                                    let in_form = document.getElementById("lib_in");
                                     function button2_click(seq){
-                                        alert('내 책장에 추가되었습니다.')
-                                        // Swal.fire({
-                                        //     title: '내 책장에 추가되었습니다.',
-                                        //     imageUrl: "{{ i.cover_img_url }}",
-                                        //     imageWidth: 150,
-                                        //     imageHeight: 225,
-                                        //     timer: 3000,
-                                        //     })
+                                        // alert('내 책장에 추가되었습니다.')
+                                        Swal.fire({
+                                            title: '내 책장에 추가되었습니다.',
+                                            imageUrl: "{{ i.cover_img_url }}",
+                                            imageWidth: 150,
+                                            imageHeight: 225
+                                            })
+                                        setTimeout(function(){in_form.submit()}, 3000);
                                     }
                                 </script>
                             </form>
@@ -229,7 +280,8 @@
                     <!-- 실험 2 -->
                     <td>
                         {% if star %}
-                        <form action="{% url 'mypage:mydic2' %}" method="post">
+
+                        <form action="{% url 'mypage:mydic2' %}" id="star_reform" method="post">
                             {% csrf_token %}
                             <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                             <input value="{{ user.id }}" name="id" id="id" hidden>
@@ -251,18 +303,23 @@
                                     <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
                                     <br>  
                                 </span>
-                                <input type="submit" value="수정하기" onclick="star_re();" class="enroll"
+                                <input type="button" value="수정하기" onclick="star_re();" class="enroll"
                                 style="color: white; font-size:15px; letter-spacing: 2px;">
                             </div>
                             <script>
                                 function star_re(seq){
-                                    alert('별점이 수정되었습니다.');
+                                    let star_reform = document.getElementById("star_reform");
+                                    Swal.fire({
+                                            icon: 'success',
+                                            title: '별점이 수정되었습니다.',
+                                            })
+                                    setTimeout(function(){star_reform.submit()}, 3000);
                                 }
                             </script>
                         </form> 
 
                         {% else %}
-                        <form action="{% url 'mypage:mydic2' %}" method="post">
+                        <form action="{% url 'mypage:mydic2' %}" id="star_form" method="post">
                             {% csrf_token %}
                             <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                             <input value="{{ user.id }}" name="id" id="id" hidden>
@@ -274,12 +331,17 @@
                                     <input type="range" name="star" id="star" oninput="drawStar(this)" value="1" step="1" min="0" max="5">
                                     <br>  
                                 </span>
-                                <input type="submit" value="등록" onclick="star_click();" class="enroll"
+                                <input type="button" value="등록" onclick="star_re();" class="enroll"
                                 style="color: white; font-size:15px; letter-spacing: 2px;">
                             </div>
                             <script>
-                                function star_click(seq){
-                                    alert('별점이 등록되었습니다.');
+                                function star_re(seq){
+                                    let star_form = document.getElementById("star_form");
+                                    Swal.fire({
+                                            icon: 'success',
+                                            title: '별점이 등록되었습니다.',
+                                            })
+                                    setTimeout(function(){star_form.submit()}, 3000);
                                 }
                             </script>
                         </form>
@@ -509,5 +571,24 @@
             
     </script>
 
+    <script>
+        window.alert = function(message, timeout=null){
+            const alert = document.createElement('div');
+            alert.classList.add('alert');
+            alert.setAttribute('style',`
+                color: white;
+                font-size: 20px;
+                background-color: black;
+                position: fixed;
+                top: 50%;
+                left: 45%;
+                padding: 20px;
+                border-radius: 10px;
+            `);
+            alert.innerText = message;
+            document.body.appendChild(alert);
+        }
+
+    </script>
 </body>
 </html>

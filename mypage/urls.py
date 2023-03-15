@@ -29,10 +29,14 @@ urlpatterns = [
     path('mydic2/', views.mydic2, name='mydic2'),
 
     # 이메일 인증 완료
-    path('email_done/', views.email_done, name='email_done'),
+    path('email_done/<pk>', views.email_done, name='email_done'),
     path('email_done2/', views.email_done2, name='email_done2'),
     
     # 고객지원센터
     path('notice/', views.notice, name='notice'),
+
+    # 이용권 구매
+    path('pay/', views.pay, name='pay'),
+    path('approval/<pk>/', views.approval, name='approval'),
 
 ]

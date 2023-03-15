@@ -3,19 +3,22 @@ from django.views.generic import UpdateView, DeleteView, DetailView
 
 from .forms import UserUpdateForm
 from .models import MYBOOK, MYCHOOSE, MYSTAR, MYSELECT
+from user.models import MYINFO
 
 from user.models import User, MYINFO
 from django.urls import reverse_lazy, reverse
 import requests
 import pandas as pd
 import numpy as np
-import openpyxl
+from datetime import datetime
+from pytz import timezone
 
 from konlpy.tag import Okt  # 한글 형태소
 import re
 from board.views import dataori, cos_sim_df
 
 from sklearn.feature_extraction.text import TfidfVectorizer
+
 from ast import literal_eval
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -32,6 +35,7 @@ from django.template.loader import render_to_string
 data = dataori  
 
 
+
 def LibraryView(request, pk):
     sort_type = request.GET.get('sortType')
     # print(sort_type)
@@ -39,47 +43,50 @@ def LibraryView(request, pk):
     response = []
     id = User.objects.get(id = pk).id
     mybooks = MYBOOK.objects.filter(user_id = id).values('book_id')
-    for book in mybooks:
-        res = data[data['id'] == int(book['book_id'])].to_dict('records')
-        if len(res) > 0: 
-            response.append(res[0])
+    if len(mybooks) > 0:
+        for book in mybooks:
+            res = data[data['id'] == int(book['book_id'])].to_dict('records')
+            if len(res) > 0: 
+                response.append(res[0])
+                print("response: ", response)
     
-    if response != '[]':
-        df_response = pd.DataFrame(response)
+        if response != '[]':
+            df_response = pd.DataFrame(response)
 
-        genre = np.array(df_response.groupby('장르').count()['id'].index)
-        value = np.array(df_response.groupby('장르').count()['id'])
-    
-        if sort_type == 'title':
-            df_response = df_response.sort_values('제목')
-        # elif sort_type == 'star':
-        #     df_response = df_response.sort_values('제목')
-        else:    
-            df_response = df_response[::-1]
+            genre = np.array(df_response.groupby('장르').count()['id'].index)
+            value = np.array(df_response.groupby('장르').count()['id'])
+        
+            if sort_type == 'title':
+                df_response = df_response.sort_values('제목')
+            # elif sort_type == 'star':
+            #     df_response = df_response.sort_values('제목')
+            else:    
+                df_response = df_response[::-1]
 
-        lib = df_response.to_dict('records')
-            
-        context = {
-            'response': lib,
-            'sortType': sort_type,
-            'graph_genre': genre,
-            'graph_value': value,
+            lib = df_response.to_dict('records')
+                
+            context = {
+                'response': lib,
+                'sortType': sort_type,
+                'graph_genre': genre,
+                'graph_value': value,
 
-        }
-        return render(request, "mypage/library.html", context)
-        # return render(request, "mypage/library.html")
+            }
+            return render(request, "mypage/library.html", context)
+            # return render(request, "mypage/library.html")
     else:
         return render(request, "mypage/library.html")
 
 
 def LogLock(request, pk):
     if request.method == 'POST' :
+        username = pk
         my_email = User.objects.filter(username = pk).values('email')[0]['email']
         email = EmailMessage(
             '[CHURY] 메일인증',                # 제목
             "안녕하세요."
             "\n다음 링크를 누르시면 CHURY 계정의 이메일을 인증하는 화면으로 이동합니다." 
-            "\n\nhttp://127.0.0.1:8000/mypage/email_done/"
+            "\n\nhttp://127.0.0.1:8000/mypage/email_done/" + username +
             "\n\n이메일 인증을 요청하지 않았다면 이 이메일을 무시하셔도 됩니다."
             "\nCHURY와 함께 해주셔서 감사합니다.",
             to=[my_email],  # 받는 이메일 리스트
@@ -504,12 +511,99 @@ def choose(request):
     return redirect("/board/home", context)
     
 
-def email_done(request):
-    return render(request, "mypage/email_done.html")
+def email_done(request, pk):
+    context = {
+        'username' : pk
+    }
+    return render(request, "mypage/email_done.html", context) 
 
 def email_done2(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        try:
+            id_check = User.objects.filter(username = username)[0].id
+        except:
+            return redirect("/board/home")
+        
+        if(id_check != 'null'):
+            post = MYINFO()
+            post.id = id_check
+            post.email_confirm = 1
+            post.email_id = id_check
+            post.save()
+    
     return render(request, "mypage/email_done2.html")
 
 # 고객지원센터
 def notice(request):
+
     return render(request, "mypage/notice.html")
+
+# 카카오페이 결제
+def pay(request):
+    if request.method == "POST":
+        id = request.POST['user_id']
+        user_id = User.objects.get(id = id).id
+        try:
+            is_regist = MYINFO.objects.get(id = user_id).regist
+        except:
+            is_regist = 0
+
+        print(is_regist)
+
+        if(is_regist == 1):
+            return render(request, 'mypage/profile.html')
+        else:
+            URL = "https://kapi.kakao.com/v1/payment/ready"
+            headers = {
+                "Authorization": "KakaoAK " + "8014c7551c26de7bcadcd6419eb22777",   # 변경불가
+                "Content-type": "application/x-www-form-urlencoded;charset=utf-8",  # 변경불가
+            }
+            params = {
+                "cid": "TC0ONETIME",    # 테스트용 코드
+                "partner_order_id": "1001",     # 주문번호
+                "partner_user_id": user_id,    # 유저 아이디
+                "item_name": "CHURY 이용권",        # 구매 물품 이름
+                "quantity": "1",                # 구매 물품 수량
+                "total_amount": "4900",        # 구매 물품 가격
+                "tax_free_amount": "0",         # 구매 물품 비과세
+                "approval_url": f"http://localhost:8000/mypage/approval/{user_id}/",
+                "cancel_url": "http://localhost:8000/mypage/profile/",
+                "fail_url": "http://localhost:8000/mypage/profile/",
+            }
+
+            res = requests.post(URL, headers=headers, params=params)
+            request.session['tid'] = res.json()['tid']      # 결제 승인시 사용할 tid를 세션에 저장
+            next_url = res.json()['next_redirect_pc_url']   # 결제 페이지로 넘어갈 url을 저장
+            return redirect(next_url)
+    
+    return render(request, 'mypage/env.html')
+
+
+# 결제 승인
+def approval(request, pk):
+    user_id = User.objects.get(id = pk).id
+    URL = "https://kapi.kakao.com/v1/payment/approve"
+    headers = {
+        "Authorization": "KakaoAK " + "8014c7551c26de7bcadcd6419eb22777",
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+    }
+    params = {
+        "cid": "TC0ONETIME",    # 테스트용 코드
+        "tid": request.session['tid'],  # 결제 요청시 세션에 저장한 tid
+        "partner_order_id": "1001",     # 주문번호
+        "partner_user_id": user_id,    # 유저 아이디
+        "pg_token": request.GET.get("pg_token"),     # 쿼리 스트링으로 받은 pg토큰
+    }
+
+    res = requests.post(URL, headers=headers, params=params)
+    if(res.status_code == 200):
+        post = MYINFO()
+        post.id = user_id
+        post.regist = 1
+        post.email_id = user_id
+        post.reg_date = datetime.now(timezone('Asia/Seoul'))
+        post.save()
+
+    return render(request, 'mypage/profile.html')
+

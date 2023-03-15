@@ -17,10 +17,12 @@ import pandas as pd
 import math
 
 from sklearn.feature_extraction.text import TfidfVectorizer
+
 from sklearn.metrics.pairwise import cosine_similarity
 from ast import literal_eval
 
 from konlpy.tag import Okt
+
 
 # 글자료 불러오기
 dataori = pd.read_excel('book_db.xlsx', nrows=10000)  # import를 위해서 dataori
@@ -29,6 +31,7 @@ data = dataori
 vectorizer = TfidfVectorizer(min_df = 100, sublinear_tf = True)
 vectorizerfit = vectorizer.fit(data['total'])
 vecdf = vectorizer.transform(data['total']).toarray()
+
 
 word_list = sorted(vectorizerfit.vocabulary_.items()) # 단어사전을 정렬합니다.
 
@@ -155,6 +158,7 @@ def BoardDetailView(request, pk):
     for i in range(0, len(response_intro)):
         response_intro[i]['chu'] = intro_sim_sorted_idx[1:6].to_list()[i] * 125
 
+
     isbook = False # 책이 있는지 없는지 검사하는 값
     if request.method == "POST":
         id = request.POST['id'] # html form안의 input 태그에서 가져옴 (input태그 id가 id인 경우)
@@ -182,7 +186,7 @@ def BoardDetailView(request, pk):
             'keyword': keyword, # 책 키워드 리스트
             'isbook': isbook,
             'response_intro' : response_intro, # 유사도검사 인트로
-            'star' : star,
+            # 'star' : star,
         }
         return render(request, "board/detail.html", context)
 

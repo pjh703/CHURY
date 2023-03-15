@@ -6,6 +6,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>CHURY | My Page</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="shortcut icon" href="/static/board/detail/image/churyico2.ico">
     <link rel='stylesheet' type='text/css' media='screen' href="{% static 'mypage/book.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
@@ -68,6 +69,7 @@
                         </div>
                     </div>
                 </div>
+                {% if response|length != 0 %}
                 <div class="down">
                     <section class="contents">
                         <div class="content-list">
@@ -98,6 +100,7 @@
                 </div>
                 <p id="graph_genre" style="display: none;">{{ graph_genre }}</p>
                 <p id="graph_value" style="display: none;">{{ graph_value }}</p>
+                {% endif %}
             </div>
         </div>
 
