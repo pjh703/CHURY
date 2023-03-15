@@ -521,16 +521,19 @@ def email_done2(request):
     if request.method == "POST":
         username = request.POST['username']
         try:
-            id_check = User.objects.filter(username = username)[0].id
+            user_id = User.objects.filter(username = username)[0].id
         except:
             return redirect("/board/home")
         
-        if(id_check != 'null'):
+        try:
+            post = MYINFO.objects.get(id = user_id)
+        except:
             post = MYINFO()
-            post.id = id_check
-            post.email_confirm = 1
-            post.email_id = id_check
-            post.save()
+            post.id = user_id
+        
+        post.email_confirm = 1
+        post.email_id = user_id
+        post.save()
     
     return render(request, "mypage/email_done2.html")
 
@@ -598,8 +601,12 @@ def approval(request, pk):
 
     res = requests.post(URL, headers=headers, params=params)
     if(res.status_code == 200):
-        post = MYINFO()
-        post.id = user_id
+        try:
+            post = MYINFO.objects.get(id = user_id)
+        except:
+            post = MYINFO()
+            post.id = user_id
+
         post.regist = 1
         post.email_id = user_id
         post.reg_date = datetime.now(timezone('Asia/Seoul'))
