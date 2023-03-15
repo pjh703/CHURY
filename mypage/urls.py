@@ -35,4 +35,8 @@ urlpatterns = [
     # 고객지원센터
     path('notice/', views.notice, name='notice'),
 
+    # 이용권 구매
+    path('pay/', views.pay, name='pay'),
+    path('approval/<pk>/', views.approval, name='approval'),
+
 ]

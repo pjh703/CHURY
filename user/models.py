@@ -15,7 +15,9 @@ class MYINFO(models.Model):
     hp_confirm = models.BooleanField(default=False)
     email_confirm = models.BooleanField(default=False)
     adult_confirm = models.BooleanField(default=False)
-    grade = models.IntegerField(default=0)
+    regist = models.BooleanField(default=0)
+    reg_date = models.DateTimeField(null=True)
+
 
     class META:
         pass

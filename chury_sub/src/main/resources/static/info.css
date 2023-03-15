@@ -24,7 +24,7 @@
     display: block;
     width: 150px;
     height: 40px;
-    background-image: url("../mypage/images/logo.png");
+    background-image: url("images/logo.png");
     background-size: contain;
     margin-left: 40px;
     margin-top: 40px;
@@ -70,7 +70,7 @@ ul li:hover a {
     padding-left: 50px;
 }
 
-.home { 
+.home {
     width: 100vw;
     height: 100vh;
     background-color: rgb(243, 243, 243);
@@ -114,8 +114,8 @@ ul li:hover a {
     font-size: 12px;
     font-weight: 700;
     cursor: pointer;
- }
- 
+}
+
 
 /* =========== */
 
@@ -138,12 +138,12 @@ ul li:hover a {
     height: 530px;
     /* background-color: blue; */
     display: flex;
-    
+
 }
 
 
 /* welcome */
-.welcome { 
+.welcome {
     width: 755px;
     height: 255px;
     background-color: white;
@@ -155,13 +155,13 @@ ul li:hover a {
     width: 180px;
     height: 180px;
     /* background-color: rgb(236, 236, 236); */
-    background-image: url("../mypage/images/profile.jpg");
+    background-image: url("images/profile.jpg");
     background-size: cover;
     border-radius: 50%;
     margin-left: 40px;
     margin-top: 40px;
 }
-    
+
 .welcome h1 {
     letter-spacing: 1px;
     margin-left: 270px;
@@ -331,7 +331,7 @@ ul li:hover a {
     width: 365px;
     height: 255px;
     background-color: white;
-    border-radius: 10px; 
+    border-radius: 10px;
     margin-top: 275px;
     margin-left: 388px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -420,49 +420,50 @@ ul li:hover a {
     background-color: rgba(0, 0, 0, 0.5);
     animation: fadeIn 0.5s;
     animation-fill-mode: both;
-  }
+}
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-  
+
 .modal-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-  
+
 .modal-inner {
-  width: 500px;
-  background-color: rgb(30, 30, 30);
-  border-radius: 12px;
-  animation: showPopup 0.75s;
-  animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+    width: 500px;
+    background-color: rgb(30, 30, 30);
+    border-radius: 12px;
+    animation: showPopup 0.75s;
+    animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
 }
 @keyframes showPopup {
-  from {
-      opacity: 0;
-      transform: scale(0.8);
-  }
-  to {
-      opacity: 1;
-      transform: scale(1);
-  }
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-.othertxt { 
-  height: auto;
-  position: relative;
+.othertxt {
+    height: auto;
+    position: relative;
+    margin-bottom: 80px;
 }
 
 .warning {
@@ -485,7 +486,7 @@ ul li:hover a {
     letter-spacing: 1px;
     line-height: 40px;
 }
-  
+
 .account-box {
     width: 380px;
     height: 45px;
@@ -526,12 +527,12 @@ ul li:hover a {
 }
 
 .othertxt #cancelimg {
-  position: absolute;
-  width: 20px;
-  filter: opacity(0.4) drop-shadow(0 0 0 white);
-  margin: 0;
-  right: 60px;
-  cursor: pointer;
+    position: absolute;
+    width: 20px;
+    filter: opacity(0.4) drop-shadow(0 0 0 white);
+    margin: 0;
+    right: 60px;
+    cursor: pointer;
 }
 
 .othertxt #subscrimg {
@@ -541,8 +542,8 @@ ul li:hover a {
 
 
 .modal-buttons {
-  text-align: center;
-  padding-bottom: 65px;
+    text-align: center;
+    padding-bottom: 65px;
 }
 
 .modal-buttons2 {
@@ -554,44 +555,44 @@ ul li:hover a {
 
 
 .cancel-btn {
-  width: 190px;
-  height: 45px;
-  margin-right: 10px;
-  font-size: 15px;
-  border-radius: 5px;
-  border: none;
-  background-color: #636363;
-  cursor: pointer;
-  letter-spacing: 2px;
+    width: 190px;
+    height: 45px;
+    margin-right: 10px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #636363;
+    cursor: pointer;
+    letter-spacing: 2px;
 }
 .cancel-btn:hover {
-  background-color: rgb(172, 172, 172);
+    background-color: rgb(172, 172, 172);
 }
 
 .change-btn {
-  width: 190px;
-  height: 45px;
-  font-size: 15px;
-  border-radius: 5px;
-  border: none;
-  background-color: #636363;
-  cursor: pointer;
-  letter-spacing: 2px;
+    width: 190px;
+    height: 45px;
+    font-size: 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #636363;
+    cursor: pointer;
+    letter-spacing: 2px;
 }
 .change-btn:hover {
-  background-color: rgb(172, 172, 172);
+    background-color: rgb(172, 172, 172);
 }
 
 @keyframes fadeIn {
     from {
-      opacity: 0;
+        opacity: 0;
     }
     to {
-      opacity: 1;
+        opacity: 1;
     }
-  }
+}
 
-  .modal {
+.modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -603,4 +604,10 @@ ul li:hover a {
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-  
+
+
+th {
+    display : inline-block;
+    width : 150px;
+}
+

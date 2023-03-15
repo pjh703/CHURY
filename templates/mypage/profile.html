@@ -38,7 +38,38 @@
                 <div class="buy">
                     <h3>추라이 정기결제 이용권을 구매하시고<br>
                     다양한 혜택을 받아보세요.</h3>
-                    <button>이용권 구매하기</button>
+                    <button id="buybtn" class="btnm login-account">이용권 구매하기</button>
+                    <div class="modal">
+                        <!-- Modal의 내용 -->
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            
+                            <div class="modal-wrapper">
+                                <div class="modal-inner">
+                                    <div class="othertxt">
+                                        <a href="{% url 'mypage:profile' %}"><img id="cancelimg" src="{% static 'mypage\images\close.svg' %}" alt=""></a>
+                                        <div class="warning">추라이 이용권 구매 혜택</div>
+                                        <img id="subscrimg" src="{% static 'mypage\images\subscribe.png' %}">
+                                        <div class="description">
+                                            <ul>
+                                                <li>한달 간 추라이의 모든 도서를 이용 가능합니다.</li>
+                                                <li>취향에 꼭 맞는 도서를 추천해 드립니다.</li>
+                                            </ul>
+                                        </div>
+                                        <div class="warning2">월 4,900원</div>
+                                    </div>
+                                    <div class="modal-buttons">
+                                        <form method="post" action="{% url 'mypage:pay' %}">
+                                            <input value="{{ user.id }}" name="user_id" id="id" style="display: none;">
+                                            {% csrf_token %}
+                                            <button id="paybtn" type="submit">이용권 구매하기</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+        
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="book">
@@ -75,15 +106,80 @@
                 </a>
             </div>
             <div class="money">
-                <h2>이용권 / 결제정보</h2>
-                <h3>추라이에 보유한 이용권/쿠폰<br>
-                    내역을 확인할 수 있습니다.</h3>
-                <h5>바로가기 ></h5>
-                <div class="use-img">
-                    <i class="fa-solid fa-gift fa-3x"></i>
-                </div>
+                <a href="http://localhost:8888/myinfo/?id={{ user.id }}" style="text-decoration:none; color: black;">
+                    <h2>이용권 / 결제정보</h2>
+                    <h3>추라이에 보유한 이용권/쿠폰<br>
+                        내역을 확인할 수 있습니다.</h3>
+                    <h5>바로가기 ></h5>
+                    <div class="use-img">
+                        <i class="fa-solid fa-gift fa-3x"></i>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+<script>
+
+function changeBtnName()  {
+  const btnElement 
+    = document.getElementById('btn');
+  
+  const html 
+
+    = '<button style="width: 190px; height: 45px; font-size: 15px; border-radius: 5px; border: none; background-color: #636363; cursor: text; letter-spacing: 2px;">전송 완료</button>'
+  
+  btnElement.innerHTML = html;
+}
+
+// Modal을 가져옵니다.
+var modals = document.getElementsByClassName("modal");
+// Modal을 띄우는 클래스 이름을 가져옵니다.
+var btns = document.getElementsByClassName("btnm");
+// Modal을 닫는 close 클래스를 가져옵니다.
+var spanes = document.getElementsByClassName("close");
+var funcs = [];
+ 
+// Modal을 띄우고 닫는 클릭 이벤트를 정의한 함수
+function Modal(num) {
+  return function() {
+    // 해당 클래스의 내용을 클릭하면 Modal을 띄웁니다.
+    btns[num].onclick =  function() {
+        modals[num].style.display = "block";
+        console.log(num);
+    };
+ 
+    // <span> 태그(X 버튼)를 클릭하면 Modal이 닫습니다.
+    spanes[num].onclick = function() {
+        modals[num].style.display = "none";
+    };
+  };
+}
+ 
+// 원하는 Modal 수만큼 Modal 함수를 호출해서 funcs 함수에 정의합니다.
+for(var i = 0; i < btns.length; i++) {
+  funcs[i] = Modal(i);
+}
+ 
+// 원하는 Modal 수만큼 funcs 함수를 호출합니다.
+for(var j = 0; j < btns.length; j++) {
+  funcs[j]();
+}
+ 
+// Modal 영역 밖을 클릭하면 Modal을 닫습니다.
+window.onclick = function(event) {
+  if (event.target.className == "modal") {
+      event.target.style.display = "none";
+  }
+};
+
+window.onclick = function(e){
+    if(e.target == modal) {
+        modal.style.visibility = "hidden";
+        modal.style.opacity = 0;
+    }
+}
+
+</script>
