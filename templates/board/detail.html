@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'board/detail/detail.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     {% if user.is_authenticated %}
@@ -182,12 +183,20 @@
                                     <input value="{{ i.id }}" name="book_id" id="book_id" style="display: none;">
                                     <div class="related-title" style="text-align: center;">{{ i.제목 }}</div>
                                 </form>
-                                
-                            </td>
+                            </td>    
+                        </tr>
+                        <tr>
+                            <td>
+                                <canvas id="pieChart{{ forloop.counter0 }}" style="width:20px; position: absolute; margin-left: 60px; margin-top: 5px;"></canvas>
+                                <span id="chu{{ forloop.counter0 }}" style="margin-left: 85px; font-size: small; margin-right: 0px;">
+                                    {{ i.chu|floatformat:1 }} 
+                                </span><span style="font-size: small;">%</span>
+                            </td>       
+                            
                         </tr>
                     </table>
                 </div>
-                {% endfor %}
+                {% endfor response_intro %}
             </div>
         </div>
         <div class="section2">
@@ -300,7 +309,7 @@
         var img55 = document.querySelector("img.egg5");
         var points = document.getElementById("point").innerText;
         // console.log(parseInt(points.substr(0, 2)))
-        console.log(points)
+        // console.log(points)
 
         if (points==5){
             //점수가 5점인 경우
@@ -352,7 +361,7 @@
         var img55 = document.querySelector("img.egg5");
         var points = document.getElementById("point").innerText;
         // console.log(parseInt(points.substr(0, 2)))
-        console.log(points)
+        // console.log(points)
 
         if (points==5){
             //점수가 5점인 경우
@@ -403,7 +412,7 @@
         var img44s = document.querySelector("img.star4");
         var img55s = document.querySelector("img.star5");
         var pointss = document.getElementById("star-point").innerText;
-        console.log(pointss)
+        // console.log(pointss)
         if (pointss>=5) {
             img11s.style.display = 'none'
             img22s.style.display = 'none'
@@ -464,5 +473,41 @@
         window.location.replace('/user/login/')
     </script>
     {% endif %}
+
+    <script>
+        var data2 = []
+        for (let i = 0; i < 5; i++) {
+        
+            var names2 = ['name1', 'name2', 'name3'];
+            var colors2 = [];
+            var dates2 = ['a'];
+            data2.push([document.getElementById('chu'+i).innerText, 100-document.getElementById('chu'+i).innerText]);
+        
+            console.log(data2);
+            
+            new Chart('pieChart'+i, {
+                type: 'pie',  
+            data: {
+                labels: dates2,  
+                datasets: dates2.map((a, b) => ({
+                label: names2[i],
+                data: data2[i],
+                borderColor: colors2[i],
+                // borderWidth: 1
+                }))  
+            },
+            options:  {
+                responsive: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                }
+            }
+        });
+    }
+            
+    </script>
+
 </body>
 </html>
