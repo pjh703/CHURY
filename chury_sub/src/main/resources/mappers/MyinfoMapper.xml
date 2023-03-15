@@ -1,0 +1,23 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="net.softsociety.chury_sub.dao.MyinfoDAO">
+	<!-- 유저 정보 불러오는 쿼리문 -->
+	<select id="selectMyinfo" resultType="Myinfo" parameterType="int">
+		select un.id, un.username, date_format(un.date_joined, '%Y-%m-%d') date_joined, un.email, un.email_confirm, un.regist, date_format(un.reg_date, '%Y-%m-%d') reg_date, ifnull(bn.book, 0) bookcnt
+		from
+		(select uu.id, uu.username, uu.date_joined, uu.email, ifnull(um.email_confirm, 0) email_confirm,
+		ifnull(um.regist, 0) regist, ifnull(um.reg_date, 0) reg_date
+		from user_user uu left outer join user_myinfo um
+		on um.id = uu.id) un left outer join
+		(select user_id, count(*) book from mypage_mybook
+		group by user_id) bn on un.id = bn.user_id
+		where un.id = #{id}
+	</select>
+</mapper>
+
+
+
+
+
