@@ -171,6 +171,27 @@
             </div>
             <br><br>      
         </div>
+        {% if response_data_star %}
+        <div class="content-list">
+            <h1>비슷한 사용자가 읽은 도서</h1>
+            <div class="slider">
+                {% for i in response_data_star %}
+                <div class="item">
+                    <form action="{% url 'board:detail' pk=i.id %}" method="post">
+                        {% csrf_token %}
+                            <input value="{{ user.id }}" name="id" id="id" style="display: none;">
+                            <div class="descr" style="pointer-events: none;">
+                                {{ i.제목 }}<br><br>
+                                추천수: {{ i.추천수 }}<br><br>
+                                별점: {{ i.point }}점/5점
+                            </div>
+                            <input type="image" class="imgs" src="{{ i.cover_img_url }}" alt="책 이미지">
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+            <br><br>      
+        </div>
         {% endif %}
 
         <div class="content-list">

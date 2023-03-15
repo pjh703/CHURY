@@ -25,7 +25,8 @@ from konlpy.tag import Okt
 
 
 # 글자료 불러오기
-dataori = pd.read_excel('book_db.xlsx', nrows=15000)  # import를 위해서 dataori
+
+dataori = pd.read_excel('book_db.xlsx')  # import를 위해서 dataori
 data = dataori
 
 vectorizer = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
@@ -81,13 +82,11 @@ def home(request):
         for l in range(0,len(book_id)):
             book_sel_data = pd.concat([book_sel_data, data[data['id'] == int(book_id[l]['book_id'])]])
 
-
         
         # 유저 평점 기반으로 도서 추천
         star_a = MYSTAR.objects.all()
         star_aa=pd.DataFrame(star_a.values())
-        # print(star_aa['user_id'])
-        
+
         try : # 
             # 현재 사용자
             star_1 = MYSTAR.objects.filter(user_id=e_id)
@@ -139,6 +138,7 @@ def home(request):
         
             response_data_star = ii.to_dict('records') # 별점 기반 다른 사용자로부터 추천
 
+
         except : 
             response_data_star = [] # 별점 기반 다른 사용자로부터 추천
         
@@ -155,7 +155,6 @@ def home(request):
         
         response_new = data.sort_values('조회수_단위').head(20).to_dict('records')
 
-        
 
         context = {
             'response_data': response_data,
