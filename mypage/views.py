@@ -370,8 +370,6 @@ def choose(request):
 
         # 마지막열에 추가
         data2.loc[len(data2)] = [len(data2),len(data2),len(data2),'mokpyo', '작', '장','커버','키','조','조단','추','추단','인','인단', movie_word,'0','2','3','0','0']
-
-        print(data2.tail)
    
         vectorizer = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
         vectorizerfit = vectorizer.fit(data2['total'])
@@ -383,41 +381,46 @@ def choose(request):
         tf_idf_df = pd.DataFrame(vecdf, columns = word_list, index = data2.제목)
         # 코사인 유사도 계산
         cos_sim_df = pd.DataFrame(cosine_similarity(tf_idf_df, tf_idf_df))
-        print(data2.index[(data2['제목'] == 'mokpyo')])
+
         intro_sim_idx = cos_sim_df[data2.index[data2['제목'] == 'mokpyo'].to_list()[0]]
         intro_sim_sorted_idx = intro_sim_idx.sort_values(ascending=False)[0:21]
         similar_book = data2.loc[intro_sim_sorted_idx.index]
 
-
+        # 코사인 유사도 열에 추가
+        similar_book['cosi'] = intro_sim_sorted_idx[0:21]
         cols = [k for k in similar_book]
         book_queryset = [dict(zip(cols, k)) for k in similar_book.values]
 
-        print(similar_book)
 
         # 유사도 검사한 결과 데이터베이스에 저장
 
         id = request.POST['id']
         
+        # 20개 책 리스트 데이터 저장
         book_list = []
         for l in range(1,21):
             bulk = book_queryset[l]['id']
             book_list.append(bulk)
 
-        bulk_list = []
+        cosi_list = []
+        for l in range(1,21):
+            cosi_bulk = book_queryset[l]['cosi']
+            cosi_list.append(cosi_bulk)
 
-        for l in book_list:
+        bulk_list = []
+        for l in range(0, len(book_list)):
             bulk_list.append(MYSELECT(
                             user_id=User.objects.get(id=id).id,
-                            book_id=l))
+                            book_id=book_list[l],
+                            cosi=cosi_list[l]))
                             
         selete_data = MYSELECT.objects.bulk_create(bulk_list)
 
-        
         context = {
             'selete_data':selete_data,
         }
 
-
+        
         # print(counter)
         # print(counter['액션'])
         # gen_list = ['액션', '모험', '애니메이션', '코미디', '범죄', '다큐멘터리', '드라마', '가족', '판타지', '역사', '공포', '음악', '미스터리', '로맨스', 'SF', 'TV영화', '스릴러', '전쟁', '서부']

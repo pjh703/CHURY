@@ -25,6 +25,7 @@ class MYSELECT(models.Model):
     user = models.ForeignKey("user.User", on_delete=models.CASCADE)
     book_id = models.CharField(null=True, max_length=15)
     add_date = models.DateTimeField(auto_now_add=True)
+    cosi = models.CharField(null=True, max_length=10)
  
 
 class MYCHOOSE(models.Model):

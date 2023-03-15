@@ -9,3 +9,8 @@ pip install konlpy
 pip install numpy, pandas
 
 pip install scikit-learn
+
+
+
+
+alter table chury.mypage_myselect add cosi float;
