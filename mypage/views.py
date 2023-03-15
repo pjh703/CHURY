@@ -360,11 +360,11 @@ def choose(request):
 
 
         df_list = data['장르'].drop_duplicates().to_list()  # 장르 목록
-        data2 = pd.DataFrame(columns=data.columns)
+        data2 = pd.DataFrame(columns=data.columns)  # 빈 데이터 프레임
 
         # 장르별 천개씩
         for i in df_list:
-            data2 = pd.concat([data2, data[data['장르'] == i][:1000]])
+            data2 = pd.concat([data2, data[data['장르'] == i][:1000]])  # 장르별 개수 추가
         
         data2 = data2.reset_index(drop=True)
 
