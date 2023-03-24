@@ -26,7 +26,7 @@ from konlpy.tag import Okt
 
 # 글자료 불러오기
 
-dataori = pd.read_excel('book_db.xlsx')  # import를 위해서 dataori
+dataori = pd.read_excel('book_db.xlsx', nrows=20000)  # import를 위해서 dataori
 data = dataori
 
 vectorizer = TfidfVectorizer(min_df = 1000, sublinear_tf = True)
@@ -217,6 +217,8 @@ def BoardDetailView(request, pk):
     response_intro = similar_book.to_dict('records')[1:6]
     for i in range(0, len(response_intro)):
         response_intro[i]['chu'] = intro_sim_sorted_idx[1:6].to_list()[i] * 100
+
+    print(response_intro)
 
 
     isbook = False # 책이 있는지 없는지 검사하는 값
