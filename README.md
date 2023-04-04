@@ -68,9 +68,14 @@ Django + Python을 이용한 Web Project 입니다.
 
 ## 🦾 주요 기능
 - 사용자가 선택한 영상 콘텐츠 기반 추천
-- 사용자가 선택한 도서 기반 추천
-- 취향이 유사한 다른 유저 기반 추천
+![function1](./readme_image/function1.png)
+![function1_2](./readme_image/function1_2.png)
 
+- 사용자가 선택한 도서 기반 추천
+![function2](./readme_image/function2.png)
+
+- 취향이 유사한 다른 유저 기반 추천
+![function3](./readme_image/function3.png)
 
 
 
