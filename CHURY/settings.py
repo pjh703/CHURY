@@ -88,9 +88,14 @@ WSGI_APPLICATION = 'CHURY.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': str(BASE_DIR / 'my.cnf')
-        }
+        # 'OPTIONS': {
+        #     'read_default_file': str(BASE_DIR / 'my.cnf')
+        # }
+        'NAME' : 'chury',
+        'USER' : 'root',
+        'PASSWORD' : '1234',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
