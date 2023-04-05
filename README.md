@@ -68,25 +68,24 @@ Django + Python을 이용한 Web Project 입니다.
 
 ## 🦾 주요 기능
 - 사용자가 선택한 영상 콘텐츠 기반 추천
-![function1](./readme_image/function1.png)
-![function1_2](./readme_image/function1_2.png)
+
+<img src="./readme_image/function1.png" height="300px">
+<img src="./readme_image/function1_2.png" height="170px">
+
+<br>
 
 - 사용자가 선택한 도서 기반 추천
-![function2](./readme_image/function2.png)
+
+<img src="./readme_image/function2.png" height="300px">
+
+<br>
 
 - 취향이 유사한 다른 유저 기반 추천
-![function3](./readme_image/function3.png)
 
+<img src="./readme_image/function3.png" height="170px">
 
+<br>
 
-
-사용법
-시작하는 법
-설치해야될거
-
-만든이~
-저작권 - 누구나 무료로 쓸수있나?
-라이센스
-
-
-몇개 캡쳐해서 이미지 좀 넣고 끗ㅎ
+## 📑 CHURY 사용법
+- read.txt에 있는 pip install 명령어 입력
+- py manage.py runserver
