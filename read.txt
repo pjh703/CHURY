@@ -1,16 +1,13 @@
-
-
-pip install django-allauth
+py -m pip install django
+py -m pip install django-allauth
 
 pip install xlrd
+py -m pip install openpyxl
+
+py -m pip install mysqlclient
 
 pip install konlpy
 
 pip install numpy, pandas
 
 pip install scikit-learn
-
-
-
-
-alter table chury.mypage_myselect add cosi float;
