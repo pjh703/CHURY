@@ -5,20 +5,23 @@
 
 * {
     font-family:'Pretendard-Regular';
+
 }
 
-/* .logoArea{
-    width: 108px;
-    height: 30px;
-    border-radius: 5;
-    margin-top: 10px;
-    margin-left: 10px;
-} */
+body {
+    overflow-x: hidden;
+}
 
-.nav{
+nav{
     height: 80px;
-    background-color: #ff750f;
-    border-bottom: solid 1px #ddd;
+    margin-left: 80px;
+}
+
+.logoArea{
+    position: absolute;
+    left: 8%; 
+    margin-top: 25px;
+
 }
 
 .text{
@@ -27,9 +30,7 @@
     margin: auto;
     position: absolute;
     left: 130px;
-    /* top: 170px; */
     overflow: auto;
-    /* margin-right: 50px; */
     float: left;
 }
 
@@ -50,23 +51,19 @@
     letter-spacing: 0.5px;
     line-height: 40px;
     position: fixed;
-    /* fix 전 margintop = 40px */
 }
 
-/* !!!!! tab css !!!!!! */
 .text [class="tab"] {
     float: right;
     margin-top: -450px;
     margin-right: 250px; 
     margin-bottom: 50px;
-    /* box-shadow: 5px 5px 5px 0px lightgray; */
     z-index: 1;
     clear: right;
     vertical-align : bottom;
 }
 
 .text [class="tab-btn"] {
-    /* border: 1px solid aqua; */
     margin-right: 10px;
     margin-bottom: 5px;
     vertical-align : bottom;
@@ -83,7 +80,6 @@
     left: 8%;
     bottom: 8%;
     font-size: 22px;
-    /* padding: 20px 60px; */
     width: 380px;
     height: 75px;
     text-align: center;
@@ -123,9 +119,8 @@
     position: relative;
     line-height: 150px;
     border-radius: 10px;
-
-
 }
+
 .egg {
     padding-top: 60px;
     padding-left: 30px;
