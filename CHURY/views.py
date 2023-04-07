@@ -16,7 +16,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 
 
-
+# 4/7 주석처리해도 이상 없음
 def password_reset_request(request): 
 	if request.method == "POST":
 		password_reset_form = PasswordResetForm(request.POST)
@@ -25,13 +25,13 @@ def password_reset_request(request):
 			associated_users = get_user_model().objects.filter(Q(email=data))
 			if associated_users.exists():
 				for user in associated_users:
-					subject = '[CHURY] 비밀번호 재설정'
+					subject = 'registration/password_reseut_subject.txt'
 					email_template_name = "registration/password_reset_email.txt"
 					c = {
 						"email": user.email,
 						# local: '127.0.0.1:8000', prod: 'givwang.herokuapp.com'
 						'domain': settings.HOSTNAME,
-						'site_name': 'givwang',
+						# 'site_name': 'givwang',
 						# MTE4
 						"uid": urlsafe_base64_encode(force_bytes(user.pk)),
 						"user": user,
@@ -42,7 +42,7 @@ def password_reset_request(request):
 					}
 					email = render_to_string(email_template_name, c)
 					try:
-						send_mail(subject, email, 'project.chury@gmail.com' , [user.email], fail_silently=False)
+						send_mail(subject, email, 'churysince2022@gmail.com' , [user.email], fail_silently=False)
 					except BadHeaderError:
 						return HttpResponse('Invalid header found.')
 					return redirect("/password_reset/done/")
