@@ -174,15 +174,15 @@ LOGIN_REDIRECT_URL = 'board:home' # 로그인 후 리디렉션할 페이지
 ACCOUNT_LOGOUT_REDIRECT_URL = "user:login"  # 로그아웃 후 리디렉션 할 페이지
 ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 버튼 클릭 시 자동 로그아웃
 
-# 이메일 보내기
+# 이메일 보내기 / 이메일 인증
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS =True 
+EMAIL_USE_TLS =True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'chury.novel@gmail.com'
-EMAIL_HOST_PASSWORD = 'rgksrgfibgvvgwgd'
+EMAIL_HOST_USER = 'churysince2022@gmail.com'
+EMAIL_HOST_PASSWORD = 'rjumxibmrnmtsomj'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SITE_ID = 1
+SITE_ID = 1 
 
 # 이메일 인증(2단계인증)
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1

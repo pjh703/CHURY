@@ -55,6 +55,7 @@ def send_email(request):
 
         # print(email_check, email_model)
 
+        # 4/7 if부터 else print까지 주석처리해도 이상 없음
         if email_check == email_model:
             
             subject = "CHURY 비밀번호 안내 이메일 입니다."
@@ -65,10 +66,11 @@ def send_email(request):
             from_email=from_email).send()
         else:
             print("????????????????????????????????")
+            
         # email_id = User.objects.get(email = username)
         # mydic = MYBOOK.objects.filter(email_id = email_id).values('mydic').filter(mydic = pk)
 
-
+    # 4/7 주석처리해도이상없음
     else:
         print('-'*30)
         print("?")
