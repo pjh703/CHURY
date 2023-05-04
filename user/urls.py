@@ -11,18 +11,9 @@ app_name = "user"
 urlpatterns = [
     path('login/', LoginView.as_view(template_name='user/login.html',next_page='/board/home/'), name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
-    
-    
-    # 비밀번호 찾기 창
-    path('pwfind/', views.FindView, name='pwfind'),
-
 
     path('email/', UserCreateView.as_view(), name='email'),
     path('sign/', views.SignView, name='sign'),
     path('modal/', views.ModalView, name='modal'),
     path('agreement/', views.AgreementView, name='agreement'),
-
-    # 이메일 전송
-    path('send_email/', views.send_email, name='send_email'), 
-   
 ]

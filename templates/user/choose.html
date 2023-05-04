@@ -1,29 +1,23 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>CHURY | Select</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="shortcut icon" href="/static/board/detail/image/churyico2.ico">
-    <link rel='stylesheet' type='text/css' media='screen' href='{% static 'user/choose/style.css' %}'>
-    <link rel='stylesheet' type='text/css' media='screen' href='{% static 'board/loading/style.css' %}'>
-    
-
+<head>
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<title>CHURY | Select</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<link rel="shortcut icon" href="/static/board/detail/image/churyico2.ico">
+<link rel='stylesheet' type='text/css' media='screen' href="{% static 'user/choose/style.css' %}">
+<link rel='stylesheet' type='text/css' media='screen' href="{% static 'board/loading/style.css' %}">
 </head>
-
-<body style="overflow-x: hidden;">
-    <nav id="nav" style="height: 80px; margin-left: 80px;">
-
-        <div class="header" style="position: absolute; ">
-            <div class="logoArea" style="position: absolute; left: 8%; margin-top: 25px;">
-                <a href="/"><img src="{% static 'user/choose/image/logo.png' %}"></a>
-            </div>
+<body>
+    <nav id="nav">
+        <div class="logoArea">
+            <a href="/"><img src="{% static 'user/choose/image/logo.png' %}"></a>
         </div>
     </nav>
-    <div style="border-bottom: 1px solid #ddd;">
-    </div>
+    <div style="border-bottom: 1px solid #ddd;"></div>
+
     <div class="text">
         <h1 style="margin-top: 50px;">{{ user.username }} 님, 좋아하는 <br>
         콘텐츠를 3개 이상 <br>
@@ -38,8 +32,6 @@
         {% csrf_token %}
         <input value="{{ user.id }}" name="id" id="id" hidden>
         <input class="not-choose-btn" type="submit" id="result" name="result" value="3개 이상 선택해주세요" onmouseup="getCheckedCnt()" disabled>
-        <!-- <input class="choose-btn" type="submit" id="result" name="result" style="display: none;" value="완료되었습니다!"> -->
-        <!-- <button id="result">3개 이상 선택해주세요</button> -->
 
         <div class="tab" style="margin-top: 60px;">
 
@@ -52,13 +44,9 @@
                 {% if forloop.counter == 13 %}<div class="one" style="display: flex;">{% endif %}
                 {% if forloop.counter == 16 %}<div class="one" style="display: flex;">{% endif %}
                 {% if forloop.counter == 19 %}<div class="one" style="display: flex;">{% endif %}
-                <!-- {% if forloop.counter == 22 %}<div class="one" style="display: flex;">{% endif %}
-                {% if forloop.counter == 25 %}<div class="one" style="display: flex;">{% endif %} -->
                     
-                
                 {% if forloop.counter < 19 %}
-                 
-                
+
                 <input type="checkbox" id="ch{{forloop.counter}}" name="contents" onclick='getCheckedCnt()' style="display:none;">
                 <label for="ch{{forloop.counter}}">
                     <div class="tab-btn">
@@ -70,7 +58,6 @@
                     </div>
                 </label>
                 
-                   
                 {% endif %}
             
                 {% if forloop.counter == 3 %}</div>{% endif %}
@@ -86,8 +73,8 @@
             {% endfor %}
                 
             
-            </div>
         </div>
+    </div>
     </form>
 
     <div id="loader" name="loader" class="loader" style="display: none;"></div>
@@ -95,4 +82,4 @@
 </body>
 
 </html>
-<script src={% static 'user/choose/script.js' %}></script>
+<script src="{% static 'user/choose/script.js' %}"></script>
