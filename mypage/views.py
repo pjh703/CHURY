@@ -77,7 +77,7 @@ def LibraryView(request, pk):
     else:
         return render(request, "mypage/library.html")
 
-
+# 이메일 인증
 def LogLock(request, pk):
     if request.method == 'POST' :
         username = pk
@@ -519,6 +519,7 @@ def choose(request):
     return redirect("/board/home", context)
     
 
+# 이메일 인증 템플릿 연결
 def email_done(request, pk):
     context = {
         'username' : pk

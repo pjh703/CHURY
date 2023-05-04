@@ -12,7 +12,7 @@ urlpatterns = [
     path('env/', views.EnvView, name='env'),
     path('profile/', views.ProfileView , name='profile'),
     
-    path('loglock/<pk>/', views.LogLock, name = 'loglock'), # 로그인 보안
+    path('loglock/<pk>/', views.LogLock, name = 'loglock'), # 2단계 인증
 
     path('delete/<int:pk>/', UserDeleteView.as_view(), name='delete'),
     path('update/<int:pk>/', UserUpdateView.as_view(), name='update'),
