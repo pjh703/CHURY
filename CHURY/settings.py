@@ -66,7 +66,7 @@ ROOT_URLCONF = 'CHURY.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ BASE_DIR/'templates' ],
+        'DIRS': [ BASE_DIR, 'templates' ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -178,9 +178,9 @@ ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 버튼 클릭 시 자동 로그아�
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS =True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'churysince2022@gmail.com'
-EMAIL_HOST_PASSWORD = 'rjumxibmrnmtsomj'
-EMAIL_PORT = 587
+EMAIL_HOST_USER = 'churybooks@gmail.com'
+EMAIL_HOST_PASSWORD = 'yhgjccdffdvjpmzb'
+EMAIL_PORT = '587'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SITE_ID = 1 
 

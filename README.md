@@ -48,7 +48,7 @@ Django + Python을 이용한 Web Project 입니다.
 <img src="https://img.shields.io/badge/Mysql-blue?style=flat&logo=Mysql&logoColor=white"/>
 <img src="https://img.shields.io/badge/Excel-darkgreen?style=flat&logo=microsoftExcel&logoColor=white"/>
 
-- <div>VSC</div>
+- <div>VCS</div>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <img src="https://img.shields.io/badge/Git-orange?style=flat&logo=git&logoColor=white"/>
 <img src="https://img.shields.io/badge/github-black?style=flat&logo=github&logoColor=white"/>
